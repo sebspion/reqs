@@ -123,6 +123,12 @@ The common lack of a user interface in constrained devices leads to various cred
 The use of RPKs may be appropriate for the authentication of the AKE initiator but not for the AKE responder.
 The AKE must support different credentials for authentication in different directions of the AKE session, e.g. certificate-based authentication for the initiating endpoint and RPK-based authentication for the responding endpoint.
 
+## Identity Protection
+
+Transporting identities as part of the AKE session is a necessity in order to provide strong mutual authentication.
+In the case of constrained devices, the identity may contain sensitive information on the manufacturer of the device, the batch, default firmware version...
+Protecting the identities from passive and active attacks is important from the privacy point of view.
+The AKE is required to support identity protection of one of the peers in the AKE run in the case of public key identities, or the protection of the PSK identifier in the case of PSK-based authentication.
 
 ## Crypto Agility
 
