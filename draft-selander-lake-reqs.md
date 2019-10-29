@@ -134,7 +134,6 @@ The AKE is required to support identity protection of one of the peers in the AK
 
 Motivated by long deployment lifetimes, the AKE is required to support crypto agility, including modularity of COSE crypto algorithms and negotiation of preferred crypto algorithms for OSCORE and the AKE. The AKE negotiation must be protected against downgrade attacks.
 
-
 ## AKE for OSCORE {#AKE-OSCORE}
 
 In order to be suitable for OSCORE, at the end of the AKE protocol run the two parties must agree on (see Section 3.2 of {{RFC8613}}):
@@ -175,13 +174,40 @@ While the large variety of settings and capabilities of the devices and networks
 
 LoRaWAN employs unlicensed radio frequency bands in the 868MHz ISM band, in Europe regulated by ETSI EN 300 220. For LoRaWAN the most relevant metric is the Time-on-Air, which determines the back-off times and can be used an indicator to calculate energy consumption. LoRaWAN is legally required to use a 1% (or smaller) duty cycle, a payload split into two fragments instead of one increases the time to complete the sending of this payload by at least 10,000%. The use of an AKE for providing end-to-end security on application layer need to comply with the duty cycle. One relevant benchmark is performance in low coverage with Data Rates 0-2 corresponding to a packet size of 51 bytes {{LoRaWAN}}. While larger frame sizes are also defined, their use depend on good radio conditions. Some libraries/providers only support 51 bytes packet size.
 
-
 ### 6TiSCH
 
-For 6TiSCH specifically, as a time-sliced network, bytes of the wire (or rather, the quantization into frame count) is particularly noteworthy, since more frames contribute to congestion for spectrum (and concomitant error rates) in a non-linear way, especially in scenarios when large numbers of independent nodes are attempting to execute an AKE to join a network.
+6TiSCH operates in the 2.4 GHz unlicensed frequency band and uses hybrid Time Division/Frequency Division multiple access (TDMA/FDMA).
+Nodes in a 6TiSCH network form a mesh.
+The basic unit of communication, a cell, is uniquely defined by its time and frequency offset in the communication schedule matrix.
+Cells can be assigned for communication to a pair of nodes in the mesh and so be collision-free, or shared by multiple nodes, for example during network formation.
+In case of shared cells, some collision-resolution scheme such as slotted-Aloha is employed.
+Nodes exchange frames which are at most 127-bytes long, including the link-layer headers.
+To preserve energy, the schedule is typically computed in such a way that nodes switch on their radio below 1% of the time ("radio duty cycle").
+A 6TiSCH mesh can be several hops deep.
+In typical use cases considered by the 6TiSCH working group, a network that is 2-4 hops deep is commonplace; a network which is more than 8 hops deep is not common.
 
-The available size for key exchange messages depends the topology of the network and other parameters. One benchmark which is relevant for studying AKE is the network formation setting. For a 6TiSCH production network 5 hops deep in a network formation setting, the available CoAP overhead to avoid fragmentation is 47/45 bytes (uplink/downlink) {{AKE-for-6TiSCH}}.
- 
+#### Bytes on the wire
+
+Increasing the number of bytes on the wire in a protocol message has an important effect on the 6TiSCH network in case the fragmentation is triggered.
+More fragments contribute to congestion of shared cells (and concomitant error rates) in a non-linear way.
+
+The available size for key exchange messages depends on the topology of the network, whether the message is traveling uplink or downlink, and other stack parameters.
+A key performance indicator for a 6TiSCH network is "network formation", i.e. the time it takes from switching on all devices, until the last device has executed the AKE and securely joined.
+As an example, given the size limit on the frames and taking into account the different headers (including link-layer security), if a 6TiSCH network is 5 hops deep, the maximum CoAP payload size to avoid fragmentation is 47/45 bytes (uplink/downlink) {{AKE-for-6TiSCH}}.
+
+#### Time
+
+Given the slotted nature of 6TiSCH, the number of bytes in a frame has insignificant impact on latency, but the number of frames has.
+The relevant metric for studying AKE is the network formation time, which implies parallel AKE sessions among nodes that are attempting to join the network.
+Network formation time directly affects the time installers need to spend on site at deployment time.
+
+#### Round trips and number of messages
+
+Given the mesh nature of the 6TiSCH network, and given that each message may travel several hops before reaching its destination, it is highly desirable to minimize the number of round trips to reduce latency.
+
+#### Power
+
+From the power consumption point of view, it is more favorable to send a small number of large frames than a larger number of short frames.
 
 ### NB-IoT {#nb-iot}
 
@@ -213,7 +239,6 @@ There are trade-offs between "few messages" and "few frames"; if overhead is spr
 This document compiles the requirements for an AKE and provides some related security considerations.
 
 The AKE must provide the security properties expected of IETF protocols, e.g., providing confidentiality protection, integrity protection, and authentication with strong work factor.
-
 
 # IANA Considerations  {#iana}
 
