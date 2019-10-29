@@ -101,22 +101,28 @@ The solution will presumably be useful in other scenarios as well since a low se
 
 # Problem description {#prob-desc}
 
-
 ## Credentials
 
-IoT deployments differ in terms of what credentials can be supported. Currently many systems use pre-shared keys (PSK) provisioned out of band, for various reasons. PSK are often used in a first deployment because of its percieved simplicity. The use of PSK allows for protection of communication without major additional security processing, and also enables the use of symmetric crypto algorithms only, reducing the implementation and computational effort in the endpoints.
+IoT deployments differ in terms of what credentials can be supported. Currently many systems use pre-shared keys (PSK) provisioned out of band, for various reasons. PSK are often used in a first deployment because of its perceived simplicity. The use of PSK allows for protection of communication without major additional security processing, and also enables the use of symmetric crypto algorithms only, reducing the implementation and computational effort in the endpoints.
 
-However, PSK based provisioning has inherent weaknesses. There has been reports of massive breaches of PSK provisioning systems, and as many systems use PSK without perfect forward secrecy (PFS) they are vulnerable to passive pervasive monitoring. The security of these systems can be improved by adding PFS through an AKE authenticated by the provisioned PSK.
+However, PSK-based provisioning has inherent weaknesses. There has been reports of massive breaches of PSK provisioning systems, and as many systems use PSK without perfect forward secrecy (PFS) they are vulnerable to passive pervasive monitoring. The security of these systems can be improved by adding PFS through an AKE authenticated by the provisioned PSK.
 
-Shared keys can alternatively be established in the endpoints using an AKE protocol authenticated with asymmetric public keys instead of symmetric secret keys. Raw public keys (RPK) can be provisioned with the same scheme as PSKs, and allows a more relaxed trust model since RPKs need not be secret.
+Shared keys can alternatively be established in the endpoints using an AKE protocol authenticated with asymmetric public keys instead of symmetric secret keys. Raw public keys (RPK) can be provisioned with the same scheme as PSKs, which allows a more relaxed trust model since RPKs need not be secret.
 
-By running the same asymmetric key AKE with public key certificates instead of RPK, key provisioning can be omitted, leading to a more automated bootstrapping procedure.
+As a third option, by running the same asymmetric key AKE with public key certificates instead of RPK, key provisioning can be omitted, leading to a more automated bootstrapping procedure.
 
 These steps provide an example of a migration path in limited scoped steps from simple to more robust security bootstrapping and provisioning schemes where each step improves the overall security and/or simplicity of deployment of the IoT system, although not all steps are necessarily feasible for the most constrained settings.
 
-In order to allow for these different schemes, the AKE must support PSK, RPK and certificate based authentication.
+In order to allow for these different schemes, the AKE must support PSK, RPK and certificate-based authentication.
 
-Considering the wide variety of deployments it is desirable to support different schemes for transporting and identifying credentials, see Section 2 of {{I-D.ietf-cose-x509}}.
+Bandwidth is a scarce resource in constrained-node networks.
+To minimize the bandwidth consumption it is therefore desirable to support transporting the certificates by reference rather than by value.
+Considering the wide variety of deployments the AKE must support different schemes for transporting and identifying credentials, see Section 2 of {{I-D.ietf-cose-x509}}.
+
+The common lack of a user interface in constrained devices leads to various credential provisioning schemes.
+The use of RPKs may be appropriate for the authentication of the AKE initiator but not for the AKE responder.
+The AKE must support different credentials for authentication in different directions of the AKE session, e.g. certificate-based authentication for the initiating endpoint and RPK-based authentication for the responding endpoint.
+
 
 ## Crypto Agility
 
