@@ -121,11 +121,11 @@ Considering the wide variety of deployments the AKE must support different schem
 
 The common lack of a user interface in constrained devices leads to various credential provisioning schemes.
 The use of RPKs may be appropriate for the authentication of the AKE initiator but not for the AKE responder.
-The AKE must support different credentials for authentication in different directions of the AKE session, e.g. certificate-based authentication for the initiating endpoint and RPK-based authentication for the responding endpoint.
+The AKE must support different credentials for authentication in different directions of the AKE run, e.g. certificate-based authentication for the initiating endpoint and RPK-based authentication for the responding endpoint.
 
 ## Identity Protection
 
-Transporting identities as part of the AKE session is a necessity in order to provide strong mutual authentication.
+Transporting identities as part of the AKE run is a necessity in order to provide strong mutual authentication.
 In the case of constrained devices, the identity may contain sensitive information on the manufacturer of the device, the batch, default firmware version...
 Protecting the identities from passive and active attacks is important from the privacy point of view.
 The AKE is required to support identity protection of one of the peers in the AKE run in the case of public key identities, or the protection of the PSK identifier in the case of PSK-based authentication.
@@ -198,7 +198,7 @@ As an example, given the size limit on the frames and taking into account the di
 #### Time
 
 Given the slotted nature of 6TiSCH, the number of bytes in a frame has insignificant impact on latency, but the number of frames has.
-The relevant metric for studying AKE is the network formation time, which implies parallel AKE sessions among nodes that are attempting to join the network.
+The relevant metric for studying AKE is the network formation time, which implies parallel AKE runs among nodes that are attempting to join the network.
 Network formation time directly affects the time installers need to spend on site at deployment time.
 
 #### Round trips and number of messages
@@ -227,7 +227,7 @@ There are trade-offs between "few messages" and "few frames"; if overhead is spr
 
 * The AKE must support PSK, RPK and certificate based authentication and crypto agility, be 3-pass and support the same transport as OSCORE. It is desirable to support different schemes for transporting and identifying credentials.
 
-* After the AKE run, the peers must agree on a shared secret with PFS and good amount of randomness, peer identifiers (potentially short), and COSE algorithms to use.
+* After the AKE run, the peers must be mutually authenticated, agree on a shared secret with PFS and good amount of randomness, peer identifiers (potentially short), and COSE algorithms to use.
 
 * The AKE must reuse CBOR, CoAP and COSE primitives and algorithms for low code complexity of a combined OSCORE and AKE implementation.
 
