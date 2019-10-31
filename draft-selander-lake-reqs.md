@@ -79,44 +79,7 @@ This document compiles the requirements for a lightweight authenticated key exch
 
 # Introduction  {#intro}
 
-OSCORE {{RFC8613}} is a lightweight communication security protocol providing end-to-end security on application layer for constrained IoT settings (cf. {{RFC7228}}). It is expected to be deployed with standards and frameworks using CoAP such as 6TiSCH, LPWAN, OMA Specworks LwM2M, Fairhair Alliance and Open Connectivity Foundation. OSCORE lacks a matching authenticated key exchange protocol (AKE). This document compiles the requirements for such an AKE.
-
-
-# Problem description {#prob-desc}
-
-
-## Credentials
-
-IoT deployments differ in terms of what credentials can be supported. Currently many systems use pre-shared keys (PSK) provisioned out of band, for various reasons. PSK are often used in a first deployment because of its percieved simplicity. The use of PSK allows for protection of communication without major additional security processing, and also enables the use of symmetric crypto algorithms only, reducing the implementation and computational effort in the endpoints.
-
-However, PSK based provisioning has inherent weaknesses. There has been reports of massive breaches of PSK provisioning systems, and as many systems use PSK without perfect forward secrecy (PFS) they are vulnerable to passive pervasive monitoring. The security of these systems can be improved by adding PFS through an AKE authenticated by the provisioned PSK.
-
-Shared keys can alternatively be established in the endpoints using an AKE protocol authenticated with asymmetric public keys instead of symmetric secret keys. Raw public keys (RPK) can be provisioned with the same scheme as PSKs, and allows a more relaxed trust model since RPKs need not be secret.
-
-By running the same asymmetric key AKE with public key certificates instead of RPK, key provisioning can be omitted, leading to a more automated bootstrapping procedure.
-
-These steps provide an example of a migration path in limited scoped steps from simple to more robust security bootstrapping and provisioning schemes where each step improves the overall security and/or simplicity of deployment of the IoT system, although not all steps are necessarily feasible for the most constrained settings.
-
-In order to allow for these different schemes, the AKE must support PSK, RPK and certificate based authentication.
-
-Considering the wide variety of deployments it is desirable to support different schemes for transporting and identifying credentials, see Section 2 of {{I-D.ietf-cose-x509}}.
-
-## Crypto Agility
-
-Motivated by long deployment lifetimes, the AKE is required to support crypto agility, including modularity of COSE crypto algorithms and negotiation of preferred crypto algorithms for OSCORE and the AKE. The AKE negotiation must be protected against downgrade attacks.
-
-
-## AKE for OSCORE {#AKE-OSCORE}
-
-In order to be suitable for OSCORE, at the end of the AKE protocol run the two parties must agree on (see Section 3.2 of {{RFC8613}}):
-
-* a shared secret (OSCORE Master Secret) with PFS and a good amount of randomness. (The term "good amount of randomness" is borrowed from {{HKDF}} to signify not necessarily uniformly distributed randomness.)
-
-* identifiers providing a hint to the receiver of what security context to use when decrypting the message (OSCORE Sender IDs of peer endpoints), arbitrarily short
-
-* COSE algorithms to use with OSCORE
-
-Moreover, the AKE must support the same transport as OSCORE, in particular any protocol where CoAP can be transported.
+OSCORE {{RFC8613}} is a lightweight communication security protocol providing end-to-end security on application layer for constrained IoT settings (cf. {{RFC7228}}). OSCORE lacks a matching authenticated key exchange protocol (AKE).
 
 To ensure that the AKE is efficient for the expected applications of OSCORE, we list the relevant public specifications of technologies where OSCORE is included:
 
@@ -130,9 +93,58 @@ Other industry fora which plan to use OSCORE:
 
 * Fairhair Alliance has defined an architecture {{Fairhair}} which adopts OSCORE for multicast, but it is not clear whether the architecture will support unicast OSCORE.
 
-* Open Connectivity Foundation (OCF) has been actively involved in the OSCORE development for the purpose of deploying OSCORE, but no public reference is available since OCF only references RFCs. We believe that these OSCORE consumers reflect similar levels of constraints on the devices and networks in question. 
+* Open Connectivity Foundation (OCF) has been actively involved in the OSCORE development for the purpose of deploying OSCORE, but no public reference is available since OCF only references RFCs. We believe that these OSCORE consumers reflect similar levels of constraints on the devices and networks in question.
 
-The solution will presumably be useful in other scenarios as well since a low security overhead improves the overall performance, but we do not require the solution to necessarily be applicable anywhere else.
+This document compiles the requirements for the AKE for OSCORE.
+It summarizes the security requirements that are expected from such an AKE, as well as the main characteristics of the environments where the solution is envisioned to be deployed.
+The solution will presumably be useful in other scenarios as well since a low security overhead improves the overall performance.
+
+# Problem description {#prob-desc}
+
+## Credentials
+
+IoT deployments differ in terms of what credentials can be supported. Currently many systems use pre-shared keys (PSK) provisioned out of band, for various reasons. PSK are often used in a first deployment because of its perceived simplicity. The use of PSK allows for protection of communication without major additional security processing, and also enables the use of symmetric crypto algorithms only, reducing the implementation and computational effort in the endpoints.
+
+However, PSK-based provisioning has inherent weaknesses. There has been reports of massive breaches of PSK provisioning systems, and as many systems use PSK without perfect forward secrecy (PFS) they are vulnerable to passive pervasive monitoring. The security of these systems can be improved by adding PFS through an AKE authenticated by the provisioned PSK.
+
+Shared keys can alternatively be established in the endpoints using an AKE protocol authenticated with asymmetric public keys instead of symmetric secret keys. Raw public keys (RPK) can be provisioned with the same scheme as PSKs, which allows a more relaxed trust model since RPKs need not be secret.
+
+As a third option, by running the same asymmetric key AKE with public key certificates instead of RPK, key provisioning can be omitted, leading to a more automated bootstrapping procedure.
+
+These steps provide an example of a migration path in limited scoped steps from simple to more robust security bootstrapping and provisioning schemes where each step improves the overall security and/or simplicity of deployment of the IoT system, although not all steps are necessarily feasible for the most constrained settings.
+
+In order to allow for these different schemes, the AKE must support PSK, RPK and certificate-based authentication.
+
+Bandwidth is a scarce resource in constrained-node networks.
+To minimize the bandwidth consumption it is therefore desirable to support transporting the certificates by reference rather than by value.
+Considering the wide variety of deployments the AKE must support different schemes for transporting and identifying credentials, see Section 2 of {{I-D.ietf-cose-x509}}.
+
+The common lack of a user interface in constrained devices leads to various credential provisioning schemes.
+The use of RPKs may be appropriate for the authentication of the AKE initiator but not for the AKE responder.
+The AKE must support different credentials for authentication in different directions of the AKE run, e.g. certificate-based authentication for the initiating endpoint and RPK-based authentication for the responding endpoint.
+
+## Identity Protection
+
+Transporting identities as part of the AKE run is a necessity in order to provide strong mutual authentication.
+In the case of constrained devices, the identity may contain sensitive information on the manufacturer of the device, the batch, default firmware version...
+Protecting the identities from passive and active attacks is important from the privacy point of view.
+The AKE is required to support identity protection of one of the peers in the AKE run in the case of public key identities, or the protection of the PSK identifier in the case of PSK-based authentication.
+
+## Crypto Agility
+
+Motivated by long deployment lifetimes, the AKE is required to support crypto agility, including modularity of COSE crypto algorithms and negotiation of preferred crypto algorithms for OSCORE and the AKE. The AKE negotiation must be protected against downgrade attacks.
+
+## AKE for OSCORE {#AKE-OSCORE}
+
+In order to be suitable for OSCORE, at the end of the AKE protocol run the two parties must agree on (see Section 3.2 of {{RFC8613}}):
+
+* a shared secret (OSCORE Master Secret) with PFS and a good amount of randomness. (The term "good amount of randomness" is borrowed from {{HKDF}} to signify not necessarily uniformly distributed randomness.)
+
+* identifiers providing a hint to the receiver of what security context to use when decrypting the message (OSCORE Sender IDs of peer endpoints), arbitrarily short
+
+* COSE algorithms to use with OSCORE
+
+Moreover, the AKE must support the same transport as OSCORE, in particular any protocol where CoAP can be transported.
 
 
 ##Lightweight {#lw}
@@ -162,13 +174,40 @@ While the large variety of settings and capabilities of the devices and networks
 
 LoRaWAN employs unlicensed radio frequency bands in the 868MHz ISM band, in Europe regulated by ETSI EN 300 220. For LoRaWAN the most relevant metric is the Time-on-Air, which determines the back-off times and can be used an indicator to calculate energy consumption. LoRaWAN is legally required to use a 1% (or smaller) duty cycle, a payload split into two fragments instead of one increases the time to complete the sending of this payload by at least 10,000%. The use of an AKE for providing end-to-end security on application layer need to comply with the duty cycle. One relevant benchmark is performance in low coverage with Data Rates 0-2 corresponding to a packet size of 51 bytes {{LoRaWAN}}. While larger frame sizes are also defined, their use depend on good radio conditions. Some libraries/providers only support 51 bytes packet size.
 
-
 ### 6TiSCH
 
-For 6TiSCH specifically, as a time-sliced network, bytes of the wire (or rather, the quantization into frame count) is particularly noteworthy, since more frames contribute to congestion for spectrum (and concomitant error rates) in a non-linear way, especially in scenarios when large numbers of independent nodes are attempting to execute an AKE to join a network.
+6TiSCH operates in the 2.4 GHz unlicensed frequency band and uses hybrid Time Division/Frequency Division multiple access (TDMA/FDMA).
+Nodes in a 6TiSCH network form a mesh.
+The basic unit of communication, a cell, is uniquely defined by its time and frequency offset in the communication schedule matrix.
+Cells can be assigned for communication to a pair of nodes in the mesh and so be collision-free, or shared by multiple nodes, for example during network formation.
+In case of shared cells, some collision-resolution scheme such as slotted-Aloha is employed.
+Nodes exchange frames which are at most 127-bytes long, including the link-layer headers.
+To preserve energy, the schedule is typically computed in such a way that nodes switch on their radio below 1% of the time ("radio duty cycle").
+A 6TiSCH mesh can be several hops deep.
+In typical use cases considered by the 6TiSCH working group, a network that is 2-4 hops deep is commonplace; a network which is more than 8 hops deep is not common.
 
-The available size for key exchange messages depends the topology of the network and other parameters. One benchmark which is relevant for studying AKE is the network formation setting. For a 6TiSCH production network 5 hops deep in a network formation setting, the available CoAP overhead to avoid fragmentation is 47/45 bytes (uplink/downlink) {{AKE-for-6TiSCH}}.
- 
+#### Bytes on the wire
+
+Increasing the number of bytes on the wire in a protocol message has an important effect on the 6TiSCH network in case the fragmentation is triggered.
+More fragments contribute to congestion of shared cells (and concomitant error rates) in a non-linear way.
+
+The available size for key exchange messages depends on the topology of the network, whether the message is traveling uplink or downlink, and other stack parameters.
+A key performance indicator for a 6TiSCH network is "network formation", i.e. the time it takes from switching on all devices, until the last device has executed the AKE and securely joined.
+As an example, given the size limit on the frames and taking into account the different headers (including link-layer security), if a 6TiSCH network is 5 hops deep, the maximum CoAP payload size to avoid fragmentation is 47/45 bytes (uplink/downlink) {{AKE-for-6TiSCH}}.
+
+#### Time
+
+Given the slotted nature of 6TiSCH, the number of bytes in a frame has insignificant impact on latency, but the number of frames has.
+The relevant metric for studying AKE is the network formation time, which implies parallel AKE runs among nodes that are attempting to join the network.
+Network formation time directly affects the time installers need to spend on site at deployment time.
+
+#### Round trips and number of messages
+
+Given the mesh nature of the 6TiSCH network, and given that each message may travel several hops before reaching its destination, it is highly desirable to minimize the number of round trips to reduce latency.
+
+#### Power
+
+From the power consumption point of view, it is more favorable to send a small number of large frames than a larger number of short frames.
 
 ### NB-IoT {#nb-iot}
 
@@ -188,7 +227,7 @@ There are trade-offs between "few messages" and "few frames"; if overhead is spr
 
 * The AKE must support PSK, RPK and certificate based authentication and crypto agility, be 3-pass and support the same transport as OSCORE. It is desirable to support different schemes for transporting and identifying credentials.
 
-* After the AKE run, the peers must agree on a shared secret with PFS and good amount of randomness, peer identifiers (potentially short), and COSE algorithms to use.
+* After the AKE run, the peers must be mutually authenticated, agree on a shared secret with PFS and good amount of randomness, peer identifiers (potentially short), and COSE algorithms to use.
 
 * The AKE must reuse CBOR, CoAP and COSE primitives and algorithms for low code complexity of a combined OSCORE and AKE implementation.
 
@@ -200,7 +239,6 @@ There are trade-offs between "few messages" and "few frames"; if overhead is spr
 This document compiles the requirements for an AKE and provides some related security considerations.
 
 The AKE must provide the security properties expected of IETF protocols, e.g., providing confidentiality protection, integrity protection, and authentication with strong work factor.
-
 
 # IANA Considerations  {#iana}
 
