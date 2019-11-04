@@ -164,7 +164,7 @@ The AKE is required to support identity protection of one of the peers in the AK
 
 ## Crypto Agility
 
-Motivated by long deployment lifetimes, the AKE is required to support crypto agility, including modularity of COSE crypto algorithms and negotiation of preferred crypto algorithms for OSCORE and the AKE. The AKE negotiation must be protected against downgrade attacks.
+Motivated by long deployment lifetimes, the AKE is required to support crypto agility, including modularity of COSE crypto algorithms and negotiation of preferred crypto algorithms for OSCORE and the AKE. The AKE should support negotiation of the all COSE algorithms that OSCORE supports. The AKE negotiation must be protected against downgrade attacks.
 
 
 ## Mutual Authentication {#mutual-auth}
