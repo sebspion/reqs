@@ -157,15 +157,16 @@ The AKE may be transported over other transport than CoAP. In this case the unde
 
 ##Lightweight {#lw}
  
-As motivated in {{AKE-OSCORE}} we target an AKE which is efficiently deployable in 6TiSCH multi-hop networks, LoRaWAN networks and NB-IoT networks. The desire is to optimize the AKE to be 'as lightweight as reasonably achievable' in these environments, where 'lightweight' refers to:
+As motivated in {{intro}} we target an AKE which is efficiently deployable in 6TiSCH multi-hop networks, LoRaWAN networks and NB-IoT networks. The desire is to optimize the AKE to be 'as lightweight as reasonably achievable' in these environments, where 'lightweight' refers to:
 
 * resource consumption, measured by bytes on the wire, wall-clock time and number of round trips to complete, or power consumption
 * the amount of new code required on end systems which already have an
 OSCORE stack
 
-These properties need to be considered in the context of the use of an existing CoAP/OSCORE stack in the targeted networks. However, some properties may be difficult to evaluate for a given protocol, for example, because they depend on the radio conditions or other simultaneous network traffic. Therefore these properties should be taken as input for identifying plausible protocol metrics that can be more easily measured and compared between protocols.
 
-Per 'bytes on the wire', it is desirable for these AKE messages to fit into the MTU size of these protocols; and if not possible, within as few frames as possible, since using multiple MTUs can have significant costs in terms of time and power.
+These properties need to be considered in the context of the use of an existing CoAP/OSCORE stack in the targeted networks and technologies. Some properties are difficult to evaluate for a given protocol, for example, because they depend on the radio conditions or other simultaneous network traffic.  Additionally, these properties are not independent. Therefore the properties listed here should be taken as input for identifying plausible protocol metrics that can be more easily measured and compared between protocols.
+
+Per 'bytes on the wire', it is desirable for the AKE messages to fit into the MTU size of these protocols; and if not possible, within as few frames as possible, since using multiple MTUs can have significant costs in terms of time and power.
 
 Per 'time', it is desirable for the AKE message exchange(s) to complete in a reasonable amount of time, both for a single uncongested exchange and when multiple exchanges are running in an interleaved fashion, like e.g. in a "network formation" setting when multiple devices connect for the first time. This latency may not be a linear function depending on congestion and the specific radio technology used. As these are relatively low data rate networks, the latency contribution due to computation is in general not expected to be dominant.
 
