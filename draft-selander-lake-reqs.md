@@ -251,7 +251,7 @@ From the power consumption point of view, it is more favorable to send a small n
 * operations in extreme coverage conditions,
 * device battery life of 10 years or more,
 * low device complexity and cost, and
-* a high system capacity of thousands of connected devices per square kilometer.
+* a high system capacity of millions of connected devices per square kilometer.
 
 NB-IoT achieves these design objectives by:
 
@@ -267,9 +267,9 @@ The number of bytes on the wire in a protocol message has a direct effect on the
 
 #### Time {#nbiot-time} 
 
-Coverage signficantly impacts the available bit rate and thereby the time for transmitting a message, and there is also a difference between downlink and uplink transmissions (see {{nbiot-power}}). The transmission time for the message is essentially proportional to the number of bytes.
+Coverage significantly impacts the available bit rate and thereby the time for transmitting a message, and there is also a difference between downlink and uplink transmissions (see {{nbiot-power}}). The transmission time for the message is essentially proportional to the number of bytes.
 
-Since NB-IoT is operating in licensed spectrum, in contrast to e.g. LoRaWAN, the packets on the radio interface can be transmitted back-to-back, so the time before sending OSCORE protected data is limited by the number of round trips/messages of the AKE.
+Since NB-IoT is operating in licensed spectrum, in contrast to e.g. LoRaWAN, the packets on the radio interface can be transmitted back-to-back, so the time before sending OSCORE protected data is limited by the number of round trips/messages of the AKE and not by a duty cycle.
 
 
 #### Round trips and number of messages {#nbiot-rtt} 
@@ -279,9 +279,9 @@ As indicated in {{nbiot-time}}, the number of messages and round-trips is one li
 
 #### Power {#nbiot-power} 
 
-Since NB-IoT is operating in licensed spectrum, the device is allowed to transmit at a high power, which has a large impact on the energy consumption in particular in bad coverage.
+Since NB-IoT is operating in licensed spectrum, the device is allowed to transmit at a relatively high power, which has a large impact on the energy consumption in particular in bad coverage.
 
-The benchmark for NB-IoT energy consumption is based on the same computational model as was used by 3GPP in the design of this radio layer. The device power consumption is assumed to be 500mW for transmission and 80mW for reception. Power consumption for "light sleep" (~ 3mW) and ”deep sleep” (~ 0.015mW) are omitted. The bitrates (uplink/downlink) are assumed to be 28/170 kbps for good coverage and 0,37/2,5 kbps for bad coverage.
+The benchmark for NB-IoT energy consumption is based on the same computational model as was used by 3GPP in the design of this radio layer {{}}. The device power consumption is assumed to be 500mW for transmission and 80mW for reception. Power consumption for "light sleep" (~ 3mW) and ”deep sleep” (~ 0.015mW) are negligible in comparison. The bitrates (uplink/downlink) are assumed to be 28/170 kbps for good coverage and 0,37/2,5 kbps for bad coverage.
 
 The energy consumption benchmark includes RRC Resume procedure for transition from RRC Inactive to RRC Connected, perform operation and returning RRC Inactive, see {{AKE-for-NB-IoT}}. The results show a high per-byte energy consumption for uplink transmissions in particular in bad coverage. Since the application decides about the device being initiator or responder in the AKE, the protocol cannot be tailored for a particular message being uplink or downlink. To perform well in both kind of applications the overall number of bytes of the protocol needs to be as low as possible. 
 
