@@ -142,7 +142,7 @@ However, PSK-based provisioning has inherent weaknesses. There has been reports 
 
 Shared keys can alternatively be established in the endpoints using an AKE protocol authenticated with asymmetric public keys instead of symmetric secret keys. Raw public keys (RPK) can be provisioned with the same scheme as PSKs, which allows for a more relaxed trust model since RPKs need not be secret.
 
-As a third option, by running the same asymmetric key AKE with public key certificates instead of RPKs, key provisioning can be omitted, leading to a more automated bootstrapping procedure.
+As a third option, by using a public key infrastructure and running an asymmetric key AKE with public key certificates instead of RPKs, key provisioning can be omitted, leading to a more automated bootstrapping procedure.
 
 These steps provide an example of a migration path in limited scoped steps from simple to more robust security bootstrapping and provisioning schemes where each step improves the overall security and/or simplicity of deployment of the IoT system, although not all steps are necessarily feasible for the most constrained settings.
 
