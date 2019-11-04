@@ -175,7 +175,7 @@ The AKE cannot rely on messages being exchanged in both directions after the AKE
 
 
 
-##Lightweight {#lw}
+## Lightweight {#lw}
  
 We target an AKE which is efficiently deployable in 6TiSCH multi-hop networks, LoRaWAN networks and NB-IoT networks. The desire is to optimize the AKE to be 'as lightweight as reasonably achievable' in these environments, where 'lightweight' refers to:
 
@@ -329,6 +329,18 @@ To summarize, even if it we are unable to give precise numbers for AKE frequency
 * reduces the time for network formation and AKE runs in challenging radio technologies,
 * allows devices to quickly re-establish security in case of reboots, and 
 * enables support for recommendations of frequent key renewal
+
+## Application Data
+
+In order to reduce round trips and number of messages, and in some cases also streamline processing, certain applications may want to transport application data within the AKE. 
+
+One example is the transport of third-party signed authorization information such as an access token or a voucher from initiator to responder or vice versa. Such a scheme could enable the party receiving the authorization information to make a decision about whether the party being authenticated is also authorized before the protocol is completed, and if not discontinue the protocol before it is complete, thereby saving time and message processing.
+
+Another example is the embedding of certificate enrolment request or a newly issued certificate.
+
+There are several considerations to make which needs to be addressed in the specification of the AKE. For example: The available protection of the application data in the AKE depend, among other things, on which protocol message the application data is carried in. Authorization information may reveal privacy sensitive information. 
+
+The AKE must support the transport of application data within the protocol message and provide the necessary instructions for how to use this mechanism and its security and privacy properties.
 
 
 
