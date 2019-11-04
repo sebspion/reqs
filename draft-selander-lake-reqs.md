@@ -303,8 +303,6 @@ The benchmark for NB-IoT energy consumption is based on the same computational m
 The results {{AKE-for-NB-IoT}} show a high per-byte energy consumption for uplink transmissions, in particular in bad coverage. Given that the application decides about the device being initiator or responder in the AKE, the protocol cannot be tailored for a particular message being uplink or downlink. To perform well in both kind of applications the overall number of bytes of the protocol needs to be as low as possible. 
 
 
-
-
 ### Discussion {#disc}
 
 While "as small protocol messages as possible" does not lend itself to a sharp boundary threshold, "as few protocol messages as possible" does and is relevant in all settings above.
@@ -314,6 +312,23 @@ The penalty is high for not fitting into the frame sizes of 6TiSCH and LoRaWAN n
 There are trade-offs between "few messages" and "few frames"; if overhead is spread out over more messages such that each message fits into a particular frame this may reduce the overall power consumption. While it may be possible to engineer such a solution for a particular radio technology and signature algorithm, the benefits in terms of fewer messages/round trips in general and for NB-IoT in particular (see {{nb-iot}}) are considered more important than optimizing for a specific scenario. Hence an optimal AKE protocol has 3 messages and each message fits into as few frames as possible, ideally 1 frame per message.
 
 The difference between uplink and downlink performance should not be engineered into the protocol since it cannot be assumed that a particular protocol message will be sent uplink or downlink.
+
+### AKE frequency
+
+One question that has been asked in the context of lightweightness is: - How often is the AKE executed? While it may be impossible to give a precise answer there are other perspectives to this question.
+
+1. For some use cases, already one execution of the AKE is too heavy, for example, because 
+   * there are a number of parallel executions of the AKE in a network formation setting which loads down the network, or
+   * the duty cycle makes the completion time too long for even one run of the protocol.
+
+2. If a device reboots it may not be able to recover the security context, e.g. due to lack of persistent storage, and is required to establish a new security context for which an AKE is preferred. Reboot frequency may be difficult to predict in general.
+
+3. To limit the impact of a key compromise, BSI, NIST and ANSSI and other organizations recommend in other contexts frequent renewal of keys by means of Diffie-Hellman key exchange.
+
+To summarize, even if it we are unable to give precise numbers for AKE frequency, a lightweight AKE 
+* reduces the time for network formation and AKE runs in challenging radio technologies,
+* allows devices to quickly re-establish security in case of reboots, and 
+* enables support for recommendations of frequent key renewal
 
 
 
