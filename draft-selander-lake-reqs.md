@@ -166,7 +166,7 @@ The AKE is required to support identity protection of one of the peers in the AK
 
 Motivated by long deployment lifetimes, the AKE is required to support crypto agility, including modularity of COSE crypto algorithms and negotiation of preferred crypto algorithms for OSCORE and the AKE. The AKE should support negotiation of the all COSE algorithms that OSCORE supports. The AKE negotiation must be protected against downgrade attacks.
 
-The AKE shall limit the impact of key compromise by providing Perfect Forward Secrecey and compromise of the long-term keys does not enable a passive attacker to compromise future session keys. This two properties can be achieved with a ephemeral Diffie-Hellman key exchange. The AKE shall Key provide Key Compromise Impersonation (KCI) resistance.
+Compromise of the long-term keys shall not enable an attacker to compromise past session keys (Perfect Forward Secrecy) and shall not enable an passive attacker to compromise future session keys. This two properties can be achieved with a ephemeral Diffie-Hellman key exchange. The AKE shall provide Key Compromise Impersonation (KCI) resistance.
 
 The AKE shall protect against misbinding attacks and reflection attacks such as the recently published Selfie attack on TLS 1.3.
 
