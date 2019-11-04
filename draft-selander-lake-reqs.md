@@ -150,18 +150,18 @@ The AKE must support different credentials for authentication in different direc
 
 Transporting identities as part of the AKE run is a necessity in order to provide strong mutual authentication. In the case of constrained devices, the identity may contain sensitive information on the manufacturer of the device, the batch, default firmware version, etc. Protecting the identities from passive and active attacks is important from the privacy point of view.
 
-The AKE is required to support identity protection of one of the peers in the AKE run in the case of public key identities, or the protection of the PSK identifier in the case of PSK-based authentication.
+The AKE is required to support identity protection of one of the peers in the AKE run in the case of public key identities, or the protection of the PSK identifier in the case of PSK-based authentication. Note that encryption of  PSK identifier is first possible in the third AKE message, which implies that at least four protocol messages are required for authentication of responder in case of symmetric key authentication (see {{mutual-auth}}).
 
 ## Crypto Agility
 
 Motivated by long deployment lifetimes, the AKE is required to support crypto agility, including modularity of COSE crypto algorithms and negotiation of preferred crypto algorithms for OSCORE and the AKE. The AKE negotiation must be protected against downgrade attacks.
 
 
-## Mutual Authentication
+## Mutual Authentication {#mutual-auth}
 
 The AKE must provide mutual authentication (injective agreement) during the protocol run. 
 
-The AKE cannot rely on messages being exchanged in both directions after the AKE has completed, because CoAP/OSCORE messages may not have a response {{RFC7967}}. Furthermore, there is no assumption of dependence between CoAP client/server and initiator/responder roles, and an OSCORE context may be used with CoAP client and server roles interchanged as is done e.g. in {{LwM2M}}.
+The AKE cannot rely on messages being exchanged in both directions after the AKE has completed, because CoAP/OSCORE requests may not have a response {{RFC7967}}. Furthermore, there is no assumption of dependence between CoAP client/server and AKE initiator/responder roles, and an OSCORE context may be used with CoAP client and server roles interchanged as is done e.g. in {{LwM2M}}.
 
 
 
@@ -320,6 +320,14 @@ The AKE must provide the security properties expected of IETF protocols, e.g., p
 # IANA Considerations  {#iana}
 
 None.
+
+
+# Acknowledgments
+{: numbered="no"}
+
+The authors want to thank Karthik Bhargavan, Michael Richardson and Claes Tidestav for providing valuable input.
+
+
 
 --- back
 
