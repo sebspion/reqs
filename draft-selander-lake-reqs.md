@@ -160,7 +160,7 @@ The AKE must support different credentials for authentication in different direc
 
 Transporting identities as part of the AKE run is a necessity in order to provide strong mutual authentication. In the case of constrained devices, the identity may contain sensitive information on the manufacturer of the device, the batch, default firmware version, etc. Protecting the identities from passive and active attacks is important from the privacy point of view.
 
-The AKE is required to support identity protection of one of the peers in the AKE run in the case of public key identities, or the protection of the PSK identifier in the case of PSK-based authentication. Note that encryption of the PSK identifier is first possible in the third AKE message, which implies that at least four protocol messages are required for authentication of responder in case of symmetric key authentication (see {{mutual-auth}}).
+The AKE is required to support identity protection against active attackers of one of the peers and protection against passive attackers of the other peer in the case of public key identities, or the protection of the PSK identifier in the case of PSK-based authentication. The AKE should allow the most sentive idenity to recieve the strongest protection. Note that encryption of the PSK identifier is first possible in the third AKE message, which implies that at least four protocol messages are required for authentication of responder in case of symmetric key authentication (see {{mutual-auth}}).
 
 ## Crypto Agility and Security Properties
 
