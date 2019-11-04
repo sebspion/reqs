@@ -29,6 +29,11 @@ author:
         name: John Preuß Mattsson
         org: Ericsson AB
         email: john.mattsson@ericsson.com
+      -
+        ins: D. Garcia
+        name: Dan Garcia-Carrillo
+        org: Odin Solutions S.L.
+        email: dgarcia@odins.es
 
 
 normative:
@@ -196,21 +201,28 @@ While the large variety of settings and capabilities of the devices and networks
 
 ### LoRaWAN
 
-LoRaWAN employs unlicensed radio frequency bands in the 868MHz ISM band, in Europe regulated by ETSI EN 300 220. For LoRaWAN the most relevant metric is the Time-on-Air, which determines the back-off times and can be used an indicator to calculate energy consumption. LoRaWAN is legally required to use a 1% (or smaller) duty cycle, a payload split into two fragments instead of one increases the time to complete the sending of this payload by at least 10,000%. The use of an AKE for providing end-to-end security on application layer need to comply with the duty cycle. One relevant benchmark is performance in low coverage with Data Rates 0-2 corresponding to a packet size of 51 bytes {{LoRaWAN}}. While larger frame sizes are also defined, their use depend on good radio conditions. Some libraries/providers only support 51 bytes packet size.
+LoRaWAN employs unlicensed radio frequency bands in the 868MHz ISM band. As a case in point, we focus here on deployment in Europe, where this is regulated by ETSI EN 300 220. For LoRaWAN the most relevant metric is the Time-on-Air, which determines the back-off times and can be used as an indicator to calculate energy consumption. LoRaWAN is legally required to use a duty cycle with values such as 0.1%, 1% and 10% depending on the sub-band that is being used, leading to a payload split into fragments interleaved with back-off times. For Europe, the duty cycle is 1% (or smaller). Although there are exceptions from the use of duty cycle, the use of an AKE for providing end-to-end security on application layer need to comply with the duty cycle. 
 
 #### Bytes on the wire
+
+LoRaWAN has a variable MTU depending on the Spreading Factor (SF). The higher the spreading factor, the higher distances can be achieved and/or better reception. LoRaWAN has a header size of 13 bytes, to which we have to add the maximum recommended payload depending on the SF used. If the coverage and distance allows it, with SF7 -- corresponding to higher data rates -- the maximum payload is 222 bytes. For a SF12 -- and low data rates -- the maximum payload is 51 bytes. 
+
+The benchmark used here is Data Rates 0-2 corresponding to a packet size of 51 bytes {{LoRaWAN}}. The use of larger frame size depend on good radio conditions which are not always present. Some libraries/providers only support 51 bytes packet size.
 
 
 #### Time
 
+The time it takes to send a message over the air in LoRaWAN can be calculated as a function of the different parameters of the communication. These are the Spreading Factor (SF), the message size, the channel, bandwidth, coding rate, etc. An important feature of LoRaWAN is the duty cycle limitation due to the use of the ISM band. A duty cycle of 1% implies that the time to complete a fragmentation of the payload increases by at least 10,000%. This limitation determines how long time the device will have to wait for next use, which encourages the reduction of the message size as much as possible.
 
 
 #### Round trips and number of messages
 
+Considering the duty cycle of LoRaWAN and associated back-off times, the round trips and number of messages needs to be reduced as much as possible.
 
 
 #### Power
 
+The calculation of the power consumption in LoRaWAN is dependent on several factors, such as the spreading factor used and the length of the message sent, both having a clear dependency with the time it takes to transmit the message. The communication model (inherent to the different LoRaWAN classes of devices) also has an impact on the energy consumption, but overall the Time-on-Air is an important indication of the performance.
 
 
 ### 6TiSCH
