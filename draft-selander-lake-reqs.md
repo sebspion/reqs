@@ -37,6 +37,7 @@ normative:
 informative:
 
   RFC7228:
+  RFC7967:
   RFC8613:
   I-D.ietf-6tisch-minimal-security:
   I-D.ietf-lpwan-coap-static-context-hc:
@@ -155,6 +156,12 @@ The AKE is required to support identity protection of one of the peers in the AK
 
 Motivated by long deployment lifetimes, the AKE is required to support crypto agility, including modularity of COSE crypto algorithms and negotiation of preferred crypto algorithms for OSCORE and the AKE. The AKE negotiation must be protected against downgrade attacks.
 
+
+## Mutual Authentication
+
+The AKE must provide mutual authentication (injective agreement) during the protocol run. 
+
+The AKE cannot rely on messages being exchanged in both directions after the AKE has completed, because CoAP/OSCORE messages may not have a response {{RFC7967}}. Furthermore, there is no assumption of dependence between CoAP client/server and initiator/responder roles, and an OSCORE context may be used with CoAP client and server roles interchanged as is done e.g. in {{LwM2M}}.
 
 
 
