@@ -146,7 +146,7 @@ As a third option, by running the same asymmetric key AKE with public key certif
 
 These steps provide an example of a migration path in limited scoped steps from simple to more robust security bootstrapping and provisioning schemes where each step improves the overall security and/or simplicity of deployment of the IoT system, although not all steps are necessarily feasible for the most constrained settings.
 
-In order to allow for these different schemes, the AKE must support PSK, RPK and certificate-based authentication.
+In order to allow for these different schemes, the AKE must support PSK (shared between two nodes), RPK and certificate-based authentication.
 
 Bandwidth is a scarce resource in constrained-node networks.
 To minimize the bandwidth consumption it is therefore desirable to support transporting the certificates by reference rather than by value.
