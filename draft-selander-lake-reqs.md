@@ -52,6 +52,11 @@ informative:
     target: https://github.com/EricssonResearch/EDHOC/blob/master/docs/NB%20IoT%20power%20consumption.xlsx
     title: AKE for NB-IoT
     date: March 2019
+    
+  NB-IoT-battery-life-evaluation:
+    target: http://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_AH/NR_AH_1701/Docs//R1-1701044.zip
+    title: "On mMTC, NB-IoT and eMTC battery life evaluation"
+    date: Jan 2017          
 
   HKDF:
     target: https://eprint.iacr.org/2010/264.pdf
@@ -281,7 +286,7 @@ As indicated in {{nbiot-time}}, the number of messages and round-trips is one li
 
 Since NB-IoT is operating in licensed spectrum, the device is allowed to transmit at a relatively high power, which has a large impact on the energy consumption in particular in bad coverage.
 
-The benchmark for NB-IoT energy consumption is based on the same computational model as was used by 3GPP in the design of this radio layer {{}}. The device power consumption is assumed to be 500mW for transmission and 80mW for reception. Power consumption for "light sleep" (~ 3mW) and ”deep sleep” (~ 0.015mW) are negligible in comparison. The bitrates (uplink/downlink) are assumed to be 28/170 kbps for good coverage and 0,37/2,5 kbps for bad coverage.
+The benchmark for NB-IoT energy consumption is based on the same computational model as was used by 3GPP in the design of this radio layer {{NB-IoT-battery-life-evaluation}}. The device power consumption is assumed to be 500mW for transmission and 80mW for reception. Power consumption for "light sleep" (~ 3mW) and ”deep sleep” (~ 0.015mW) are negligible in comparison. The bitrates (uplink/downlink) are assumed to be 28/170 kbps for good coverage and 0,37/2,5 kbps for bad coverage.
 
 The energy consumption benchmark includes RRC Resume procedure for transition from RRC Inactive to RRC Connected, perform operation and returning RRC Inactive, see {{AKE-for-NB-IoT}}. The results show a high per-byte energy consumption for uplink transmissions in particular in bad coverage. Since the application decides about the device being initiator or responder in the AKE, the protocol cannot be tailored for a particular message being uplink or downlink. To perform well in both kind of applications the overall number of bytes of the protocol needs to be as low as possible. 
 
