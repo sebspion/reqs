@@ -119,9 +119,9 @@ The solution will presumably be useful in other scenarios as well since a low se
 
 ## AKE for OSCORE {#AKE-OSCORE}
 
-The rationale for designing this protocol is that OSCORE is lacking a matching AKE. OSCORE was designed for lightweight RESTful operations for example by minimizing the overhead, and applying the protection to the application layer, thereby limiting the data being encrypted and integrity protected for the other endpoint togit add a minimum. Moreover, OSCORE was tailored for use with lightweight primitives that are likely to be implemented in the device, specifically CoAP, CBOR and COSE. The same properties must apply to the AKE.
+The rationale for designing this protocol is that OSCORE is lacking a matching AKE. OSCORE was designed for lightweight RESTful operations for example by minimizing the overhead, and applying the protection to the application layer, thereby limiting the data being encrypted and integrity protected for the other endpoint. Moreover, OSCORE was tailored for use with lightweight primitives that are likely to be implemented in the device, specifically CoAP, CBOR and COSE. The same properties must apply to the AKE.
 
-In order to at all be suitable for OSCORE, at the end of the AKE protocol run the two parties must agree on (see Section 3.2 of {{RFC8613}}):
+In order to be suitable for OSCORE, at the end of the AKE protocol run the two parties must agree on (see Section 3.2 of {{RFC8613}}):
 
 * a shared secret (OSCORE Master Secret) with PFS and a good amount of randomness. (The term "good amount of randomness" is borrowed from {{HKDF}} to signify not necessarily uniformly distributed randomness.)
 
@@ -136,13 +136,13 @@ The AKE may be transported over other transport than CoAP. In this case the unde
 
 ## Credentials
 
-IoT deployments differ in terms of what credentials can be supported. Currently many systems use pre-shared keys (PSK) provisioned out of band, for various reasons. PSK are often used in a first deployment because of its perceived simplicity. The use of PSK allows for protection of communication without major additional security processing, and also enables the use of symmetric crypto algorithms only, reducing the implementation and computational effort in the endpoints.
+IoT deployments differ in terms of what credentials can be supported. Currently many systems use pre-shared keys (PSKs) provisioned out of band, for various reasons. PSKs are often used in a first deployment because of their perceived simplicity. The use of PSKs allows for protection of communication without major additional security processing, and also enables the use of symmetric crypto algorithms only, reducing the implementation and computational effort in the endpoints.
 
-However, PSK-based provisioning has inherent weaknesses. There has been reports of massive breaches of PSK provisioning systems, and as many systems use PSK without perfect forward secrecy (PFS) they are vulnerable to passive pervasive monitoring. The security of these systems can be improved by adding PFS through an AKE authenticated by the provisioned PSK.
+However, PSK-based provisioning has inherent weaknesses. There has been reports of massive breaches of PSK provisioning systems, and as many systems use PSKs without perfect forward secrecy (PFS) they are vulnerable to passive pervasive monitoring. The security of these systems can be improved by adding PFS through an AKE authenticated by the provisioned PSK.
 
-Shared keys can alternatively be established in the endpoints using an AKE protocol authenticated with asymmetric public keys instead of symmetric secret keys. Raw public keys (RPK) can be provisioned with the same scheme as PSKs, which allows a more relaxed trust model since RPKs need not be secret.
+Shared keys can alternatively be established in the endpoints using an AKE protocol authenticated with asymmetric public keys instead of symmetric secret keys. Raw public keys (RPK) can be provisioned with the same scheme as PSKs, which allows for a more relaxed trust model since RPKs need not be secret.
 
-As a third option, by running the same asymmetric key AKE with public key certificates instead of RPK, key provisioning can be omitted, leading to a more automated bootstrapping procedure.
+As a third option, by running the same asymmetric key AKE with public key certificates instead of RPKs, key provisioning can be omitted, leading to a more automated bootstrapping procedure.
 
 These steps provide an example of a migration path in limited scoped steps from simple to more robust security bootstrapping and provisioning schemes where each step improves the overall security and/or simplicity of deployment of the IoT system, although not all steps are necessarily feasible for the most constrained settings.
 
@@ -160,7 +160,7 @@ The AKE must support different credentials for authentication in different direc
 
 Transporting identities as part of the AKE run is a necessity in order to provide strong mutual authentication. In the case of constrained devices, the identity may contain sensitive information on the manufacturer of the device, the batch, default firmware version, etc. Protecting the identities from passive and active attacks is important from the privacy point of view.
 
-The AKE is required to support identity protection of one of the peers in the AKE run in the case of public key identities, or the protection of the PSK identifier in the case of PSK-based authentication. Note that encryption of  PSK identifier is first possible in the third AKE message, which implies that at least four protocol messages are required for authentication of responder in case of symmetric key authentication (see {{mutual-auth}}).
+The AKE is required to support identity protection of one of the peers in the AKE run in the case of public key identities, or the protection of the PSK identifier in the case of PSK-based authentication. Note that encryption of the PSK identifier is first possible in the third AKE message, which implies that at least four protocol messages are required for authentication of responder in case of symmetric key authentication (see {{mutual-auth}}).
 
 ## Crypto Agility
 
@@ -177,7 +177,7 @@ The AKE cannot rely on messages being exchanged in both directions after the AKE
 
 ##Lightweight {#lw}
  
-As motivated in {{intro}} we target an AKE which is efficiently deployable in 6TiSCH multi-hop networks, LoRaWAN networks and NB-IoT networks. The desire is to optimize the AKE to be 'as lightweight as reasonably achievable' in these environments, where 'lightweight' refers to:
+We target an AKE which is efficiently deployable in 6TiSCH multi-hop networks, LoRaWAN networks and NB-IoT networks. The desire is to optimize the AKE to be 'as lightweight as reasonably achievable' in these environments, where 'lightweight' refers to:
 
 * resource consumption, measured by bytes on the wire, wall-clock time and number of round trips to complete, or power consumption
 * the amount of new code required on end systems which already have an
@@ -201,13 +201,13 @@ While the large variety of settings and capabilities of the devices and networks
 
 ### LoRaWAN
 
-LoRaWAN employs unlicensed radio frequency bands in the 868MHz ISM band. As a case in point, we focus here on deployment in Europe, where this is regulated by ETSI EN 300 220. For LoRaWAN the most relevant metric is the Time-on-Air, which determines the back-off times and can be used as an indicator to calculate energy consumption. LoRaWAN is legally required to use a duty cycle with values such as 0.1%, 1% and 10% depending on the sub-band that is being used, leading to a payload split into fragments interleaved with back-off times. For Europe, the duty cycle is 1% (or smaller). Although there are exceptions from the use of duty cycle, the use of an AKE for providing end-to-end security on application layer need to comply with the duty cycle. 
+LoRaWAN employs unlicensed radio frequency bands in the 868MHz ISM band. As a case in point, we focus here on deployment in Europe, where this is regulated by ETSI EN 300 220. For LoRaWAN the most relevant metric is the Time-on-Air, which determines the back-off times and can be used as an indicator to calculate energy consumption. LoRaWAN is legally required to use a duty cycle with values such as 0.1%, 1% and 10% depending on the sub-band that is being used, leading to a payload split into fragments interleaved with back-off times. For Europe, the duty cycle is 1% (or smaller). Although there are exceptions from the use of duty cycle, the use of an AKE for providing end-to-end security on application layer needs to comply with the duty cycle. 
 
 #### Bytes on the wire
 
 LoRaWAN has a variable MTU depending on the Spreading Factor (SF). The higher the spreading factor, the higher distances can be achieved and/or better reception. LoRaWAN has a header size of 13 bytes, to which we have to add the maximum recommended payload depending on the SF used. If the coverage and distance allows it, with SF7 -- corresponding to higher data rates -- the maximum payload is 222 bytes. For a SF12 -- and low data rates -- the maximum payload is 51 bytes. 
 
-The benchmark used here is Data Rates 0-2 corresponding to a packet size of 51 bytes {{LoRaWAN}}. The use of larger frame size depend on good radio conditions which are not always present. Some libraries/providers only support 51 bytes packet size.
+The benchmark used here is Data Rates 0-2 corresponding to a packet size of 51 bytes {{LoRaWAN}}. The use of larger frame size depend on good radio conditions which are not always present. Some libraries/providers only support 51-bytes packet size.
 
 
 #### Time
@@ -272,7 +272,7 @@ From the power consumption point of view, it is more favorable to send a small n
 
 NB-IoT achieves these design objectives by:
 
-* Reduced base band processing, memory and RF enabling low complexity device implementation. 
+* Reduced baseband processing, memory and RF enabling low complexity device implementation. 
 * A lightweight setup minimizing control signaling overhead to optimize power consumption.
 * In-band, guard-band, and stand-alone deployment enabling efficient use of spectrum and network infrastructure.
 
