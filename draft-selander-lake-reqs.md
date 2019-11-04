@@ -46,6 +46,11 @@ informative:
     target: https://docs.google.com/document/d/1wLoIexMLG3U9iYO5hzGzKjkvi-VDndQBbYRNsMUlh-k
     title: AKE for 6TiSCH
     date: March 2019
+    
+  AKE-for-NB-IoT:
+    target: https://github.com/EricssonResearch/EDHOC/blob/master/docs/NB%20IoT%20power%20consumption.xlsx
+    title: AKE for NB-IoT
+    date: March 2019
 
   HKDF:
     target: https://eprint.iacr.org/2010/264.pdf
@@ -125,9 +130,8 @@ The AKE must support different credentials for authentication in different direc
 
 ## Identity Protection
 
-Transporting identities as part of the AKE run is a necessity in order to provide strong mutual authentication.
-In the case of constrained devices, the identity may contain sensitive information on the manufacturer of the device, the batch, default firmware version...
-Protecting the identities from passive and active attacks is important from the privacy point of view.
+Transporting identities as part of the AKE run is a necessity in order to provide strong mutual authentication. In the case of constrained devices, the identity may contain sensitive information on the manufacturer of the device, the batch, default firmware version, etc. Protecting the identities from passive and active attacks is important from the privacy point of view.
+
 The AKE is required to support identity protection of one of the peers in the AKE run in the case of public key identities, or the protection of the PSK identifier in the case of PSK-based authentication.
 
 ## Crypto Agility
@@ -136,7 +140,7 @@ Motivated by long deployment lifetimes, the AKE is required to support crypto ag
 
 ## AKE for OSCORE {#AKE-OSCORE}
 
-In order to be suitable for OSCORE, at the end of the AKE protocol run the two parties must agree on (see Section 3.2 of {{RFC8613}}):
+In order to at all be suitable for OSCORE, at the end of the AKE protocol run the two parties must agree on (see Section 3.2 of {{RFC8613}}):
 
 * a shared secret (OSCORE Master Secret) with PFS and a good amount of randomness. (The term "good amount of randomness" is borrowed from {{HKDF}} to signify not necessarily uniformly distributed randomness.)
 
@@ -174,6 +178,21 @@ While the large variety of settings and capabilities of the devices and networks
 
 LoRaWAN employs unlicensed radio frequency bands in the 868MHz ISM band, in Europe regulated by ETSI EN 300 220. For LoRaWAN the most relevant metric is the Time-on-Air, which determines the back-off times and can be used an indicator to calculate energy consumption. LoRaWAN is legally required to use a 1% (or smaller) duty cycle, a payload split into two fragments instead of one increases the time to complete the sending of this payload by at least 10,000%. The use of an AKE for providing end-to-end security on application layer need to comply with the duty cycle. One relevant benchmark is performance in low coverage with Data Rates 0-2 corresponding to a packet size of 51 bytes {{LoRaWAN}}. While larger frame sizes are also defined, their use depend on good radio conditions. Some libraries/providers only support 51 bytes packet size.
 
+#### Bytes on the wire
+
+
+#### Time
+
+
+
+#### Round trips and number of messages
+
+
+
+#### Power
+
+
+
 ### 6TiSCH
 
 6TiSCH operates in the 2.4 GHz unlicensed frequency band and uses hybrid Time Division/Frequency Division multiple access (TDMA/FDMA).
@@ -209,9 +228,50 @@ Given the mesh nature of the 6TiSCH network, and given that each message may tra
 
 From the power consumption point of view, it is more favorable to send a small number of large frames than a larger number of short frames.
 
+
 ### NB-IoT {#nb-iot}
 
-For NB-IoT, in contrast to the other two technologies below, the radio bearers are not characterized by a fixed sized PDU. Concatenation, segmentation and reassembly are part of the service provided by the radio layer. Furthermore, since NB-IoT is operating in licensed spectrum, the packets on the radio interface can be transmitted back-to-back, so the time before sending OSCORE protected data is dependent on the number of round trips/messages of the AKE. An AKE providing challenge-response based mutual authentication requires at least three messages/one round trip before it is possible to encrypt traffic data between peers meeting for the first time. NB-IoT has a high per byte energy consumption component for uplink transfers, implying that those messages should be as small as possible.
+3GPP has specified Narrow-Band IoT (NB-IoT) for support of infrequent data transmission via user plane and via control plane. NB-IoT is built on cellular licensed spectrum at low data rates for the purpose of supporting:
+
+* operations in extreme coverage conditions,
+* device battery life of 10 years or more,
+* low device complexity and cost, and
+* a high system capacity of thousands of connected devices per square kilometer.
+
+NB-IoT achieves these design objectives by:
+
+* Reduced base band processing, memory and RF enabling low complexity device implementation. 
+* A lightweight setup minimizing control signaling overhead to optimize power consumption.
+* In-band, guard-band, and stand-alone deployment enabling efficient use of spectrum and network infrastructure.
+
+
+#### Bytes on the wire {#nbiot-bytes} 
+
+The number of bytes on the wire in a protocol message has a direct effect on the performance for NB-IoT. In contrast to LoRaWAN and 6TiSCH, the NB-IoT radio bearers are not characterized by a fixed sized PDU. Concatenation, segmentation and reassembly are part of the service provided by the NB-IoT radio layer. As a consequence, the byte count has a measurable impact on time and energy consumption for running the AKE.
+
+
+#### Time {#nbiot-time} 
+
+Coverage signficantly impacts the available bit rate and thereby the time for transmitting a message, and there is also a difference between downlink and uplink transmissions (see {{nbiot-power}}). The transmission time for the message is essentially proportional to the number of bytes.
+
+Since NB-IoT is operating in licensed spectrum, in contrast to e.g. LoRaWAN, the packets on the radio interface can be transmitted back-to-back, so the time before sending OSCORE protected data is limited by the number of round trips/messages of the AKE.
+
+
+#### Round trips and number of messages {#nbiot-rtt} 
+
+As indicated in {{nbiot-time}}, the number of messages and round-trips is one limiting factor for protocol completion time.
+ 
+
+#### Power {#nbiot-power} 
+
+Since NB-IoT is operating in licensed spectrum, the device is allowed to transmit at a high power, which has a large impact on the energy consumption in particular in bad coverage.
+
+The benchmark for NB-IoT energy consumption is based on the same computational model as was used by 3GPP in the design of this radio layer. The device power consumption is assumed to be 500mW for transmission and 80mW for reception. Power consumption for "light sleep" (~ 3mW) and ”deep sleep” (~ 0.015mW) are omitted. The bitrates (uplink/downlink) are assumed to be 28/170 kbps for good coverage and 0,37/2,5 kbps for bad coverage.
+
+The energy consumption benchmark includes RRC Resume procedure for transition from RRC Inactive to RRC Connected, perform operation and returning RRC Inactive, see {{AKE-for-NB-IoT}}. The results show a high per-byte energy consumption for uplink transmissions in particular in bad coverage. Since the application decides about the device being initiator or responder in the AKE, the protocol cannot be tailored for a particular message being uplink or downlink. To perform well in both kind of applications the overall number of bytes of the protocol needs to be as low as possible. 
+
+
+
 
 ### Discussion {#disc}
 
@@ -220,6 +280,8 @@ While "as small protocol messages as possible" does not lend itself to a sharp b
 The penalty is high for not fitting into the frame sizes of 6TiSCH and LoRaWAN networks. Fragmentation is not defined within these technologies so requires fragmentation scheme on a higher layer in the stack. With fragmentation increases the number of frames per message, each with its associated overhead in terms of power consumption and latency. Additionally the probability for errors increases, which leads to retransmissions of frames or entire messages that in turn increases the power consumption and latency.
 
 There are trade-offs between "few messages" and "few frames"; if overhead is spread out over more messages such that each message fits into a particular frame this may reduce the overall power consumption. While it may be possible to engineer such a solution for a particular radio technology and signature algorithm, the benefits in terms of fewer messages/round trips in general and for NB-IoT in particular (see {{nb-iot}}) are considered more important than optimizing for a specific scenario. Hence an optimal AKE protocol has 3 messages and each message fits into as few frames as possible, ideally 1 frame per message.
+
+The difference between uplink and downlink performance should not be engineered into the protocol since it cannot be assumed that a particular protocol message will be sent uplink or downlink.
 
 
 
