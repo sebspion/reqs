@@ -123,7 +123,7 @@ The rationale for designing this protocol is that OSCORE is lacking a matching A
 
 In order to be suitable for OSCORE, at the end of the AKE protocol run the two parties must agree on (see Section 3.2 of {{RFC8613}}):
 
-* a shared secret (OSCORE Master Secret) with PFS and a good amount of randomness. (The term "good amount of randomness" is borrowed from {{HKDF}} to signify not necessarily uniformly distributed randomness.)
+* a shared secret (OSCORE Master Secret) with PFS (see {{crypto-agility}}) and a good amount of randomness. (The term "good amount of randomness" is borrowed from {{HKDF}} to signify not necessarily uniformly distributed randomness.)
 
 * identifiers providing a hint to the receiver of what security context to use when decrypting the message (OSCORE Sender IDs of peer endpoints), arbitrarily short
 
@@ -140,9 +140,9 @@ IoT deployments differ in terms of what credentials can be supported. Currently 
 
 However, PSK-based provisioning has inherent weaknesses. There has been reports of massive breaches of PSK provisioning systems, and as many systems use PSKs without perfect forward secrecy (PFS) they are vulnerable to passive pervasive monitoring. The security of these systems can be improved by adding PFS through an AKE authenticated by the provisioned PSK.
 
-Shared keys can alternatively be established in the endpoints using an AKE protocol authenticated with asymmetric public keys instead of symmetric secret keys. Raw public keys (RPK) can be provisioned with the same scheme as PSKs, which allows for a more relaxed trust model since RPKs need not be secret.
+Shared keys can alternatively be established in the endpoints using an AKE protocol authenticated with asymmetric public keys instead of symmetric secret keys. Raw public keys (RPK) can be provisioned with the same scheme as PSKs, which allows for a more relaxed trust model since RPKs need not be secret. The corresponding private keys are assumed to be provisioned beforehand (e.g. in factory or generated on-board).
 
-As a third option, by using a public key infrastructure and running an asymmetric key AKE with public key certificates instead of RPKs, key provisioning can be omitted, leading to a more automated bootstrapping procedure.
+As a third option, by using a public key infrastructure and running an asymmetric key AKE with public key certificates instead of RPKs, key provisioning can be omitted, leading to a more automated ("zero-touch") bootstrapping procedure. The root CA keys are assumed to be provisioned beforehand.
 
 These steps provide an example of a migration path in limited scoped steps from simple to more robust security bootstrapping and provisioning schemes where each step improves the overall security and/or simplicity of deployment of the IoT system, although not all steps are necessarily feasible for the most constrained settings.
 
@@ -158,24 +158,42 @@ The AKE must support different credentials for authentication in different direc
 
 ## Identity Protection
 
-Transporting identities as part of the AKE run is a necessity in order to provide strong mutual authentication. In the case of constrained devices, the identity may contain sensitive information on the manufacturer of the device, the batch, default firmware version, etc. Protecting the identities from passive and active attacks is important from the privacy point of view.
+Transporting identities as part of the AKE run is a necessity in order to provide strong mutual authentication. In the case of constrained devices, the identity may contain sensitive information on the manufacturer of the device, the batch, default firmware version, etc. Protecting identifying information from passive and active attacks is important from the privacy point of view, but needs to be balanced with the other requirements, including security and lightweightness. For certain data we therefore need to make an exemption in order to obtain an efficient protocol.
 
-The AKE is required to support identity protection against active attackers of one of the peers and protection against passive attackers of the other peer in the case of public key identities, or the protection of the PSK identifier in the case of PSK-based authentication. The AKE should allow the most sentive idenity to recieve the strongest protection. Note that encryption of the PSK identifier is first possible in the third AKE message, which implies that at least four protocol messages are required for authentication of responder in case of symmetric key authentication (see {{mutual-auth}}).
+The AKE is required to protect the identity against active attackers of one of the peers and protection against passive attackers of the other peer in the case of public key identities. In case of a PSK identifier, it can be protected against passive attackers with a derived shared secret, but since the responder in general does not know from whom a message is sent it needs to be protected by the initiator when the shared secret is available, which would implies  at least four protocol messages for authentication of responder in case of symmetric key authentication (see {{mutual-auth}}). With this in mind, it is not required to protect the PSK identifier and it can be sent in the first message.
 
-## Crypto Agility and Security Properties
+Other identifying information that may be transported in plain text is cipher suites and connection identifiers.
 
-Motivated by long deployment lifetimes, the AKE is required to support crypto agility, including modularity of COSE crypto algorithms and negotiation of preferred crypto algorithms for OSCORE and the AKE. The AKE should support negotiation of the all COSE algorithms that OSCORE supports. The AKE negotiation must be protected against downgrade attacks.
+## Crypto Agility and Security Properties {#crypto-agility}
 
-Compromise of the long-term keys shall not enable an attacker to compromise past session keys (Perfect Forward Secrecy) and shall not enable a passive attacker to compromise future session keys. These two properties can be achieved with an ephemeral Diffie-Hellman key exchange. The AKE shall provide Key Compromise Impersonation (KCI) resistance.
+Motivated by long deployment lifetimes, the AKE is required to support crypto agility, including modularity of COSE crypto algorithms and negotiation of preferred crypto algorithms for OSCORE and the AKE. 
 
-The AKE shall protect against misbinding attacks and reflection attacks such as the recently published Selfie attack on TLS 1.3.
+* The protocol shall support both pre-shared key and asymmetric key authentication. Post-quantum key exchange is out of scope.
+* The protocol shall allow multiple elliptic curves for asymmetric keys
+* The AKE shall support negotiation of the all COSE algorithms used in the AKE and that OSCORE supports. 
+
+The AKE negotiation must be protected against downgrade attacks.
+
 
 ## Mutual Authentication {#mutual-auth}
 
-The AKE must provide mutual authentication (injective agreement) during the protocol run. 
+The AKE must provide mutual authentication during the protocol run. At the end of the AKE protocol, each endpoint shall have authenticated the other.
 
 The AKE cannot rely on messages being exchanged in both directions after the AKE has completed, because CoAP/OSCORE requests may not have a response {{RFC7967}}. Furthermore, there is no assumption of dependence between CoAP client/server and AKE initiator/responder roles, and an OSCORE context may be used with CoAP client and server roles interchanged as is done e.g. in {{LwM2M}}.
 
+Compromise of initiator or responder long-term keys shall not enable an attacker to compromise past session keys (Perfect Forward Secrecy) and shall not enable a passive attacker to compromise future session keys. These two properties can be achieved with an ephemeral Diffie-Hellman key exchange. The AKE shall provide Key Compromise Impersonation (KCI) resistance.
+
+The AKE shall protect against replay attacks (injective).
+
+The AKE shall protect against identity misbinding attacks, when applicable. Note that the identity may be the public key, a hash of the public key or other data directly related to the public key. 
+
+The AKE shall protect against reflection attacks, but need not protect against attacks when more than two parties legitimately share keys (cf. the Selfie attack on TLS 1.3).
+
+## Denial of Service
+
+The AKE shall protect against denial of service attacks on responder and initiator to the extent that the protocol supports lightweight deployments (see {{lw}}) and without duplicating the DoS mitigation of the underlying transport (see {{AKE-OSCORE}}). 
+
+Jamming attacks, cutting cables etc. leading to loss of availability may not be possible to mitigate, but an attacker temporarily injecting messages or disturbing the communication shall not have a similar impact. 
 
 
 ## Lightweight {#lw}
