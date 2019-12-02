@@ -2,9 +2,9 @@
 
 This is the working area for the individual Internet-Draft, "Requirements for a Lightweight AKE for OSCORE.".
 
-* [Editor's Copy](https://EricssonResearch.github.io/lake/#go.draft-selander-lake-reqs.html)
+* [Editor's Copy](https://lake-wg.github.io/reqs/#go.draft-selander-lake-reqs.html)
 * [Individual Draft](https://tools.ietf.org/html/draft-selander-lake-reqs)
-* [Compare Editor's Copy to Individual Draft](https://EricssonResearch.github.io/lake/#go.draft-selander-lake-reqs.diff)
+* [Compare Editor's Copy to Individual Draft](https://lake-wg.github.io/reqs/#go.draft-selander-lake-reqs.diff)
 
 ## Building the Draft
 
@@ -21,4 +21,4 @@ This requires that you have the necessary software installed.  See
 ## Contributing
 
 See the
-[guidelines for contributions](https://github.com/EricssonResearch/lake/blob/master/CONTRIBUTING.md).
+[guidelines for contributions](https://github.com/lake-wg/reqs/blob/master/CONTRIBUTING.md).
