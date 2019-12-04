@@ -170,7 +170,7 @@ The AKE is required to protect the identity against active attackers of one of t
 
 In case of a PSK identifier, this may be protected against passive attackers with a key derived from the a Diffie-Hellman shared secret. The responder has first access to the shared secret but does in general does not know from whom a message without PSK identifier is sent. Therefore the protection of PSK identifier in general needs to be performed by the initiator, i.e. at the earliest in message 3. As a consequence, in order to authenticate the responder within the AKE, at least four protocol messages are needed in case of symmetric key authentication with identity protection. Considering the need to keep the number of messages at a minimum (see {{disc}}), unless there are other good reasons for having more than 3 messages, it is not required to protect the PSK identifier, and it may thus be sent in the first message.
 
-Other identifying information that may be transported in plain text is cipher suites and connection identifiers.
+Other identifying information that need to be transported in plain text is cipher suites and connection identifiers. Encrypting crypto algorithms does not allow negotiation of cipher suite within 3 messages. Encryption of connection identifiers only works in asymmetric case and does not enable arbitrarily short identifiers (see {{AKE-OSCORE}}.
 
 ## Crypto Agility and Security Properties {#crypto-agility}
 
