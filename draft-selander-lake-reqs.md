@@ -371,10 +371,15 @@ One example is the transport of third-party signed authorization information suc
 
 Another example is the embedding of certificate enrolment request or a newly issued certificate.
 
-There are several considerations to make which needs to be addressed in the specification of the AKE. For example: The available protection of the application data in the AKE depend, among other things, on which protocol message the application data is carried in. Authorization information may reveal privacy sensitive information. 
+The AKE must support the transport of application data within the protocol messages. 
 
-The AKE must support the transport of application data within the protocol message and provide the necessary instructions for how to use this mechanism and its security and privacy properties.
+It is expected that a 3 message AKE will provide the following protection of the application data:
 
+*  Application data in the first message is unprotected
+*  Application data in the second message is confidentiality protected against passive attackers and integrity protected against active attackers
+*  Application data in the third message is confidentiality and integrity protected against active attackers
+
+Application data may reveal privacy sensitive information. The application data must not violate the AKE security properties. The assumptions on the application data needs to be detailed by the specification.
 
 
 # Requirements Summary
