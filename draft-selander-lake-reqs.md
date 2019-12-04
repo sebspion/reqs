@@ -48,6 +48,7 @@ informative:
   I-D.ietf-lpwan-coap-static-context-hc:
   I-D.ietf-cose-x509:
   I-D.ietf-core-echo-request-tag:
+  I-D.irtf-cfrg-randomness-improvements:
 
   AKE-for-6TiSCH:
     target: https://docs.google.com/document/d/1wLoIexMLG3U9iYO5hzGzKjkvi-VDndQBbYRNsMUlh-k
@@ -188,7 +189,11 @@ The AKE must provide mutual authentication during the protocol run. At the end o
 
 The AKE cannot rely on messages being exchanged in both directions after the AKE has completed, because CoAP/OSCORE requests may not have a response {{RFC7967}}. Furthermore, there is no assumption of dependence between CoAP client/server and AKE initiator/responder roles, and an OSCORE context may be used with CoAP client and server roles interchanged as is done e.g. in {{LwM2M}}. Since the protocol may be initiated by different endpoints, it shall not be necessary to determine beforehand which endpoint takes the role of initiator of the AKE.
 
-Compromise of initiator or responder long-term keys shall not enable an attacker to compromise past session keys (Perfect Forward Secrecy) and shall not enable a passive attacker to compromise future session keys. These two properties can be achieved with an ephemeral Diffie-Hellman key exchange. The AKE shall provide Key Compromise Impersonation (KCI) resistance.
+Compromise of initiator or responder long-term keys shall not enable an attacker to compromise past session keys (Perfect Forward Secrecy) and shall not enable a passive attacker to compromise future session keys. These two properties can be achieved with an ephemeral Diffie-Hellman key exchange. 
+
+To mitigate against bad random number generators the AKE shall mandate randomness improvements such as {{I-D.irtf-cfrg-randomness-improvements}} and analogously for symmetric keys.
+
+The AKE shall provide Key Compromise Impersonation (KCI) resistance.
 
 The AKE shall protect against replay attacks (injective).
 
