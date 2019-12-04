@@ -47,6 +47,7 @@ informative:
   I-D.ietf-6tisch-minimal-security:
   I-D.ietf-lpwan-coap-static-context-hc:
   I-D.ietf-cose-x509:
+  I-D.ietf-core-echo-request-tag:
 
   AKE-for-6TiSCH:
     target: https://docs.google.com/document/d/1wLoIexMLG3U9iYO5hzGzKjkvi-VDndQBbYRNsMUlh-k
@@ -125,13 +126,15 @@ In order to be suitable for OSCORE, at the end of the AKE protocol run the two p
 
 * a shared secret (OSCORE Master Secret) with PFS (see {{crypto-agility}}) and a good amount of randomness. (The term "good amount of randomness" is borrowed from {{HKDF}} to signify not necessarily uniformly distributed randomness.)
 
-* identifiers providing a hint to the receiver of what security context to use when decrypting the message (OSCORE Sender IDs of peer endpoints), arbitrarily short
+* OSCORE Sender IDs of peer endpoints, arbitrarily short
 
 * COSE algorithms to use with OSCORE
 
-Moreover, the AKE must support the same transport as OSCORE, in particular any protocol where CoAP can be transported. Since the AKE messages most commonly will be encapsulated in CoAP, the AKE must not duplicate functionality provided by CoAP. It is therefore assumed that the AKE is being transported in a protocol that provides reliable transport, that can preserve packet ordering and handle message duplication, that can perform fragmentation and protect against denial of service attacks.
+COSE provides the crypto primitives for OSCORE, and shall therefore be used also by the AKE, for several reasons including maintenance of crypto library. COSE provides identification of credentials and algorithms for OSCORE and the AKE, and an extension point for new schemes.
 
-The AKE may be transported over other transport than CoAP. In this case the underlying layers must handle message loss, reordering, message duplication, fragmentation, and denial of service protection.
+Moreover, the AKE must support transport over CoAP. Since the AKE messages most commonly will be encapsulated in CoAP, the AKE must not duplicate functionality provided by CoAP, or at least not duplicate functionality in such a way that it adds extra costs in terms of code size, code maintenance, etc. It is therefore assumed that the AKE is being transported in a protocol that provides reliable transport, that can preserve packet ordering and handle message duplication, that can perform fragmentation and protect against denial of service attacks, such as provided by the CoAP Echo option {{I-D.ietf-core-echo-request-tag}}.
+
+The AKE may use other transport than CoAP. In this case the underlying layers must correspondingly handle message loss, reordering, message duplication, fragmentation, and denial of service protection.
 
 
 ## Credentials
@@ -146,11 +149,11 @@ As a third option, by using a public key infrastructure and running an asymmetri
 
 These steps provide an example of a migration path in limited scoped steps from simple to more robust security bootstrapping and provisioning schemes where each step improves the overall security and/or simplicity of deployment of the IoT system, although not all steps are necessarily feasible for the most constrained settings.
 
-In order to allow for these different schemes, the AKE must support PSK (shared between two nodes), RPK and certificate-based authentication.
+In order to allow for these different schemes, the AKE must support PSK- (shared between two nodes), RPK- and certificate-based authentication of the Diffie-Hellman key exchange.
 
 Bandwidth is a scarce resource in constrained-node networks.
-To minimize the bandwidth consumption it is therefore desirable to support transporting the certificates by reference rather than by value.
-Considering the wide variety of deployments the AKE must support different schemes for transporting and identifying credentials, see Section 2 of {{I-D.ietf-cose-x509}}.
+To minimize the bandwidth consumption it is therefore required to support transporting the certificates by reference rather than by value.
+Considering the wide variety of deployments the AKE must support different schemes for transporting and identifying credentials, including those identified in Section 2 of {{I-D.ietf-cose-x509}}.
 
 The common lack of a user interface in constrained devices leads to various credential provisioning schemes.
 The use of RPKs may be appropriate for the authentication of the AKE initiator but not for the AKE responder.
@@ -158,9 +161,11 @@ The AKE must support different credentials for authentication in different direc
 
 ## Identity Protection
 
-Transporting identities as part of the AKE run is a necessity in order to provide strong mutual authentication. In the case of constrained devices, the identity may contain sensitive information on the manufacturer of the device, the batch, default firmware version, etc. Protecting identifying information from passive and active attacks is important from the privacy point of view, but needs to be balanced with the other requirements, including security and lightweightness. For certain data we therefore need to make an exemption in order to obtain an efficient protocol.
+In general, it is necessary to transport identities as part of the AKE run in order to provide authentication of an entity not identified beforehand. In the case of constrained devices, the identity may contain sensitive information on the manufacturer of the device, the batch, default firmware version, etc. Protecting identifying information from passive and active attacks is important from a privacy point of view, but needs to be balanced with the other requirements, including security and lightweightness. For certain data we therefore need to make an exemption in order to obtain an efficient protocol.
 
-The AKE is required to protect the identity against active attackers of one of the peers and protection against passive attackers of the other peer in the case of public key identities. In case of a PSK identifier, it can be protected against passive attackers with a derived shared secret, but since the responder in general does not know from whom a message is sent it needs to be protected by the initiator when the shared secret is available, which would implies  at least four protocol messages for authentication of responder in case of symmetric key authentication (see {{mutual-auth}}). With this in mind, it is not required to protect the PSK identifier and it can be sent in the first message.
+The AKE is required to protect the identity against active attackers of one of the peers and protection against passive attackers of the other peer in the case of public key identities. 
+
+In case of a PSK identifier, this may be protected against passive attackers with a key derived from the a Diffie-Hellman shared secret. The responder has first access to the shared secret but does in general does not know from whom a message without PSK identifier is sent. Therefore the protection of PSK identifier in general needs to be performed by the initiator, i.e. at the earliest in message 3. As a consequence, in order to authenticate the responder within the AKE, at least four protocol messages are needed in case of symmetric key authentication with identity protection. Considering the need to keep the number of messages at a minimum (see {{disc}}), unless there are other good reasons for having more than 3 messages, it is not required to protect the PSK identifier, and it may thus be sent in the first message.
 
 Other identifying information that may be transported in plain text is cipher suites and connection identifiers.
 
@@ -172,28 +177,28 @@ Motivated by long deployment lifetimes, the AKE is required to support crypto ag
 * The protocol shall allow multiple elliptic curves for asymmetric keys
 * The AKE shall support negotiation of the all COSE algorithms used in the AKE and that OSCORE supports. 
 
-The AKE negotiation must be protected against downgrade attacks.
+The AKE negotiation must be protected against downgrade attacks. [Input for further detailing this is requested.]
 
 
 ## Mutual Authentication {#mutual-auth}
 
 The AKE must provide mutual authentication during the protocol run. At the end of the AKE protocol, each endpoint shall have authenticated the other.
 
-The AKE cannot rely on messages being exchanged in both directions after the AKE has completed, because CoAP/OSCORE requests may not have a response {{RFC7967}}. Furthermore, there is no assumption of dependence between CoAP client/server and AKE initiator/responder roles, and an OSCORE context may be used with CoAP client and server roles interchanged as is done e.g. in {{LwM2M}}.
+The AKE cannot rely on messages being exchanged in both directions after the AKE has completed, because CoAP/OSCORE requests may not have a response {{RFC7967}}. Furthermore, there is no assumption of dependence between CoAP client/server and AKE initiator/responder roles, and an OSCORE context may be used with CoAP client and server roles interchanged as is done e.g. in {{LwM2M}}. Since the protocol may be initiated by different endpoints, it shall not be necessary to determine beforehand which endpoint takes the role of initiator of the AKE.
 
 Compromise of initiator or responder long-term keys shall not enable an attacker to compromise past session keys (Perfect Forward Secrecy) and shall not enable a passive attacker to compromise future session keys. These two properties can be achieved with an ephemeral Diffie-Hellman key exchange. The AKE shall provide Key Compromise Impersonation (KCI) resistance.
 
 The AKE shall protect against replay attacks (injective).
 
-The AKE shall protect against identity misbinding attacks, when applicable. Note that the identity may be the public key, a hash of the public key or other data directly related to the public key. 
+The endpoints shall be able to verify that the identity of the other endpoint is an acceptable identity that it is intended to authenticate to. The AKE shall protect against identity misbinding attacks, when applicable. Note that the identity may be data directly related to a public key such as for example the public key itself, a hash of the public key, or data unrelated to a key. 
 
-The AKE shall protect against reflection attacks, but need not protect against attacks when more than two parties legitimately share keys (cf. the Selfie attack on TLS 1.3).
+The AKE shall protect against reflection attacks, but need not protect against attacks when more than two parties legitimately share keys (cf. the Selfie attack on TLS 1.3) as that setting is out of scope.
 
 ## Denial of Service
 
 The AKE shall protect against denial of service attacks on responder and initiator to the extent that the protocol supports lightweight deployments (see {{lw}}) and without duplicating the DoS mitigation of the underlying transport (see {{AKE-OSCORE}}). 
 
-Jamming attacks, cutting cables etc. leading to loss of availability may not be possible to mitigate, but an attacker temporarily injecting messages or disturbing the communication shall not have a similar impact. 
+Jamming attacks, cutting cables etc. leading to long term loss of availability may not be possible to mitigate, but an attacker temporarily injecting messages or disturbing the communication shall not have a similar impact. 
 
 
 ## Lightweight {#lw}
@@ -207,7 +212,7 @@ OSCORE stack
 
 These properties need to be considered in the context of the use of an existing CoAP/OSCORE stack in the targeted networks and technologies. Some properties are difficult to evaluate for a given protocol, for example, because they depend on the radio conditions or other simultaneous network traffic.  Additionally, these properties are not independent. Therefore the properties listed here should be taken as input for identifying plausible protocol metrics that can be more easily measured and compared between protocols.
 
-Per 'bytes on the wire', it is desirable for the AKE messages to fit into the MTU size of these protocols; and if not possible, within as few frames as possible, since using multiple MTUs can have significant costs in terms of time and power.
+Per 'bytes on the wire', it is desirable for the AKE messages to fit into the MTU size of these protocols; and if not possible, within as few frames as possible, since using multiple MTUs can have significant costs in terms of time and power. Note that the MTU size depends on radio technology and its characteristics, including data rates, number of hops, etc. Example benchmarks are given further down in this section. 
 
 Per 'time', it is desirable for the AKE message exchange(s) to complete in a reasonable amount of time, both for a single uncongested exchange and when multiple exchanges are running in an interleaved fashion, like e.g. in a "network formation" setting when multiple devices connect for the first time. This latency may not be a linear function depending on congestion and the specific radio technology used. As these are relatively low data rate networks, the latency contribution due to computation is in general not expected to be dominant.
 
@@ -367,20 +372,20 @@ The AKE must support the transport of application data within the protocol messa
 
 # Requirements Summary
 
-* The AKE must support PSK, RPK and certificate based authentication and crypto agility, be 3-pass and support the same transport as OSCORE. It is desirable to support different schemes for transporting and identifying credentials.
+* The AKE must support PSK, RPK and certificate based authentication with PFS and crypto agility for AKE as well as OSCORE, be 3-pass and support transport over CoAP. It is required to support different schemes for transporting and identifying credentials.
 
 * After the AKE run, the peers must be mutually authenticated, agree on a shared secret with PFS and good amount of randomness, peer identifiers (potentially short), and COSE algorithms to use.
 
-* The AKE must reuse CBOR, CoAP and COSE primitives and algorithms for low code complexity of a combined OSCORE and AKE implementation.
+* The AKE must reuse CBOR, CoAP and COSE primitives and algorithms for low code complexity and to avoid duplicate maintenance of a combined OSCORE and AKE implementation.
 
-* The messages must be as small as reasonably achievable and fit into as few LoRaWAN packets and 6TiSCH frames as possible, optimally 1 for each message.
+* The messages should be as small as reasonably achievable. The messages shall fit into as few LoRaWAN packets and 6TiSCH frames as possible.
 
 
 # Security Considerations  {#sec-cons}
 
 This document compiles the requirements for an AKE and provides some related security considerations.
 
-The AKE must provide the security properties expected of IETF protocols, e.g., providing confidentiality protection, integrity protection, and authentication with strong work factor.
+The AKE must provide the security properties expected of IETF protocols, e.g., providing confidentiality protection, integrity protection, and authentication as is further detailed in the requirements.
 
 # IANA Considerations  {#iana}
 
@@ -390,7 +395,7 @@ None.
 # Acknowledgments
 {: numbered="no"}
 
-The authors want to thank Karthik Bhargavan, Michael Richardson and Claes Tidestav for providing valuable input.
+The authors want to thank Karthik Bhargavan, Eric Rescorla, Michael Richardson, and Claes Tidestav for providing valuable input.
 
 
 
