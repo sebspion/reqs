@@ -97,7 +97,7 @@ This document compiles the requirements for a lightweight authenticated key exch
 
 # Introduction  {#intro}
 
-OSCORE {{RFC8613}} is a lightweight communication security protocol providing end-to-end security on application layer for constrained IoT settings (cf. {{RFC7228}}). OSCORE lacks a matching authenticated key exchange protocol (AKE).
+OSCORE {{RFC8613}} is a lightweight communication security protocol providing end-to-end security on application layer for constrained IoT settings (cf. {{RFC7228}}). OSCORE lacks a matching authenticated key exchange protocol (AKE). The intention with LAKE is to create a simple yet secure AKE for implementation in embedded devices supporting OSCORE. 
 
 To ensure that the AKE is efficient for the expected applications of OSCORE, we list the relevant public specifications of technologies where OSCORE is included:
 
@@ -176,7 +176,7 @@ Other identifying information that need to be transported in plain text is ciphe
 
 Motivated by long deployment lifetimes, the AKE is required to support crypto agility, including modularity of COSE crypto algorithms and negotiation of preferred crypto algorithms for OSCORE and the AKE. 
 
-* The protocol shall support both pre-shared key and asymmetric key authentication. Post-quantum key exchange is out of scope.
+* The protocol shall support both pre-shared key and asymmetric key authentication. PAKE and post-quantum key exchange is out of scope, but may be supported in a later version.
 * The protocol shall allow multiple elliptic curves for asymmetric keys
 * The AKE shall support negotiation of the all COSE algorithms used in the AKE and that OSCORE supports. 
 
@@ -381,6 +381,13 @@ It is expected that a 3 message AKE will provide the following protection of the
 
 Application data may reveal privacy sensitive information. The application data must not violate the AKE security properties. The assumptions on the application data needs to be detailed by the specification.
 
+## Extensibility 
+
+It is desirable that the AKE supports some kind of extensibility, in particular,  the ability to later include new AKE modes such as PAKE support. Note that by supporting COSE, the AKE can already support new algorithms, new certificate formats, ways to identify credentials, etc. 
+
+Since the main objective with this work is to create a simple yet secure AKE, 
+care needs to be taken to avoid feature creep and extensions working against this.
+
 
 # Requirements Summary
 
@@ -407,7 +414,7 @@ None.
 # Acknowledgments
 {: numbered="no"}
 
-The authors want to thank Karthik Bhargavan, Eric Rescorla, Michael Richardson, and Claes Tidestav for providing valuable input.
+The authors want to thank Richard Barnes, Karthik Bhargavan, Eric Rescorla, Michael Richardson, and Claes Tidestav for providing valuable input.
 
 
 
