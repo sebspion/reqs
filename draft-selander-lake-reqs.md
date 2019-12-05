@@ -176,12 +176,14 @@ Other identifying information that needs to be transported in plain text is ciph
 
 Motivated by long deployment lifetimes, the AKE is required to support crypto agility, including modularity of COSE crypto algorithms and negotiation of preferred crypto algorithms for OSCORE and the AKE. 
 
-* The protocol shall support both pre-shared key and asymmetric key authentication. PAKE and post-quantum key exchange is out of scope, but may be supported in a later version.
+* The protocol shall support both pre-shared key and asymmetric key authentication. PAKE and post-quantum key exchange is out of scope, but may be supported in a later version. 
 * The protocol shall allow multiple elliptic curves for asymmetric keys
-* The AKE shall support negotiation of the all COSE algorithms used in the AKE and that OSCORE supports. 
+* The AKE shall support negotiation of the all COSE algorithms used in the AKE and that OSCORE supports. A successful negotiation shall result in the most preferred algorithms of one of the parties which is supported by the other.
 * The AKE shall support different AEAD/MAC algorithms for AKE and OSCORE
 
-The AKE negotiation must be protected against downgrade attacks. [Input for further detailing this is requested.]
+
+The AKE negotiation must be protected against downgrade attacks. [Input for further detailing this is requested.] 
+
 
 
 ## Mutual Authentication {#mutual-auth}
