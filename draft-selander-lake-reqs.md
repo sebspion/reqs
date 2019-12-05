@@ -15,9 +15,9 @@ pi: # can use array (if all yes) or hash here
 
 author:
       -
-        ins: M. Vucinic
-        name: Malisa Vucinic
-        org: INRIA
+        ins: M. Vučinić
+        name: Mališa Vučinić
+        org: Inria
         email: malisa.vucinic@inria.fr
       -
         ins: G. Selander
@@ -168,9 +168,9 @@ In general, it is necessary to transport identities as part of the AKE run in or
 
 The AKE is required to protect the identity against active attackers of one of the peers and protection against passive attackers of the other peer in the case of public key identities. 
 
-In case of a PSK identifier, this may be protected against passive attackers with a key derived from the a Diffie-Hellman shared secret. The responder has first access to the shared secret but does in general does not know from whom a message without PSK identifier is sent. Therefore the protection of PSK identifier in general needs to be performed by the initiator, i.e. at the earliest in message 3. As a consequence, in order to authenticate the responder within the AKE, at least four protocol messages are needed in case of symmetric key authentication with identity protection. Considering the need to keep the number of messages at a minimum (see {{disc}}), unless there are other good reasons for having more than 3 messages, it is not required to protect the PSK identifier, and it may thus be sent in the first message.
+In case of a PSK identifier, this may be protected against passive attackers with a key derived from the Diffie-Hellman shared secret. The responder has first access to the shared secret but does in general not know from whom a message without PSK identifier is sent. Therefore the protection of PSK identifier in general needs to be performed by the initiator, i.e. at the earliest in message 3. As a consequence, in order to authenticate the responder within the AKE, at least four protocol messages are needed in case of symmetric key authentication with identity protection. Considering the need to keep the number of messages at a minimum (see {{disc}}), unless there are other good reasons for having more than 3 messages, it is not required to protect the PSK identifier, and it may thus be sent in the first message.
 
-Other identifying information that need to be transported in plain text is cipher suites and connection identifiers. Encrypting crypto algorithms does not allow negotiation of cipher suite within 3 messages. Encryption of connection identifiers only works in asymmetric case and does not enable arbitrarily short identifiers (see {{AKE-OSCORE}}.
+Other identifying information that needs to be transported in plain text is cipher suites and connection identifiers. Encrypting crypto algorithms does not allow negotiation of cipher suite within 3 messages. Encryption of connection identifiers only works in asymmetric case and does not enable arbitrarily short identifiers (see {{AKE-OSCORE}}.
 
 ## Crypto Agility and Security Properties {#crypto-agility}
 
@@ -198,7 +198,7 @@ The AKE shall provide Key Compromise Impersonation (KCI) resistance.
 
 The AKE shall protect against replay attacks (injective).
 
-The endpoints shall be able to verify that the identity of the other endpoint is an acceptable identity that it is intended to authenticate to. The AKE shall protect against identity misbinding attacks, when applicable. Note that the identity may be data directly related to a public key such as for example the public key itself, a hash of the public key, or data unrelated to a key. 
+The endpoints shall be able to verify that the identity of the other endpoint is an acceptable identity that it is intended to authenticate to. The AKE shall protect against identity misbinding attacks, when applicable. Note that the identity may be directly related to a public key such as for example the public key itself, a hash of the public key, or data unrelated to a key. 
 
 The AKE shall protect against reflection attacks, but need not protect against attacks when more than two parties legitimately share keys (cf. the Selfie attack on TLS 1.3) as that setting is out of scope.
 
