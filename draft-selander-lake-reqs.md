@@ -162,30 +162,6 @@ The AKE must support different credentials for authentication in different direc
 
 Assuming that both signature public keys and static DH public keys are in use, then also the case of mixed credentials need to be supported with one endpoint using a static DH public key and the other using a signature public key.
 
-## Identity Protection
-
-In general, it is necessary to transport identities as part of the AKE run in order to provide authentication of an entity not identified beforehand. In the case of constrained devices, the identity may contain sensitive information on the manufacturer of the device, the batch, default firmware version, etc. Protecting identifying information from passive and active attacks is important from a privacy point of view, but needs to be balanced with the other requirements, including security and lightweightness. For certain data we therefore need to make an exemption in order to obtain an efficient protocol.
-
-The AKE is required to protect the identity against active attackers of one of the peers and protection against passive attackers of the other peer in the case of public key identities. 
-
-In case of a PSK identifier, this may be protected against passive attackers with a key derived from the Diffie-Hellman shared secret. The responder has first access to the shared secret but does in general not know from whom a message without PSK identifier is sent. Therefore the protection of PSK identifier in general needs to be performed by the initiator, i.e. at the earliest in message 3. As a consequence, in order to authenticate the responder within the AKE, at least four protocol messages are needed in case of symmetric key authentication with identity protection. Considering the need to keep the number of messages at a minimum (see {{disc}}), unless there are other good reasons for having more than 3 messages, it is not required to protect the PSK identifier, and it may thus be sent in the first message.
-
-Other identifying information that needs to be transported in plain text is cipher suites and connection identifiers. Encrypting crypto algorithms does not allow negotiation of cipher suite within 3 messages. Encryption of connection identifiers only works in asymmetric case and does not enable arbitrarily short identifiers (see {{AKE-OSCORE}}).
-
-## Crypto Agility and Security Properties {#crypto-agility}
-
-Motivated by long deployment lifetimes, the AKE is required to support crypto agility, including modularity of COSE crypto algorithms and negotiation of preferred crypto algorithms for OSCORE and the AKE. 
-
-* The protocol shall support both pre-shared key and asymmetric key authentication. PAKE and post-quantum key exchange is out of scope, but may be supported in a later version. 
-* The protocol shall allow multiple elliptic curves for asymmetric keys
-* The AKE shall support negotiation of the all COSE algorithms used in the AKE and that OSCORE supports. A successful negotiation shall result in the most preferred algorithms of one of the parties which are supported by the other.
-* The AKE shall support different AEAD/MAC algorithms for AKE and OSCORE
-
-
-The AKE negotiation must be protected against downgrade attacks. 
-\[Further detailing is requested.\] 
-
-
 
 ## Mutual Authentication {#mutual-auth}
 
@@ -204,6 +180,32 @@ The AKE shall protect against replay attacks (injective).
 The endpoints shall be able to verify that the identity of the other endpoint is an acceptable identity that it is intended to authenticate to. The AKE shall protect against identity misbinding attacks, when applicable. Note that the identity may be directly related to a public key such as for example the public key itself, a hash of the public key, or data unrelated to a key. 
 
 The AKE shall protect against reflection attacks, but need not protect against attacks when more than two parties legitimately share keys (cf. the Selfie attack on TLS 1.3) as that setting is out of scope.
+
+
+## Crypto Agility and Security Properties {#crypto-agility}
+
+Motivated by long deployment lifetimes, the AKE is required to support crypto agility, including modularity of COSE crypto algorithms and negotiation of preferred crypto algorithms for OSCORE and the AKE. 
+
+* The protocol shall support both pre-shared key and asymmetric key authentication. PAKE and post-quantum key exchange is out of scope, but may be supported in a later version. 
+* The protocol shall allow multiple elliptic curves for asymmetric keys
+* The AKE shall support negotiation of the all COSE algorithms used in the AKE and that OSCORE supports. A successful negotiation shall result in the most preferred algorithms of one of the parties which are supported by the other.
+* The AKE shall support different AEAD/MAC algorithms for AKE and OSCORE
+
+
+The AKE negotiation must be protected against downgrade attacks. 
+\[Further detailing is requested.\] 
+
+
+## Identity Protection
+
+In general, it is necessary to transport identities as part of the AKE run in order to provide authentication of an entity not identified beforehand. In the case of constrained devices, the identity may contain sensitive information on the manufacturer of the device, the batch, default firmware version, etc. Protecting identifying information from passive and active attacks is important from a privacy point of view, but needs to be balanced with the other requirements, including security and lightweightness. For certain data we therefore need to make an exemption in order to obtain an efficient protocol.
+
+The AKE is required to protect the identity against active attackers of one of the peers and protection against passive attackers of the other peer in the case of public key identities. 
+
+In case of a PSK identifier, this may be protected against passive attackers with a key derived from the Diffie-Hellman shared secret. The responder has first access to the shared secret but does in general not know from whom a message without PSK identifier is sent. Therefore the protection of PSK identifier in general needs to be performed by the initiator, i.e. at the earliest in message 3. As a consequence, in order to authenticate the responder within the AKE, at least four protocol messages are needed in case of symmetric key authentication with identity protection. Considering the need to keep the number of messages at a minimum (see {{disc}}), unless there are other good reasons for having more than 3 messages, it is not required to protect the PSK identifier, and it may thus be sent in the first message.
+
+Other identifying information that needs to be transported in plain text is cipher suites and connection identifiers. Encrypting crypto algorithms does not allow negotiation of cipher suite within 3 messages. Encryption of connection identifiers only works in asymmetric case and does not enable arbitrarily short identifiers (see {{AKE-OSCORE}}).
+
 
 ## Application Data
 
