@@ -125,7 +125,7 @@ The rationale for designing this protocol is that OSCORE is lacking a matching A
 
 In order to be suitable for OSCORE, at the end of the AKE protocol run the two parties must agree on (see Section 3.2 of {{RFC8613}}):
 
-* a shared secret (OSCORE Master Secret) with PFS (see {{crypto-agility}}) and a good amount of randomness. (The term "good amount of randomness" is borrowed from {{HKDF}} to signify not necessarily uniformly distributed randomness.)
+* a shared secret (OSCORE Master Secret) with PFS (see {{mutual-auth}}) and a good amount of randomness. (The term "good amount of randomness" is borrowed from {{HKDF}} to signify not necessarily uniformly distributed randomness.)
 
 * OSCORE Sender IDs of peer endpoints, arbitrarily short
 
