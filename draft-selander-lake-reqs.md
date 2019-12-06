@@ -182,7 +182,8 @@ Motivated by long deployment lifetimes, the AKE is required to support crypto ag
 * The AKE shall support different AEAD/MAC algorithms for AKE and OSCORE
 
 
-The AKE negotiation must be protected against downgrade attacks. [Input for further detailing this is requested.] 
+The AKE negotiation must be protected against downgrade attacks. 
+\[Further detailing is requested.\] 
 
 
 
