@@ -205,11 +205,38 @@ The endpoints shall be able to verify that the identity of the other endpoint is
 
 The AKE shall protect against reflection attacks, but need not protect against attacks when more than two parties legitimately share keys (cf. the Selfie attack on TLS 1.3) as that setting is out of scope.
 
+## Application Data
+
+In order to reduce round trips and number of messages, and in some cases also streamline processing, certain applications may want to transport application data within the AKE. 
+
+One example is the transport of third-party signed authorization information such as an access token or a voucher from initiator to responder or vice versa. Such a scheme could enable the party receiving the authorization information to make a decision about whether the party being authenticated is also authorized before the protocol is completed, and if not discontinue the protocol before it is complete, thereby saving time and message processing.
+
+Another example is the embedding of certificate enrolment request or a newly issued certificate.
+
+The AKE must support the transport of application data within the protocol messages. 
+
+It is expected that an AKE with 3 messages will provide the following protection of the application data:
+
+*  Application data in the first message is unprotected
+*  Application data in the second message is confidentiality protected against passive attackers and integrity protected against active attackers
+*  Application data in the third message is confidentiality and integrity protected against active attackers
+
+Application data may contain privacy sensitive information. The application data must not violate the AKE security properties. The assumptions on the application data need to be detailed in the specification of the AKE.
+
+## Extensibility 
+
+It is desirable that the AKE supports some kind of extensibility, in particular,  the ability to later include new AKE modes such as PAKE support. Note that by supporting COSE, the AKE can already support new algorithms, new certificate formats, ways to identify credentials, etc. 
+
+Since the main objective with this work is to create a simple yet secure AKE, 
+care needs to be taken to avoid feature creep and extensions working against this.
+
+
 ## Denial of Service
 
 The AKE shall protect against denial of service attacks on responder and initiator to the extent that the protocol supports lightweight deployments (see {{lw}}) and without duplicating the DoS mitigation of the underlying transport (see {{AKE-OSCORE}}). 
 
 Jamming attacks, cutting cables etc. leading to long term loss of availability may not be possible to mitigate, but an attacker temporarily injecting messages or disturbing the communication shall not have a similar impact. 
+
 
 
 ## Lightweight {#lw}
@@ -369,30 +396,6 @@ To summarize, even if it we are unable to give precise numbers for AKE frequency
 * allows devices to quickly re-establish security in case of reboots, and 
 * enables support for recommendations of frequent key renewal
 
-## Application Data
-
-In order to reduce round trips and number of messages, and in some cases also streamline processing, certain applications may want to transport application data within the AKE. 
-
-One example is the transport of third-party signed authorization information such as an access token or a voucher from initiator to responder or vice versa. Such a scheme could enable the party receiving the authorization information to make a decision about whether the party being authenticated is also authorized before the protocol is completed, and if not discontinue the protocol before it is complete, thereby saving time and message processing.
-
-Another example is the embedding of certificate enrolment request or a newly issued certificate.
-
-The AKE must support the transport of application data within the protocol messages. 
-
-It is expected that an AKE with 3 messages will provide the following protection of the application data:
-
-*  Application data in the first message is unprotected
-*  Application data in the second message is confidentiality protected against passive attackers and integrity protected against active attackers
-*  Application data in the third message is confidentiality and integrity protected against active attackers
-
-Application data may contain privacy sensitive information. The application data must not violate the AKE security properties. The assumptions on the application data need to be detailed in the specification of the AKE.
-
-## Extensibility 
-
-It is desirable that the AKE supports some kind of extensibility, in particular,  the ability to later include new AKE modes such as PAKE support. Note that by supporting COSE, the AKE can already support new algorithms, new certificate formats, ways to identify credentials, etc. 
-
-Since the main objective with this work is to create a simple yet secure AKE, 
-care needs to be taken to avoid feature creep and extensions working against this.
 
 
 # Requirements Summary
