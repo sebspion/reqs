@@ -15,18 +15,18 @@ pi: # can use array (if all yes) or hash here
 
 author:
       -
-        ins: M. Vučinić
-        name: Mališa Vučinić
+        ins: M. Vucinic
+        name: Malisa Vucinic
         org: Inria
         email: malisa.vucinic@inria.fr
       -
         ins: G. Selander
-        name: Göran Selander
+        name: Goeran Selander
         org: Ericsson AB
         email: goran.selander@ericsson.com
       -
         ins: J. Mattsson
-        name: John Preuß Mattsson
+        name: John Preuss Mattsson
         org: Ericsson AB
         email: john.mattsson@ericsson.com
       -
