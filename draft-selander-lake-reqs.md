@@ -353,13 +353,14 @@ The difference between uplink and downlink performance should not be engineered 
 
 One question that has been asked in the context of lightweightness is: - How often is the AKE executed? While it may be impossible to give a precise answer there are other perspectives to this question.
 
-1. For some use cases, already one execution of the AKE is too heavy, for example, because 
-   * there are a number of parallel executions of the AKE in a network formation setting which loads down the network, or
-   * the duty cycle makes the completion time too long for even one run of the protocol.
+1. For some use cases, already one execution of the AKE is heavy, for example, because 
+   * there are a number of parallel executions of the AKE which loads down the network, such as in a network formation setting, or
+   * the duty cycle makes the completion time long for even one run of the protocol.
 
 2. If a device reboots it may not be able to recover the security context, e.g. due to lack of persistent storage, and is required to establish a new security context for which an AKE is preferred. Reboot frequency may be difficult to predict in general.
 
-3. To limit the impact of a key compromise, BSI, NIST and ANSSI and other organizations recommend in other contexts frequent renewal of keys by means of Diffie-Hellman key exchange.
+3. To limit the impact of a key compromise, BSI, NIST and ANSSI and other organizations recommend in other contexts frequent renewal of keys by means of Diffie-Hellman key exchange. 
+
 
 To summarize, even if it we are unable to give precise numbers for AKE frequency, a lightweight AKE 
 
@@ -377,13 +378,13 @@ Another example is the embedding of certificate enrolment request or a newly iss
 
 The AKE must support the transport of application data within the protocol messages. 
 
-It is expected that a 3 message AKE will provide the following protection of the application data:
+It is expected that an AKE with 3 messages will provide the following protection of the application data:
 
 *  Application data in the first message is unprotected
 *  Application data in the second message is confidentiality protected against passive attackers and integrity protected against active attackers
 *  Application data in the third message is confidentiality and integrity protected against active attackers
 
-Application data may reveal privacy sensitive information. The application data must not violate the AKE security properties. The assumptions on the application data needs to be detailed by the specification.
+Application data may contain privacy sensitive information. The application data must not violate the AKE security properties. The assumptions on the application data need to be detailed in the specification of the AKE.
 
 ## Extensibility 
 
