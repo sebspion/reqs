@@ -212,13 +212,13 @@ Other identifying information that needs to be transported in plain text is ciph
 
 ## Application Data
 
-In order to reduce round trips and number of messages, and in some cases also streamline processing, certain applications may want to transport application data within the AKE. 
+In order to reduce round trips and number of messages, and in some cases also streamline processing, certain applications may want to transport application data together with the AKE message. 
 
-One example is the transport of third-party signed authorization information such as an access token or a voucher from initiator to responder or vice versa. Such a scheme could enable the party receiving the authorization information to make a decision about whether the party being authenticated is also authorized before the protocol is completed, and if not discontinue the protocol before it is complete, thereby saving time and message processing.
+One example is the transport of third-party signed authorization information such as an access token or a voucher from initiator to responder or vice versa. Such a scheme could enable the party receiving the authorization information to make a decision about whether the party being authenticated is also authorized before the protocol is completed, and if not then discontinue the protocol before it is complete, thereby saving time and message processing.
 
-Another example is the embedding of certificate enrolment request or a newly issued certificate.
+Another example is the embedding of a certificate enrolment request or a newly issued certificate.
 
-The AKE must support the transport of application data within the protocol messages. 
+The AKE must support the transport of application data together with the protocol messages. 
 
 It is expected that an AKE with 3 messages will provide the following protection of the application data:
 
