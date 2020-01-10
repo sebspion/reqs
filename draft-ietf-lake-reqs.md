@@ -109,9 +109,10 @@ To ensure that the AKE is efficient for the expected applications of OSCORE, we 
 
 Other industry fora which plan to use OSCORE:
 
-* Fairhair Alliance has defined an architecture {{Fairhair}} which adopts OSCORE for multicast, but it is not clear whether the architecture will support unicast OSCORE.
+* Open Connectivity Foundation (OCF) has been actively involved in the OSCORE development for the purpose of deploying OSCORE. 
 
-* Open Connectivity Foundation (OCF) has been actively involved in the OSCORE development for the purpose of deploying OSCORE, but no public reference is available since OCF only references RFCs. We believe that these OSCORE consumers reflect similar levels of constraints on the devices and networks in question.
+* Fairhair Alliance has defined an architecture {{Fairhair}} which adopts OSCORE for multicast, but it is not clear whether the architecture will support unicast OSCORE. Fairhair Alliance merged with OCF in November 2019.
+
 
 This document compiles the requirements for the AKE for OSCORE.
 It summarizes the security requirements that are expected from such an AKE, as well as the main characteristics of the environments where the solution is envisioned to be deployed.
