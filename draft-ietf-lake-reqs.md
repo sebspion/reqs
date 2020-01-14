@@ -428,7 +428,7 @@ None.
 # Acknowledgments
 {: numbered="no"}
 
-The authors want to thank Richard Barnes, Karthik Bhargavan, Eric Rescorla, Michael Richardson, and Claes Tidestav for providing valuable input.
+The authors want to thank Richard Barnes, Karthik Bhargavan, Ivaylo Petrov, Eric Rescorla, Michael Richardson, and Claes Tidestav for providing valuable input.
 
 
 
