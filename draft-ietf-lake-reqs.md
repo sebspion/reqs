@@ -191,7 +191,7 @@ Motivated by long deployment lifetimes, the AKE is required to support crypto ag
 
 * The protocol shall support both pre-shared key and asymmetric key authentication. PAKE and post-quantum key exchange is out of scope, but may be supported in a later version. 
 * The protocol shall allow multiple elliptic curves for asymmetric keys
-* The AKE shall support negotiation of the all COSE algorithms used in the AKE and that OSCORE supports. A successful negotiation shall result in the most preferred algorithms of one of the parties which are supported by the other.
+* The AKE shall support negotiation of all the COSE algorithms used in the AKE and that OSCORE supports. A successful negotiation shall result in the most preferred algorithms of one of the parties which are supported by the other.
 * The AKE shall support different AEAD/MAC algorithms for AKE and OSCORE
 
 
@@ -203,7 +203,7 @@ The AKE negotiation must be protected against downgrade attacks.
 
 In general, it is necessary to transport identities as part of the AKE run in order to provide authentication of an entity not identified beforehand. In the case of constrained devices, the identity may contain sensitive information on the manufacturer of the device, the batch, default firmware version, etc. Protecting identifying information from passive and active attacks is important from a privacy point of view, but needs to be balanced with the other requirements, including security and lightweightness. For certain data we therefore need to make an exemption in order to obtain an efficient protocol.
 
-The AKE is required to protect the identity against active attackers of one of the peers and protection against passive attackers of the other peer in the case of public key identities. 
+In the case of public key identities, the AKE is required to protect the identity of one of the peers against active attackers and the identity of the other peer against passive attackers.
 
 In case of a PSK identifier, this may be protected against passive attackers with a key derived from the Diffie-Hellman shared secret. The responder has first access to the shared secret but does in general not know from whom a message without PSK identifier is sent. Therefore the protection of PSK identifier in general needs to be performed by the initiator, i.e. at the earliest in message 3. As a consequence, in order to authenticate the responder within the AKE, at least four protocol messages are needed in case of symmetric key authentication with identity protection. Considering the need to keep the number of messages at a minimum (see {{disc}}), unless there are other good reasons for having more than 3 messages, it is not required to protect the PSK identifier, and it may thus be sent in the first message.
 
@@ -261,7 +261,7 @@ Per 'time', it is desirable for the AKE message exchange(s) to complete in a rea
 
 Per 'round-trips', it is desirable that the number of completed request/response message exchanges required before the initiating endpoint can start sending protected traffic data is as small as possible, since this reduces completion time. See {{disc}} for a discussion about the tradeoff between message size and number of messages.
 
-Per 'power', it is desirable for the transmission of AKE messages and crypto to draw as little power as possible. The best mechanism for doing so differs across radio technologies.  For example, NB-IoT uses licensed spectrum and thus can transmit at higher power to improve coverage, making the transmitted byte count relatively more important than for other radio technologies.  In other cases, the radio transmitter will be active for a full MTU frame regardless of how much of the frame is occupied by message content, which makes the byte count less sensitive for the power consumption.  Increased power consumption is unavoidable in poor network conditions, such as most wide-area settings including LoRaWAN.
+Per 'power', it is desirable for the transmission of AKE messages and crypto to draw as little power as possible. The best mechanism for doing so differs across radio technologies.  For example, NB-IoT uses licensed spectrum and thus can transmit at higher power to improve coverage, making the transmitted byte count relatively more important than for other radio technologies.  In other cases, the radio transmitter will be active for a full MTU frame regardless of how much of the frame is occupied by message content, which makes the byte count less sensitive for the power consumption as long as it fits into the MTU frame. The power consumption thus increases with AKE message size and the largest impact is on average under poor network conditions.
 
 Per 'new code', it is desirable to introduce as little new code as possible onto OSCORE-enabled devices to support this new AKE. These devices have on the order of 10s of kB of memory and 100 kB of storage on which an embedded OS; a COAP stack; CORE and AKE libraries; and target applications would run. It is expected that the majority of this space is available for actual application logic, as opposed to the support libraries. In a typical OSCORE implementation COSE encrypt and signature structures will be available, as will support for COSE algorithms relevant for IoT enabling the same algorithms as is used for OSCORE (e.g. COSE algorithm no. 10 = CCM* used by 6TiSCH). The use of those, or CBOR or CoAP, would not add to the footprint.
 
@@ -270,11 +270,11 @@ While the large variety of settings and capabilities of the devices and networks
 
 ### LoRaWAN
 
-LoRaWAN employs unlicensed radio frequency bands in the 868 MHz ISM band. As a case in point, we focus here on deployment in Europe, where this is regulated by ETSI EN 300 220. For LoRaWAN the most relevant metric is the Time-on-Air, which determines the back-off times and can be used as an indicator to calculate energy consumption. LoRaWAN is legally required to use a duty cycle with values such as 0.1%, 1% and 10% depending on the sub-band that is being used, leading to a payload split into fragments interleaved with back-off times. For Europe, the duty cycle is 1% (or smaller). Although there are exceptions from the use of duty cycle, the use of an AKE for providing end-to-end security on application layer needs to comply with the duty cycle. 
+Reflecting deployment reality as of now, we focus on the European regulation as described in ETSI EN 300 220. LoRaWAN employs unlicensed radio frequency bands in the 868 MHz ISM band. For LoRaWAN the most relevant metric is the Time-on-Air, which determines the period before the next communication can occur and also which can be used as an indicator to calculate energy consumption. LoRaWAN is legally required to use a duty cycle with values such as 0.1%, 1% and 10% depending on the sub-band that is being used, leading to a payload split into fragments interleaved with unavailable times. For Europe, the duty cycle is 1% (or smaller). Although there are exceptions from the use of duty cycle, the use of an AKE for providing end-to-end security on application layer needs to comply with the duty cycle. 
 
 #### Bytes on the wire
 
-LoRaWAN has a variable MTU depending on the Spreading Factor (SF). The higher the spreading factor, the higher distances can be achieved and/or better reception. LoRaWAN has a header size of 13 bytes, to which we have to add the maximum recommended payload depending on the SF used. If the coverage and distance allows it, with SF7 -- corresponding to higher data rates -- the maximum payload is 222 bytes. For a SF12 -- and low data rates -- the maximum payload is 51 bytes. 
+LoRaWAN has a variable MTU depending on the Spreading Factor (SF). The higher the spreading factor, the higher distances can be achieved and/or better reception. If the coverage and distance allows it, with SF7 -- corresponding to higher data rates -- the maximum payload is 222 bytes. For a SF12 -- and low data rates -- the maximum payload is 51 bytes. 
 
 The benchmark used here is Data Rates 0-2 corresponding to a packet size of 51 bytes {{LoRaWAN}}. The use of larger frame size depend on good radio conditions which are not always present. Some libraries/providers only support 51-bytes packet size.
 
@@ -286,7 +286,7 @@ The time it takes to send a message over the air in LoRaWAN can be calculated as
 
 #### Round trips and number of messages
 
-Considering the duty cycle of LoRaWAN and associated back-off times, the round trips and number of messages needs to be reduced as much as possible.
+Considering the duty cycle of LoRaWAN and associated unavailable times, the round trips and number of messages needs to be reduced as much as possible.
 
 
 #### Power
