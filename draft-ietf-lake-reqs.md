@@ -126,7 +126,7 @@ The rationale for designing this protocol is that OSCORE is lacking a matching A
 
 In order to be suitable for OSCORE, at the end of the AKE protocol run the two parties must agree on (see Section 3.2 of {{RFC8613}}):
 
-* a shared secret (OSCORE Master Secret) with PFS (see {{mutual-auth}}) and a good amount of randomness. (The term "good amount of randomness" is borrowed from {{HKDF}} to signify not necessarily uniformly distributed randomness.)
+* a shared secret (OSCORE Master Secret) with Perfect Forward Secrecy (PFS, see {{crypto-agility}}) and a good amount of randomness. (The term "good amount of randomness" is borrowed from {{HKDF}} to signify not necessarily uniformly distributed randomness.)
 
 * OSCORE Sender IDs of peer endpoints, arbitrarily short
 
@@ -151,9 +151,9 @@ As a third option, by using a public key infrastructure and running an asymmetri
 
 These steps provide an example of a migration path in limited scoped steps from simple to more robust security bootstrapping and provisioning schemes where each step improves the overall security and/or simplicity of deployment of the IoT system, although not all steps are necessarily feasible for the most constrained settings.
 
-In order to allow for these different schemes, the AKE must support PSK- (shared between two nodes), RPK- and certificate-based authentication of the Diffie-Hellman (DH) key exchange.
+In order to allow for these different schemes, the AKE must support PSK- (shared between two nodes), RPK- and certificate-based authentication.
 
-Bandwidth is a scarce resource in constrained-node networks. The use of static DH public keys instead of signature public keys is a significant optimization and shall be supported.
+Multiple public key authentication credential types may need to be supported for RPK and certificate-based authentication. In case of a Diffie-Hellman key exchange both the use of signature based public keys (for compatibility with existing ecosystem) and static DH public keys (for reduced message size) is expected.
 
 To further minimize the bandwidth consumption it is required to support transporting the certificates by reference rather than by value. Considering the wide variety of deployments the AKE must support different schemes for transporting and identifying credentials, including those identified in Section 2 of {{I-D.ietf-cose-x509}}.
 
@@ -166,23 +166,23 @@ Assuming that both signature public keys and static DH public keys are in use, t
 
 ## Mutual Authentication {#mutual-auth}
 
-The AKE must provide mutual authentication during the protocol run. At the end of the AKE protocol, each endpoint shall have authenticated the other.
+The AKE must provide mutual authentication during the protocol run. At the end of the AKE protocol, each endpoint shall have authenticated the other. 
 
 The AKE cannot rely on messages being exchanged in both directions after the AKE has completed, because CoAP/OSCORE requests may not have a response {{RFC7967}}. Furthermore, there is no assumption of dependence between CoAP client/server and AKE initiator/responder roles, and an OSCORE context may be used with CoAP client and server roles interchanged as is done e.g. in {{LwM2M}}. Since the protocol may be initiated by different endpoints, it shall not be necessary to determine beforehand which endpoint takes the role of initiator of the AKE.
 
-Compromise of initiator or responder long-term keys shall not enable an attacker to compromise past session keys (Perfect Forward Secrecy) and shall not enable a passive attacker to compromise future session keys. These two properties can be achieved with an ephemeral Diffie-Hellman key exchange. 
+A consequence of mutual authentication during the AKE and that the subsequent message exchange is not predictable is that the AKE needs at least three messages.
 
-To mitigate against bad random number generators the AKE shall mandate randomness improvements such as {{I-D.irtf-cfrg-randomness-improvements}} and analogously for symmetric keys.
+The mutual authentication guarantees of the AKE shall guarantee the following properties:
 
-The AKE shall provide Key Compromise Impersonation (KCI) resistance.
+* The AKE shall provide Key Compromise Impersonation (KCI) resistance.
 
-The AKE shall protect against replay attacks (injective).
+* The AKE shall protect against identity misbinding attacks, when applicable. Note that the identity may be directly related to a public key such as for example the public key itself, a hash of the public key, or data unrelated to a key. 
 
-The endpoints shall be able to verify that the identity of the other endpoint is an acceptable identity that it is intended to authenticate to. (This requirement extends beyond the AKE in that the application must enable access to information about acceptable identities without compromising the overall lightweightness of the AKE.)
+* The AKE shall protect against reflection attacks, but need not protect against attacks when more than two parties legitimately share keys (cf. the Selfie attack on TLS 1.3) as that setting is out of scope.
 
-The AKE shall protect against identity misbinding attacks, when applicable. Note that the identity may be directly related to a public key such as for example the public key itself, a hash of the public key, or data unrelated to a key. 
+Moreover, it shall be possible for the receiving endpoint to detect a replayed AKE message.
 
-The AKE shall protect against reflection attacks, but need not protect against attacks when more than two parties legitimately share keys (cf. the Selfie attack on TLS 1.3) as that setting is out of scope.
+Furthermore, the endpoints shall be able to verify that the identity of the other endpoint is an acceptable identity that it is intended to authenticate to. (This requirement extends beyond the AKE in that the application must enable access to information about acceptable identities without compromising the overall lightweightness of the AKE.)
 
 
 ## Crypto Agility and Security Properties {#crypto-agility}
@@ -198,6 +198,11 @@ Motivated by long deployment lifetimes, the AKE is required to support crypto ag
 The AKE negotiation must be protected against downgrade attacks. 
 \[Further detailing is requested.\] 
 
+Compromise of initiator or responder long-term keys shall not enable an attacker to compromise past session keys (Perfect Forward Secrecy) and shall not enable a passive attacker to compromise future session keys. These two properties can be achieved e.g. with an ephemeral Diffie-Hellman key exchange. 
+
+To mitigate against bad random number generators the AKE shall mandate randomness improvements such as {{I-D.irtf-cfrg-randomness-improvements}} and analogously for symmetric keys.
+
+
 
 ## Identity Protection
 
@@ -205,7 +210,7 @@ In general, it is necessary to transport identities as part of the AKE run in or
 
 In the case of public key identities, the AKE is required to protect the identity of one of the peers against active attackers and the identity of the other peer against passive attackers.
 
-In case of a PSK identifier, this may be protected against passive attackers with a key derived from the Diffie-Hellman shared secret. The responder has first access to the shared secret but does in general not know from whom a message without PSK identifier is sent. Therefore the protection of PSK identifier in general needs to be performed by the initiator, i.e. at the earliest in message 3. As a consequence, in order to authenticate the responder within the AKE, at least four protocol messages are needed in case of symmetric key authentication with identity protection. Considering the need to keep the number of messages at a minimum (see {{disc}}), unless there are other good reasons for having more than 3 messages, it is not required to protect the PSK identifier, and it may thus be sent in the first message.
+In case of a PSK identifier, this may be protected against passive attackers, for example with a key derived from a Diffie-Hellman shared secret at the earliest in message 3. As a consequence, in order to authenticate the responder within the AKE, at least four protocol messages are needed in case of symmetric key authentication with identity protection. Considering the need to keep the number of messages at a minimum (see {{disc}}), unless there are other good reasons for having more than 3 messages, it is not required to protect the PSK identifier, and it may thus be sent in the first message.
 
 Other identifying information that needs to be transported in plain text is cipher suites and connection identifiers. Encrypting crypto algorithms does not allow negotiation of cipher suite within 3 messages. Encryption of connection identifiers only works in asymmetric case and does not enable arbitrarily short identifiers (see {{AKE-OSCORE}}).
 
@@ -214,19 +219,21 @@ Other identifying information that needs to be transported in plain text is ciph
 
 In order to reduce round trips and number of messages, and in some cases also streamline processing, certain applications may want to transport application data together with the AKE message. 
 
-One example is the transport of third-party signed authorization information such as an access token or a voucher from initiator to responder or vice versa. Such a scheme could enable the party receiving the authorization information to make a decision about whether the party being authenticated is also authorized before the protocol is completed, and if not then discontinue the protocol before it is complete, thereby saving time and message processing.
+One example is the transport of third-party signed authorization information such as an access token or a voucher from initiator to responder or vice versa. Such a scheme could enable the party receiving the authorization information to make a decision about whether the party being authenticated is also authorized before the protocol is completed, and if not then discontinue the protocol before it is complete, thereby saving time and message processing. This application can be further optimized by using an AKE with static DH keys [TBD].
 
 Another example is the embedding of a certificate enrolment request or a newly issued certificate.
 
 The AKE must support the transport of application data together with the protocol messages. 
 
-It is expected that an AKE with 3 messages will provide the following protection of the application data:
+Application data may contain privacy sensitive information. The application data must not violate the AKE security properties. 
+The AKE needs to provide clear guidance on the level of security provided to application data at different stages of the protocol.
+
+For example, for a SIGMA-I AKE it is expected that the 3 messages will provide the following protection of the application data:
 
 *  Application data in the first message is unprotected
 *  Application data in the second message is confidentiality protected against passive attackers and integrity protected against active attackers
 *  Application data in the third message is confidentiality and integrity protected against active attackers
 
-Application data may contain privacy sensitive information. The application data must not violate the AKE security properties. The assumptions on the application data need to be detailed in the specification of the AKE.
 
 ## Extensibility 
 
