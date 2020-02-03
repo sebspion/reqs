@@ -161,7 +161,7 @@ The common lack of a user interface in constrained devices leads to various cred
 The use of RPKs may be appropriate for the authentication of the AKE initiator but not for the AKE responder.
 The AKE must support different credentials for authentication in different directions of the AKE run, e.g. certificate-based authentication for the initiating endpoint and RPK-based authentication for the responding endpoint.
 
-Assuming that both signature public keys and static DH public keys are in use, then also the case of mixed credentials need to be supported with one endpoint using a static DH public key and the other using a signature public key.
+Assuming that both signature public keys and static DH public keys are in use, then also the case of mixed credentials need to be supported with one endpoint using a static DH public key and the other using a signature public key. The AKE shall support the initiator signaling which public key credential mix to be used in the protocol such that the responder knows and can verify that the intended variant was executed.
 
 
 ## Mutual Authentication {#mutual-auth}
