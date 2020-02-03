@@ -215,24 +215,24 @@ In case of a PSK identifier, this may be protected against passive attackers, fo
 Other identifying information that needs to be transported in plain text is cipher suites and connection identifiers. Encrypting crypto algorithms does not allow negotiation of cipher suite within 3 messages. Encryption of connection identifiers only works in asymmetric case and does not enable arbitrarily short identifiers (see {{AKE-OSCORE}}).
 
 
-## Application Data
+## Auxiliary Data
 
-In order to reduce round trips and number of messages, and in some cases also streamline processing, certain applications may want to transport application data together with the AKE message. 
+In order to reduce round trips and number of messages, and in some cases also streamline processing, certain security features may be  integrated into the AKE by transporting auxiliary data together with the AKE messages. 
 
-One example is the transport of third-party signed authorization information such as an access token or a voucher from initiator to responder or vice versa. Such a scheme could enable the party receiving the authorization information to make a decision about whether the party being authenticated is also authorized before the protocol is completed, and if not then discontinue the protocol before it is complete, thereby saving time and message processing. This application can be further optimized by using an AKE with static DH keys [TBD].
+One example is the transport of third-party authorization information such as an access token or a voucher from initiator to responder or vice versa. Such a scheme could enable the party receiving the authorization information to make a decision about whether the party being authenticated is also authorized before the protocol is completed, and if not then discontinue the protocol before it is complete, thereby saving time, message processing and data transmission. This application can be further optimized by using an AKE with static DH keys [TBD].
 
 Another example is the embedding of a certificate enrolment request or a newly issued certificate.
 
-The AKE must support the transport of application data together with the protocol messages. 
+The AKE must support the transport of such auxiliary data together with the protocol messages. 
 
-Application data may contain privacy sensitive information. The application data must not violate the AKE security properties. 
-The AKE needs to provide clear guidance on the level of security provided to application data at different stages of the protocol.
+Auxiliary data may contain privacy sensitive information. The auxiliary data must not violate the AKE security properties. 
+The AKE needs to provide clear guidance on the level of security provided to auxiliary data at different stages of the protocol.
 
-For example, for a SIGMA-I AKE it is expected that the 3 messages will provide the following protection of the application data:
+For example, for a SIGMA-I AKE it is expected that the 3 messages will provide the following protection of the auxiliary data:
 
-*  Application data in the first message is unprotected
-*  Application data in the second message is confidentiality protected against passive attackers and integrity protected against active attackers
-*  Application data in the third message is confidentiality and integrity protected against active attackers
+*  Auxiliary data in the first message is unprotected
+*  Auxiliary data in the second message is confidentiality protected against passive attackers and integrity protected against active attackers
+*  Auxiliary data in the third message is confidentiality and integrity protected against active attackers
 
 
 ## Extensibility 
