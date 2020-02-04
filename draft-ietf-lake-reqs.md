@@ -54,16 +54,16 @@ informative:
     target: https://docs.google.com/document/d/1wLoIexMLG3U9iYO5hzGzKjkvi-VDndQBbYRNsMUlh-k
     title: AKE for 6TiSCH
     date: March 2019
-    
+
   AKE-for-NB-IoT:
     target: https://github.com/EricssonResearch/EDHOC/blob/master/docs/NB%20IoT%20power%20consumption.xlsx
     title: AKE for NB-IoT
     date: March 2019
-    
+
   NB-IoT-battery-life-evaluation:
     target: http://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_AH/NR_AH_1701/Docs//R1-1701044.zip
     title: "On mMTC, NB-IoT and eMTC battery life evaluation"
-    date: Jan 2017          
+    date: Jan 2017
 
   HKDF:
     target: https://eprint.iacr.org/2010/264.pdf
@@ -97,7 +97,7 @@ This document compiles the requirements for a lightweight authenticated key exch
 
 # Introduction  {#intro}
 
-OSCORE {{RFC8613}} is a lightweight communication security protocol providing end-to-end security on application layer for constrained IoT settings (cf. {{RFC7228}}). OSCORE lacks a matching authenticated key exchange protocol (AKE). The intention with LAKE is to create a simple yet secure AKE for implementation in embedded devices supporting OSCORE. 
+OSCORE {{RFC8613}} is a lightweight communication security protocol providing end-to-end security on application layer for constrained IoT settings (cf. {{RFC7228}}). OSCORE lacks a matching authenticated key exchange protocol (AKE). The intention with LAKE is to create a simple yet secure AKE for implementation in embedded devices supporting OSCORE.
 
 To ensure that the AKE is efficient for the expected applications of OSCORE, we list the relevant public specifications of technologies where OSCORE is included:
 
@@ -109,7 +109,7 @@ To ensure that the AKE is efficient for the expected applications of OSCORE, we 
 
 Other industry fora which plan to use OSCORE:
 
-* Open Connectivity Foundation (OCF) has been actively involved in the OSCORE development for the purpose of deploying OSCORE. 
+* Open Connectivity Foundation (OCF) has been actively involved in the OSCORE development for the purpose of deploying OSCORE.
 
 * Fairhair Alliance has defined an architecture {{Fairhair}} which adopts OSCORE for multicast, but it is not clear whether the architecture will support unicast OSCORE. Fairhair Alliance merged with OCF in November 2019.
 
@@ -166,7 +166,7 @@ Assuming that both signature public keys and static DH public keys are in use, t
 
 ## Mutual Authentication {#mutual-auth}
 
-The AKE must provide mutual authentication during the protocol run. At the end of the AKE protocol, each endpoint shall have authenticated the other. 
+The AKE must provide mutual authentication during the protocol run. At the end of the AKE protocol, each endpoint shall have authenticated the other.
 
 The AKE cannot rely on messages being exchanged in both directions after the AKE has completed, because CoAP/OSCORE requests may not have a response {{RFC7967}}. Furthermore, there is no assumption of dependence between CoAP client/server and AKE initiator/responder roles, and an OSCORE context may be used with CoAP client and server roles interchanged as is done e.g. in {{LwM2M}}. Since the protocol may be initiated by different endpoints, it shall not be necessary to determine beforehand which endpoint takes the role of initiator of the AKE.
 
@@ -176,7 +176,7 @@ The mutual authentication guarantees of the AKE shall guarantee the following pr
 
 * The AKE shall provide Key Compromise Impersonation (KCI) resistance.
 
-* The AKE shall protect against identity misbinding attacks, when applicable. Note that the identity may be directly related to a public key such as for example the public key itself, a hash of the public key, or data unrelated to a key. 
+* The AKE shall protect against identity misbinding attacks, when applicable. Note that the identity may be directly related to a public key such as for example the public key itself, a hash of the public key, or data unrelated to a key.
 
 * The AKE shall protect against reflection attacks, but need not protect against attacks when more than two parties legitimately share keys (cf. the Selfie attack on TLS 1.3) as that setting is out of scope.
 
@@ -187,18 +187,18 @@ Furthermore, the endpoints shall be able to verify that the identity of the othe
 
 ## Crypto Agility and Security Properties {#crypto-agility}
 
-Motivated by long deployment lifetimes, the AKE is required to support crypto agility, including modularity of COSE crypto algorithms and negotiation of preferred crypto algorithms for OSCORE and the AKE. 
+Motivated by long deployment lifetimes, the AKE is required to support crypto agility, including modularity of COSE crypto algorithms and negotiation of preferred crypto algorithms for OSCORE and the AKE.
 
-* The protocol shall support both pre-shared key and asymmetric key authentication. PAKE and post-quantum key exchange is out of scope, but may be supported in a later version. 
+* The protocol shall support both pre-shared key and asymmetric key authentication. PAKE and post-quantum key exchange is out of scope, but may be supported in a later version.
 * The protocol shall allow multiple elliptic curves for asymmetric keys
 * The AKE shall support negotiation of all the COSE algorithms used in the AKE and that OSCORE supports. A successful negotiation shall result in the most preferred algorithms of one of the parties which are supported by the other.
 * The AKE shall support different AEAD/MAC algorithms for AKE and OSCORE
 
 
-The AKE negotiation must be protected against downgrade attacks. 
-\[Further detailing is requested.\] 
+The AKE negotiation must be protected against downgrade attacks.
+\[Further detailing is requested.\]
 
-Compromise of initiator or responder long-term keys shall not enable an attacker to compromise past session keys (Perfect Forward Secrecy) and shall not enable a passive attacker to compromise future session keys. These two properties can be achieved e.g. with an ephemeral Diffie-Hellman key exchange. 
+Compromise of initiator or responder long-term keys shall not enable an attacker to compromise past session keys (Perfect Forward Secrecy) and shall not enable a passive attacker to compromise future session keys. These two properties can be achieved e.g. with an ephemeral Diffie-Hellman key exchange.
 
 To mitigate against bad random number generators the AKE shall mandate randomness improvements such as {{I-D.irtf-cfrg-randomness-improvements}} and analogously for symmetric keys.
 
@@ -217,15 +217,15 @@ Other identifying information that needs to be transported in plain text is ciph
 
 ## Auxiliary Data
 
-In order to reduce round trips and number of messages, and in some cases also streamline processing, certain security features may be  integrated into the AKE by transporting auxiliary data together with the AKE messages. 
+In order to reduce round trips and number of messages, and in some cases also streamline processing, certain security features may be  integrated into the AKE by transporting auxiliary data together with the AKE messages.
 
 One example is the transport of third-party authorization information such as an access token or a voucher from initiator to responder or vice versa. Such a scheme could enable the party receiving the authorization information to make a decision about whether the party being authenticated is also authorized before the protocol is completed, and if not then discontinue the protocol before it is complete, thereby saving time, message processing and data transmission. This application can be further optimized by using an AKE with static DH keys [TBD].
 
 Another example is the embedding of a certificate enrolment request or a newly issued certificate.
 
-The AKE must support the transport of such auxiliary data together with the protocol messages. 
+The AKE must support the transport of such auxiliary data together with the protocol messages.
 
-Auxiliary data may contain privacy sensitive information. The auxiliary data must not violate the AKE security properties. 
+Auxiliary data may contain privacy sensitive information. The auxiliary data must not violate the AKE security properties.
 The AKE needs to provide clear guidance on the level of security provided to auxiliary data at different stages of the protocol.
 
 For example, for a SIGMA-I AKE it is expected that the 3 messages will provide the following protection of the auxiliary data:
@@ -235,19 +235,19 @@ For example, for a SIGMA-I AKE it is expected that the 3 messages will provide t
 *  Auxiliary data in the third message is confidentiality and integrity protected against active attackers
 
 
-## Extensibility 
+## Extensibility
 
-It is desirable that the AKE supports some kind of extensibility, in particular,  the ability to later include new AKE modes such as PAKE support. Note that by supporting COSE, the AKE can already support new algorithms, new certificate formats, ways to identify credentials, etc. 
+It is desirable that the AKE supports some kind of extensibility, in particular,  the ability to later include new AKE modes such as PAKE support. Note that by supporting COSE, the AKE can already support new algorithms, new certificate formats, ways to identify credentials, etc.
 
-Since the main objective with this work is to create a simple yet secure AKE, 
+Since the main objective with this work is to create a simple yet secure AKE,
 care needs to be taken to avoid feature creep and extensions working against this.
 
 
 ## Denial of Service
 
-The AKE shall protect against denial of service attacks on responder and initiator to the extent that the protocol supports lightweight deployments (see {{lw}}) and without duplicating the DoS mitigation of the underlying transport (see {{AKE-OSCORE}}). 
+The AKE shall protect against denial of service attacks on responder and initiator to the extent that the protocol supports lightweight deployments (see {{lw}}) and without duplicating the DoS mitigation of the underlying transport (see {{AKE-OSCORE}}).
 
-Jamming attacks, cutting cables etc. leading to long term loss of availability may not be possible to mitigate, but an attacker temporarily injecting messages or disturbing the communication shall not have a similar impact. 
+Jamming attacks, cutting cables etc. leading to long term loss of availability may not be possible to mitigate, but an attacker temporarily injecting messages or disturbing the communication shall not have a similar impact.
 
 
 
@@ -262,7 +262,7 @@ OSCORE stack
 
 These properties need to be considered in the context of the use of an existing CoAP/OSCORE stack in the targeted networks and technologies. Some properties are difficult to evaluate for a given protocol, for example, because they depend on the radio conditions or other simultaneous network traffic.  Additionally, these properties are not independent. Therefore the properties listed here should be taken as input for identifying plausible protocol metrics that can be more easily measured and compared between protocols.
 
-Per 'bytes on the wire', it is desirable for the AKE messages to fit into the MTU size of these protocols; and if not possible, within as few frames as possible, since using multiple MTUs can have significant costs in terms of time and power. Note that the MTU size depends on radio technology and its characteristics, including data rates, number of hops, etc. Example benchmarks are given further down in this section. 
+Per 'bytes on the wire', it is desirable for the AKE messages to fit into the MTU size of these protocols; and if not possible, within as few frames as possible, since using multiple MTUs can have significant costs in terms of time and power. Note that the MTU size depends on radio technology and its characteristics, including data rates, number of hops, etc. Example benchmarks are given further down in this section.
 
 Per 'time', it is desirable for the AKE message exchange(s) to complete in a reasonable amount of time, both for a single uncongested exchange and when multiple exchanges are running in an interleaved fashion, like e.g. in a "network formation" setting when multiple devices connect for the first time. This latency may not be a linear function depending on congestion and the specific radio technology used. As these are relatively low data rate networks, the latency contribution due to computation is in general not expected to be dominant.
 
@@ -277,11 +277,11 @@ While the large variety of settings and capabilities of the devices and networks
 
 ### LoRaWAN
 
-Reflecting deployment reality as of now, we focus on the European regulation as described in ETSI EN 300 220. LoRaWAN employs unlicensed radio frequency bands in the 868 MHz ISM band. For LoRaWAN the most relevant metric is the Time-on-Air, which determines the period before the next communication can occur and also which can be used as an indicator to calculate energy consumption. LoRaWAN is legally required to use a duty cycle with values such as 0.1%, 1% and 10% depending on the sub-band that is being used, leading to a payload split into fragments interleaved with unavailable times. For Europe, the duty cycle is 1% (or smaller). Although there are exceptions from the use of duty cycle, the use of an AKE for providing end-to-end security on application layer needs to comply with the duty cycle. 
+Reflecting deployment reality as of now, we focus on the European regulation as described in ETSI EN 300 220. LoRaWAN employs unlicensed radio frequency bands in the 868 MHz ISM band. For LoRaWAN the most relevant metric is the Time-on-Air, which determines the period before the next communication can occur and also which can be used as an indicator to calculate energy consumption. LoRaWAN is legally required to use a duty cycle with values such as 0.1%, 1% and 10% depending on the sub-band that is being used, leading to a payload split into fragments interleaved with unavailable times. For Europe, the duty cycle is 1% (or smaller). Although there are exceptions from the use of duty cycle, the use of an AKE for providing end-to-end security on application layer needs to comply with the duty cycle.
 
 #### Bytes on the wire
 
-LoRaWAN has a variable MTU depending on the Spreading Factor (SF). The higher the spreading factor, the higher distances can be achieved and/or better reception. If the coverage and distance allows it, with SF7 -- corresponding to higher data rates -- the maximum payload is 222 bytes. For a SF12 -- and low data rates -- the maximum payload is 51 bytes. 
+LoRaWAN has a variable MTU depending on the Spreading Factor (SF). The higher the spreading factor, the higher distances can be achieved and/or better reception. If the coverage and distance allows it, with SF7 -- corresponding to higher data rates -- the maximum payload is 222 bytes. For a SF12 -- and low data rates -- the maximum payload is 51 bytes.
 
 The benchmark used here is Data Rates 0-2 corresponding to a packet size of 51 bytes {{LoRaWAN}}. The use of larger frame size depend on good radio conditions which are not always present. Some libraries/providers only support 51-bytes packet size.
 
@@ -348,35 +348,35 @@ From the power consumption point of view, it is more favorable to send a small n
 
 NB-IoT achieves these design objectives by:
 
-* Reduced baseband processing, memory and RF enabling low complexity device implementation. 
+* Reduced baseband processing, memory and RF enabling low complexity device implementation.
 * A lightweight setup minimizing control signaling overhead to optimize power consumption.
 * In-band, guard-band, and stand-alone deployment enabling efficient use of spectrum and network infrastructure.
 
 
-#### Bytes on the wire {#nbiot-bytes} 
+#### Bytes on the wire {#nbiot-bytes}
 
 The number of bytes on the wire in a protocol message has a direct effect on the performance for NB-IoT. In contrast to LoRaWAN and 6TiSCH, the NB-IoT radio bearers are not characterized by a fixed sized PDU. Concatenation, segmentation and reassembly are part of the service provided by the NB-IoT radio layer. As a consequence, the byte count has a measurable impact on time and energy consumption for running the AKE.
 
 
-#### Time {#nbiot-time} 
+#### Time {#nbiot-time}
 
 Coverage significantly impacts the available bit rate and thereby the time for transmitting a message, and there is also a difference between downlink and uplink transmissions (see {{nbiot-power}}). The transmission time for the message is essentially proportional to the number of bytes.
 
 Since NB-IoT is operating in licensed spectrum, in contrast to e.g. LoRaWAN, the packets on the radio interface can be transmitted back-to-back, so the time before sending OSCORE protected data is limited by the number of round trips/messages of the AKE and not by a duty cycle.
 
 
-#### Round trips and number of messages {#nbiot-rtt} 
+#### Round trips and number of messages {#nbiot-rtt}
 
 As indicated in {{nbiot-time}}, the number of messages and round-trips is one limiting factor for protocol completion time.
- 
 
-#### Power {#nbiot-power} 
 
-Since NB-IoT is operating in licensed spectrum, the device is allowed to transmit at a relatively high power, which has a large impact on the energy consumption. 
+#### Power {#nbiot-power}
+
+Since NB-IoT is operating in licensed spectrum, the device is allowed to transmit at a relatively high power, which has a large impact on the energy consumption.
 
 The benchmark for NB-IoT energy consumption is based on the same computational model as was used by 3GPP in the design of this radio layer {{NB-IoT-battery-life-evaluation}}. The device power consumption is assumed to be 500mW for transmission and 80mW for reception. Power consumption for "light sleep" (~ 3mW) and ”deep sleep” (~ 0.015mW) are negligible in comparison. The bitrates (uplink/downlink) are assumed to be 28/170 kbps for good coverage and 0,37/2,5 kbps for bad coverage.
 
-The results {{AKE-for-NB-IoT}} show a high per-byte energy consumption for uplink transmissions, in particular in bad coverage. Given that the application decides about the device being initiator or responder in the AKE, the protocol cannot be tailored for a particular message being uplink or downlink. To perform well in both kind of applications the overall number of bytes of the protocol needs to be as low as possible. 
+The results {{AKE-for-NB-IoT}} show a high per-byte energy consumption for uplink transmissions, in particular in bad coverage. Given that the application decides about the device being initiator or responder in the AKE, the protocol cannot be tailored for a particular message being uplink or downlink. To perform well in both kind of applications the overall number of bytes of the protocol needs to be as low as possible.
 
 
 ### Discussion {#disc}
@@ -393,7 +393,7 @@ The difference between uplink and downlink performance should not be engineered 
 
 One question that has been asked in the context of lightweightness is: - How often is the AKE executed? While it may be impossible to give a precise answer there are other perspectives to this question.
 
-1. For some use cases, already one execution of the AKE is heavy, for example, because 
+1. For some use cases, already one execution of the AKE is heavy, for example, because
    * there are a number of parallel executions of the AKE which loads down the network, such as in a network formation setting, or
    * the duty cycle makes the completion time long for even one run of the protocol.
 
@@ -402,10 +402,10 @@ One question that has been asked in the context of lightweightness is: - How oft
 3. To limit the impact of a key compromise, BSI, NIST and ANSSI and other organizations recommend in other contexts frequent renewal of keys by means of Diffie-Hellman key exchange. This may be a symmetric key authenticated key exchange, where the symmetric key is obtained from a previous asymmetric key based run of the AKE.
 
 
-To summarize, even if it we are unable to give precise numbers for AKE frequency, a lightweight AKE 
+To summarize, even if it we are unable to give precise numbers for AKE frequency, a lightweight AKE
 
 * reduces the time for network formation and AKE runs in challenging radio technologies,
-* allows devices to quickly re-establish security in case of reboots, and 
+* allows devices to quickly re-establish security in case of reboots, and
 * enables support for recommendations of frequent key renewal
 
 
