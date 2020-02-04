@@ -239,9 +239,17 @@ For example, for a SIGMA-I AKE it is expected that the 3 messages will provide t
 
 It is desirable that the AKE supports some kind of extensibility, in particular,  the ability to later include new AKE modes such as PAKE support. Note that by supporting COSE, the AKE can already support new algorithms, new certificate formats, ways to identify credentials, etc.
 
-Since the main objective with this work is to create a simple yet secure AKE,
-care needs to be taken to avoid feature creep and extensions working against this.
+The main objective with this work is to create a simple yet secure AKE.
+The AKE should avoid having multiple ways to express the same thing.
+When the underlying encodings offered by CBOR offer multiple possibility the
+AKE should be strongly opinioniated, and clearly specify which one will be used.
 
+While remaining extensible, the AKE should avoid optional mechanisms which
+introduce code paths that are less well tested.
+
+The AKE should mechanisms where an initiator takes a guess at the policy, and
+when it receives a negative response, must guess, based upon what it has
+tried, what to do next.
 
 ## Denial of Service
 
