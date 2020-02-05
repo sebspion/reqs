@@ -247,7 +247,7 @@ AKE should be strongly opinioniated, and clearly specify which one will be used.
 While remaining extensible, the AKE should avoid optional mechanisms which
 introduce code paths that are less well tested.
 
-The AKE should mechanisms where an initiator takes a guess at the policy, and
+The AKE should avoid mechanisms where an initiator takes a guess at the policy, and
 when it receives a negative response, must guess, based upon what it has
 tried, what to do next.
 
