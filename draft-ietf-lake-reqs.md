@@ -198,7 +198,7 @@ Motivated by long deployment lifetimes, the AKE is required to support crypto ag
 The AKE negotiation must be protected against downgrade attacks.
 \[Further detailing is requested.\]
 
-Compromise of initiator or responder long-term keys shall not enable an attacker to compromise past session keys (Perfect Forward Secrecy) and shall not enable a passive attacker to compromise future session keys. These two properties can be achieved e.g. with an ephemeral Diffie-Hellman key exchange.
+Compromise of initiator or responder long-term keys shall not enable an attacker to compromise past session keys (Perfect Forward Secrecy) and shall not enable a passive attacker to compromise future session keys. These two properties can be achieved e.g. with an ephemeral Diffie-Hellman key exchange. Perfect Forward Secrecy may alternatively be achieved with a nonce exchange followed by appropriately derived new session keys provided that state can be kept in the form of a session counter, for example as a resumption procedure. The decision whether such a procedure needs to be specified within the LAKE protocol is left for the design phase.
 
 To mitigate against bad random number generators the AKE shall mandate randomness improvements such as {{I-D.irtf-cfrg-randomness-improvements}} and analogously for symmetric keys.
 
