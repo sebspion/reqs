@@ -49,6 +49,8 @@ informative:
   I-D.ietf-cose-x509:
   I-D.ietf-core-echo-request-tag:
   I-D.irtf-cfrg-randomness-improvements:
+  I-D.selander-ace-ake-authz:
+  
 
   AKE-for-6TiSCH:
     target: https://docs.google.com/document/d/1wLoIexMLG3U9iYO5hzGzKjkvi-VDndQBbYRNsMUlh-k
@@ -219,7 +221,7 @@ Other identifying information that needs to be transported in plain text is ciph
 
 In order to reduce round trips and number of messages, and in some cases also streamline processing, certain security features may be  integrated into the AKE by transporting auxiliary data together with the AKE messages.
 
-One example is the transport of third-party authorization information such as an access token or a voucher from initiator to responder or vice versa. Such a scheme could enable the party receiving the authorization information to make a decision about whether the party being authenticated is also authorized before the protocol is completed, and if not then discontinue the protocol before it is complete, thereby saving time, message processing and data transmission. This application can be further optimized by using an AKE with static DH keys [TBD].
+One example is the transport of third-party authorization information such as an access token or a voucher from initiator to responder or vice versa. Such a scheme could enable the party receiving the authorization information to make a decision about whether the party being authenticated is also authorized before the protocol is completed, and if not then discontinue the protocol before it is complete, thereby saving time, message processing and data transmission. This application can be further optimized by using an AKE with static DH keys {{I-D.selander-ace-ake-authz}}.
 
 Another example is the embedding of a certificate enrolment request or a newly issued certificate.
 
