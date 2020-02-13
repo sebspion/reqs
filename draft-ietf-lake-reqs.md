@@ -194,7 +194,7 @@ Motivated by long deployment lifetimes, the AKE is required to support crypto ag
 * The protocol shall support both pre-shared key and asymmetric key authentication. PAKE and post-quantum key exchange is out of scope, but may be supported in a later version.
 * The protocol shall allow multiple elliptic curves for asymmetric keys
 * The AKE shall support negotiation of all the COSE algorithms used in the AKE and that OSCORE supports. A successful negotiation shall result in the most preferred algorithms of one of the parties which are supported by the other.
-* The AKE shall support different AEAD/MAC algorithms for AKE and OSCORE
+* The AKE shall support different AEAD/MAC algorithms for AKE and OSCORE. In particular, the length of the MAC for the AKE may be required to be larger than for OSCORE. Other instances of algorithms different for the AKE and OSCORE may be added in the design phase.
 
 
 The AKE negotiation must be protected against downgrade attacks.
