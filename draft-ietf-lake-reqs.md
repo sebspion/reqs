@@ -193,7 +193,11 @@ The shared secret established by the AKE must be known only to the two authentic
 
 A passive network attacker should never learn any session keys, even if it knows both endpoints' long-term keys.
 
-An active attacker who has compromises the initiator or responder credential shall still not be able to compute past session keys (Perfect Forward Secrecy). These properties can be achieved e.g. with an ephemeral Diffie-Hellman key exchange.
+An active attacker who has compromised the initiator or responder credential shall still not be able to compute past session keys (Perfect Forward Secrecy). These properties can be achieved e.g. with an ephemeral Diffie-Hellman key exchange. 
+
+Perfect Forward Secrecy may alternatively be achieved with a nonce exchange followed by appropriately derived new session keys provided that state can be kept in the form of a session counter. Note that OSCORE specifies a method for session key update involving a nonce exchange (see Appendix B in {{RFC8613}}). 
+
+The AKE shall provide a mechanism to use the output of one handshake to optimize future handshakes, e.g., by generating keying material which can be used to authenticate a future handshake, thus avoiding the need for public key authentication in that handshake.
 
 To mitigate against bad random number generators the AKE shall mandate randomness improvements such as {{I-D.irtf-cfrg-randomness-improvements}}.
 
