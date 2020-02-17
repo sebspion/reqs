@@ -128,11 +128,12 @@ The rationale for designing this protocol is that OSCORE is lacking a matching A
 
 In order to be suitable for OSCORE, at the end of the AKE protocol run the two parties must agree on (see Section 3.2 of {{RFC8613}}):
 
-* a shared secret (OSCORE Master Secret) with Perfect Forward Secrecy (PFS, see {{crypto-agility}}) and a good amount of randomness. (The term "good amount of randomness" is borrowed from {{HKDF}} to signify not necessarily uniformly distributed randomness.)
+* A shared secret (OSCORE Master Secret) with Perfect Forward Secrecy (PFS, see {{confidentiality}}) and a good amount of randomness. (The term "good amount of randomness" is borrowed from {{HKDF}} to signify not necessarily uniformly distributed randomness.)
 
 * OSCORE Sender IDs of peer endpoints, arbitrarily short
 
 * COSE algorithms to use with OSCORE
+
 
 COSE provides the crypto primitives for OSCORE, and shall therefore be used also by the AKE, for several reasons including maintenance of crypto library. COSE provides identification of credentials and algorithms for OSCORE and the AKE, and an extension point for new schemes.
 
@@ -168,13 +169,11 @@ Assuming that both signature public keys and static DH public keys are in use, t
 
 ## Mutual Authentication {#mutual-auth}
 
-The AKE must provide mutual authentication during the protocol run. At the end of the AKE protocol, each endpoint shall have authenticated the other.
+The AKE must provide mutual authentication during the protocol run. At the end of the AKE protocol, each endpoint shall have authenticated the other's credential. In particular, both endpoints must agree on a fresh session identifier, and the roles and credentials of both endpoints.
 
-The AKE cannot rely on messages being exchanged in both directions after the AKE has completed, because CoAP/OSCORE requests may not have a response {{RFC7967}}. Furthermore, there is no assumption of dependence between CoAP client/server and AKE initiator/responder roles, and an OSCORE context may be used with CoAP client and server roles interchanged as is done e.g. in {{LwM2M}}. Since the protocol may be initiated by different endpoints, it shall not be necessary to determine beforehand which endpoint takes the role of initiator of the AKE.
+Since the protocol may be initiated by different endpoints, it shall not be necessary to determine beforehand which endpoint takes the role of initiator of the AKE.
 
-A consequence of mutual authentication during the AKE and that the subsequent message exchange is not predictable is that the AKE needs at least three messages.
-
-The mutual authentication guarantees of the AKE shall guarantee the following properties:
+The mutual authentication guarantees of the AKE shall at least guarantee the following properties:
 
 * The AKE shall provide Key Compromise Impersonation (KCI) resistance.
 
@@ -186,24 +185,26 @@ Moreover, it shall be possible for the receiving endpoint to detect a replayed A
 
 Furthermore, the endpoints shall be able to verify that the identity of the other endpoint is an acceptable identity that it is intended to authenticate to. (This requirement extends beyond the AKE in that the application must enable access to information about acceptable identities without compromising the overall lightweightness of the AKE.)
 
+## Confidentiality {#confidentiality}
 
-## Crypto Agility and Security Properties {#crypto-agility}
+The shared secret established by the AKE must be known only to the two authenticated endpoints.
 
-Motivated by long deployment lifetimes, the AKE is required to support crypto agility, including modularity of COSE crypto algorithms and negotiation of preferred crypto algorithms for OSCORE and the AKE.
+A passive network attacker should never learn any session keys, even if it knows both endpoints' long-term keys.
+
+An active attacker who has compromises the initiator or responder credential shall still not be able to compute past session keys (Perfect Forward Secrecy). These properties can be achieved e.g. with an ephemeral Diffie-Hellman key exchange.
+
+To mitigate against bad random number generators the AKE shall mandate randomness improvements such as {{I-D.irtf-cfrg-randomness-improvements}}.
+
+## Cryptographic Agility and Negotiation Integrity {#crypto-agility}
+
+Motivated by long deployment lifetimes, the AKE is required to support cryptographic agility, including the modularity of COSE crypto algorithms and negotiation of preferred crypto algorithms for OSCORE and the AKE.
 
 * The protocol shall support both pre-shared key and asymmetric key authentication. PAKE and post-quantum key exchange is out of scope, but may be supported in a later version.
-* The protocol shall allow multiple elliptic curves for asymmetric keys
-* The AKE shall support negotiation of all the COSE algorithms used in the AKE and that OSCORE supports. A successful negotiation shall result in the most preferred algorithms of one of the parties which are supported by the other.
-* The AKE shall support different AEAD/MAC algorithms for AKE and OSCORE
+* The protocol shall allow multiple elliptic curves for Diffie-Hellman operations and signature-based authentication.
+* The AKE shall support negotiation of all the COSE algorithms to be used in the AKE and in OSCORE. A successful negotiation shall result in the most preferred algorithms of one of the parties which are supported by the other.
+* The AKE may choose different sets of symmetric crypto algorithms (AEAD, MAC, etc.) for AKE and for OSCORE. In particular, the length of the MAC for the AKE may be required to be larger than for OSCORE.
 
-
-The AKE negotiation must be protected against downgrade attacks.
-\[Further detailing is requested.\]
-
-Compromise of initiator or responder long-term keys shall not enable an attacker to compromise past session keys (Perfect Forward Secrecy) and shall not enable a passive attacker to compromise future session keys. These two properties can be achieved e.g. with an ephemeral Diffie-Hellman key exchange.
-
-To mitigate against bad random number generators the AKE shall mandate randomness improvements such as {{I-D.irtf-cfrg-randomness-improvements}} and analogously for symmetric keys.
-
+The AKE negotiation must provide strong integrity guarantees against active attackers. At the end of the AKE protocol, both endpoints must agree on both the crypto algorithms that were proposed and those that were chosen. In particular, the protocol must protect against downgrade attacks.
 
 
 ## Identity Protection
@@ -435,7 +436,7 @@ To summarize, even if it we are unable to give precise numbers for AKE frequency
 
 This document compiles the requirements for an AKE and provides some related security considerations.
 
-The AKE must provide the security properties expected of IETF protocols, e.g., providing confidentiality protection, integrity protection, and authentication as is further detailed in the requirements.
+The AKE must provide the security properties expected of IETF protocols, e.g., providing mutual authentication, confidentiality, and negotiation integrity as is further detailed in the requirements.
 
 # IANA Considerations  {#iana}
 
