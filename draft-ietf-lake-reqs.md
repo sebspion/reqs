@@ -222,12 +222,12 @@ In the case of public key identities, the AKE is required to protect the identit
 
 In case of a PSK identifier, this may be protected against passive attackers, for example with a key derived from a Diffie-Hellman shared secret at the earliest in flight 3. As a consequence, in order to authenticate the responder within the AKE, at least four protocol flights are needed in case of symmetric key authentication with identity protection. Considering the need to keep the number of round-trips at a minimum (see {{disc}}), unless there are other good reasons for having more than 3 flights, it is not required to protect the PSK identifier, and it may thus be sent in the first flight.
 
-Other identifying information that needs to be transported in plain text is cipher suites and connection identifiers. Encrypting crypto algorithms does not allow negotiation of cipher suite within 3 flight. Encryption of connection identifiers only works in asymmetric case and does not enable arbitrarily short identifiers (see {{AKE-OSCORE}}).
+Other identifying information that needs to be transported in plain text is cipher suites and connection identifiers. Encrypting crypto algorithms does not allow negotiation of cipher suite within 3 flights. Encryption of connection identifiers only works in asymmetric case and does not enable arbitrarily short identifiers (see {{AKE-OSCORE}}).
 
 
 ## Auxiliary Data
 
-In order to reduce round trips and the number of messages, and in some cases also streamline processing, certain security features may be  integrated into the AKE by transporting auxiliary data together with the AKE messages.
+In order to reduce round trips and the number of flights, and in some cases also streamline processing, certain security features may be  integrated into the AKE by transporting auxiliary data together with the AKE messages.
 
 One example is the transport of third-party authorization information such as an access token or a voucher from initiator to responder or vice versa. Such a scheme could enable the party receiving the authorization information to make a decision about whether the party being authenticated is also authorized before the protocol is completed, and if not then discontinue the protocol before it is complete, thereby saving time, message processing and data transmission. This application can be further optimized by using an AKE with static DH keys {{I-D.selander-ace-ake-authz}}.
 
@@ -284,7 +284,7 @@ Per 'bytes on the wire', it is desirable for the AKE messages to fit into the MT
 
 Per 'time', it is desirable for the AKE message exchange(s) to complete in a reasonable amount of time, both for a single uncongested exchange and when multiple exchanges are running in an interleaved fashion, like e.g. in a "network formation" setting when multiple devices connect for the first time. This latency may not be a linear function depending on congestion and the specific radio technology used. As these are relatively low data rate networks, the latency contribution due to computation is in general not expected to be dominant.
 
-Per 'round-trips', it is desirable that the number of completed request/response message exchanges required before the initiating endpoint can start sending protected traffic data is as small as possible, since this reduces completion time. See {{disc}} for a discussion about the tradeoff between message size and number of messages.
+Per 'round-trips', it is desirable that the number of completed request/response message exchanges required before the initiating endpoint can start sending protected traffic data is as small as possible, since this reduces completion time. See {{disc}} for a discussion about the tradeoff between message size and number of flights.
 
 Per 'power', it is desirable for the transmission of AKE messages and crypto to draw as little power as possible. The best mechanism for doing so differs across radio technologies.  For example, NB-IoT uses licensed spectrum and thus can transmit at higher power to improve coverage, making the transmitted byte count relatively more important than for other radio technologies.  In other cases, the radio transmitter will be active for a full MTU frame regardless of how much of the frame is occupied by message content, which makes the byte count less sensitive for the power consumption as long as it fits into the MTU frame. The power consumption thus increases with AKE message size and the largest impact is on average under poor network conditions.
 
@@ -309,14 +309,14 @@ The benchmark used here is Data Rates 0-2 corresponding to a packet size of 51 b
 The time it takes to send a message over the air in LoRaWAN can be calculated as a function of the different parameters of the communication. These are the Spreading Factor (SF), the message size, the channel, bandwidth, coding rate, etc. An important feature of LoRaWAN is the duty cycle limitation due to the use of the ISM band. A duty cycle of 1% implies that the time to complete a fragmentation of the payload increases by at least 10,000%. This limitation determines how long time the device will have to wait for next use, which encourages the reduction of the message size as much as possible.
 
 
-#### Round trips and number of messages
+#### Round trips and number of flights
 
 Considering the duty cycle of LoRaWAN and associated unavailable times, the round trips and number of LoRaWAN packets needs to be reduced as much as possible.
 
 
 #### Power
 
-The calculation of the power consumption in LoRaWAN is dependent on several factors, such as the spreading factor used and the length of the message sent, both having a clear dependency with the time it takes to transmit the message. The communication model (inherent to the different LoRaWAN classes of devices) also has an impact on the energy consumption, but overall the Time-on-Air is an important indication of the performance.
+The calculation of the power consumption in LoRaWAN is dependent on several factors, such as the spreading factor used and the length of the messages sent, both having a clear dependency with the time it takes to transmit the messages. The communication model (inherent to the different LoRaWAN classes of devices) also has an impact on the energy consumption, but overall the Time-on-Air is an important indication of the performance.
 
 
 ### 6TiSCH
@@ -346,7 +346,7 @@ Given the slotted nature of 6TiSCH, the number of bytes in a frame has insignifi
 The relevant metric for studying AKE is the network formation time, which implies parallel AKE runs among nodes that are attempting to join the network.
 Network formation time directly affects the time installers need to spend on site at deployment time.
 
-#### Round trips and number of messages
+#### Round trips and number of flights
 
 Given the mesh nature of the 6TiSCH network, and given that each message may travel several hops before reaching its destination, it is highly desirable to minimize the number of round trips to reduce latency.
 
@@ -378,12 +378,12 @@ The number of bytes on the wire in a protocol message has a direct effect on the
 
 #### Time {#nbiot-time}
 
-Coverage significantly impacts the available bit rate and thereby the time for transmitting a message, and there is also a difference between downlink and uplink transmissions (see {{nbiot-power}}). The transmission time for the message is essentially proportional to the number of bytes.
+Coverage significantly impacts the available bit rate and thereby the time for transmitting a message, and there is also a difference between downlink and uplink transmissions (see {{nbiot-power}}). The transmission time for a message is essentially proportional to the number of bytes.
 
-Since NB-IoT is operating in licensed spectrum, in contrast to e.g. LoRaWAN, the packets on the radio interface can be transmitted back-to-back, so the time before sending OSCORE protected data is limited by the number of round trips/messages of the AKE and not by a duty cycle.
+Since NB-IoT is operating in licensed spectrum, in contrast to e.g. LoRaWAN, the packets on the radio interface can be transmitted back-to-back, so the time before sending OSCORE protected data is limited by the number of round trips/flights of the AKE and not by a duty cycle.
 
 
-#### Round trips and number of messages {#nbiot-rtt}
+#### Round trips and number of flights {#nbiot-rtt}
 
 As indicated in {{nbiot-time}}, the number of frames and round-trips is one limiting factor for protocol completion time.
 
@@ -399,11 +399,11 @@ The results {{AKE-for-NB-IoT}} show a high per-byte energy consumption for uplin
 
 ### Discussion {#disc}
 
-While "as small protocol messages as possible" does not lend itself to a sharp boundary threshold, "as few protocol messages as possible" does and is relevant in all settings above.
+While "as small protocol messages as possible" does not lend itself to a sharp boundary threshold, "as few flights as possible" does and is relevant in all settings above.
 
 The penalty is high for not fitting into the frame sizes of 6TiSCH and LoRaWAN networks. Fragmentation is not defined within these technologies so requires fragmentation scheme on a higher layer in the stack. With fragmentation increases the number of frames per message, each with its associated overhead in terms of power consumption and latency. Additionally the probability for errors increases, which leads to retransmissions of frames or entire messages that in turn increases the power consumption and latency.
 
-There are trade-offs between "few messages" and "few frames"; if overhead is spread out over more messages such that each message fits into a particular frame this may reduce the overall power consumption. While it may be possible to engineer such a solution for a particular radio technology and signature algorithm, the benefits in terms of fewer messages/round trips in general and for NB-IoT in particular (see {{nb-iot}}) are considered more important than optimizing for a specific scenario. Hence an optimal AKE protocol has 3 messages and each messages fits into as few frames as possible, ideally 1 frame per messages.
+There are trade-offs between "few messages" and "few frames"; if overhead is spread out over more messages such that each message fits into a particular frame this may reduce the overall power consumption. For example, with a frame size of 50 bytes, two 60-byte messages will fragment into 4 frames in total, whereas three 40-byte messages fragment into 3 frames in total. While it may be possible to engineer such a solution for a particular radio technology and signature algorithm, the benefits in terms of fewer flights/round trips in general and for NB-IoT in particular (see {{nb-iot}}) are considered more important than optimizing for a specific scenario. Considering that an AKE protocol complying with these requirements is expected to have at least 3 messages, the optimal AKE has 3 messages and each message fits into as few frames as possible, ideally 1 frame per message.
 
 The difference between uplink and downlink performance should not be engineered into the protocol since it cannot be assumed that a particular protocol message will be sent uplink or downlink.
 
@@ -420,17 +420,17 @@ One question that has been asked in the context of lightweightness is: - How oft
 3. To limit the impact of a key compromise, BSI, NIST and ANSSI and other organizations recommend in other contexts frequent renewal of keys by means of Diffie-Hellman key exchange. This may be a symmetric key authenticated key exchange, where the symmetric key is obtained from a previous asymmetric key based run of the AKE.
 
 
-To summarize, even if it we are unable to give precise numbers for AKE frequency, a lightweight AKE
+To summarize, even if it we are unable to give precise numbers for AKE frequency, a lightweight AKE:
 
 * reduces the time for network formation and AKE runs in challenging radio technologies,
 * allows devices to quickly re-establish security in case of reboots, and
-* enables support for recommendations of frequent key renewal
+* enables support for recommendations of frequent key renewal.
 
 
 
 # Requirements Summary
 
-* The AKE must support PSK, RPK and certificate based authentication with PFS and crypto agility for AKE as well as OSCORE, be 3-pass and support transport over CoAP. It is required to support different schemes for transporting and identifying credentials.
+* The AKE must support PSK, RPK and certificate based authentication with PFS and crypto agility for AKE as well as OSCORE, have 3 flights and support transport over CoAP. It is required to support different schemes for transporting and identifying credentials.
 
 * After the AKE run, the peers must be mutually authenticated, agree on a shared secret with PFS and good amount of randomness, peer identifiers (potentially short), and COSE algorithms to use.
 
