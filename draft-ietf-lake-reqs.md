@@ -49,6 +49,8 @@ informative:
   I-D.ietf-cose-x509:
   I-D.ietf-core-echo-request-tag:
   I-D.irtf-cfrg-randomness-improvements:
+  I-D.selander-ace-ake-authz:
+  
 
   AKE-for-6TiSCH:
     target: https://docs.google.com/document/d/1wLoIexMLG3U9iYO5hzGzKjkvi-VDndQBbYRNsMUlh-k
@@ -126,11 +128,12 @@ The rationale for designing this protocol is that OSCORE is lacking a matching A
 
 In order to be suitable for OSCORE, at the end of the AKE protocol run the two parties must agree on (see Section 3.2 of {{RFC8613}}):
 
-* a shared secret (OSCORE Master Secret) with Perfect Forward Secrecy (PFS, see {{crypto-agility}}) and a good amount of randomness. (The term "good amount of randomness" is borrowed from {{HKDF}} to signify not necessarily uniformly distributed randomness.)
+* A shared secret (OSCORE Master Secret) with Perfect Forward Secrecy (PFS, see {{confidentiality}}) and a good amount of randomness. (The term "good amount of randomness" is borrowed from {{HKDF}} to signify not necessarily uniformly distributed randomness.)
 
 * OSCORE Sender IDs of peer endpoints, arbitrarily short
 
 * COSE algorithms to use with OSCORE
+
 
 COSE provides the crypto primitives for OSCORE, and shall therefore be used also by the AKE, for several reasons including maintenance of crypto library. COSE provides identification of credentials and algorithms for OSCORE and the AKE, and an extension point for new schemes.
 
@@ -166,13 +169,11 @@ Assuming that both signature public keys and static DH public keys are in use, t
 
 ## Mutual Authentication {#mutual-auth}
 
-The AKE must provide mutual authentication during the protocol run. At the end of the AKE protocol, each endpoint shall have authenticated the other.
+The AKE must provide mutual authentication during the protocol run. At the end of the AKE protocol, each endpoint shall have authenticated the other's credential. In particular, both endpoints must agree on a fresh session identifier, and the roles and credentials of both endpoints.
 
-The AKE cannot rely on messages being exchanged in both directions after the AKE has completed, because CoAP/OSCORE requests may not have a response {{RFC7967}}. Furthermore, there is no assumption of dependence between CoAP client/server and AKE initiator/responder roles, and an OSCORE context may be used with CoAP client and server roles interchanged as is done e.g. in {{LwM2M}}. Since the protocol may be initiated by different endpoints, it shall not be necessary to determine beforehand which endpoint takes the role of initiator of the AKE.
+Since the protocol may be initiated by different endpoints, it shall not be necessary to determine beforehand which endpoint takes the role of initiator of the AKE.
 
-A consequence of mutual authentication during the AKE and that the subsequent message exchange is not predictable is that the AKE needs at least three messages.
-
-The mutual authentication guarantees of the AKE shall guarantee the following properties:
+The mutual authentication guarantees of the AKE shall at least guarantee the following properties:
 
 * The AKE shall provide Key Compromise Impersonation (KCI) resistance.
 
@@ -184,26 +185,32 @@ Moreover, it shall be possible for the receiving endpoint to detect a replayed A
 
 Furthermore, the endpoints shall be able to verify that the identity of the other endpoint is an acceptable identity that it is intended to authenticate to. (This requirement extends beyond the AKE in that the application must enable access to information about acceptable identities without compromising the overall lightweightness of the AKE.)
 
+As often is the case, it is expected that an AKE fulfilling these goals would have at least three flights of messages (with each flight potentially consisting of one or more messages, depending on the AKE design and the mapping to OSCORE).
 
-## Crypto Agility and Security Properties {#crypto-agility}
+## Confidentiality {#confidentiality}
 
-Motivated by long deployment lifetimes, the AKE is required to support crypto agility, including modularity of COSE crypto algorithms and negotiation of preferred crypto algorithms for OSCORE and the AKE.
+The shared secret established by the AKE must be known only to the two authenticated endpoints.
 
-* The protocol shall support both pre-shared key and asymmetric key authentication. PAKE and post-quantum key exchange is out of scope, but may be supported in a later version.
-* The protocol shall allow multiple elliptic curves for asymmetric keys
-* The AKE shall support negotiation of all the COSE algorithms used in the AKE and that OSCORE supports. A successful negotiation shall result in the most preferred algorithms of one of the parties which are supported by the other.
-* The AKE shall support different AEAD/MAC algorithms for AKE and OSCORE
+A passive network attacker should never learn any session keys, even if it knows both endpoints' long-term keys.
 
+An active attacker who has compromised the initiator or responder credential shall still not be able to compute past session keys (Perfect Forward Secrecy). These properties can be achieved e.g. with an ephemeral Diffie-Hellman key exchange. 
 
-The AKE negotiation must be protected against downgrade attacks.
-\[Further detailing is requested.\]
-
-Compromise of initiator or responder long-term keys shall not enable an attacker to compromise past session keys (Perfect Forward Secrecy) and shall not enable a passive attacker to compromise future session keys. These two properties can be achieved e.g. with an ephemeral Diffie-Hellman key exchange. Perfect Forward Secrecy may alternatively be achieved with a nonce exchange followed by appropriately derived new session keys provided that state can be kept in the form of a session counter, for example as a resumption procedure. Note that OSCORE specifies a method for session key change following a nonce exchange (see Appendix B in {{RFC8613}}). The decision whether such a procedure needs to be specified within the LAKE protocol is left for the design phase.
+Perfect Forward Secrecy may alternatively be achieved with a nonce exchange followed by appropriately derived new session keys provided that state can be kept in the form of a session counter. Note that OSCORE specifies a method for session key update involving a nonce exchange (see Appendix B in {{RFC8613}}). 
 
 The AKE shall provide a mechanism to use the output of one handshake to optimize future handshakes, e.g., by generating keying material which can be used to authenticate a future handshake, thus avoiding the need for public key authentication in that handshake.
 
-To mitigate against bad random number generators the AKE shall mandate randomness improvements such as {{I-D.irtf-cfrg-randomness-improvements}} and analogously for symmetric keys.
+To mitigate against bad random number generators the AKE shall mandate randomness improvements such as {{I-D.irtf-cfrg-randomness-improvements}}.
 
+## Cryptographic Agility and Negotiation Integrity {#crypto-agility}
+
+Motivated by long deployment lifetimes, the AKE is required to support cryptographic agility, including the modularity of COSE crypto algorithms and negotiation of preferred crypto algorithms for OSCORE and the AKE.
+
+* The protocol shall support both pre-shared key and asymmetric key authentication. PAKE and post-quantum key exchange is out of scope, but may be supported in a later version.
+* The protocol shall allow multiple elliptic curves for Diffie-Hellman operations and signature-based authentication.
+* The AKE shall support negotiation of all the COSE algorithms to be used in the AKE and in OSCORE. A successful negotiation shall result in the most preferred algorithms of one of the parties which are supported by the other.
+* The AKE may choose different sets of symmetric crypto algorithms (AEAD, MAC, etc.) for AKE and for OSCORE. In particular, the length of the MAC for the AKE may be required to be larger than for OSCORE.
+
+The AKE negotiation must provide strong integrity guarantees against active attackers. At the end of the AKE protocol, both endpoints must agree on both the crypto algorithms that were proposed and those that were chosen. In particular, the protocol must protect against downgrade attacks.
 
 
 ## Identity Protection
@@ -212,16 +219,16 @@ In general, it is necessary to transport identities as part of the AKE run in or
 
 In the case of public key identities, the AKE is required to protect the identity of one of the peers against active attackers and the identity of the other peer against passive attackers.
 
-In case of a PSK identifier, this may be protected against passive attackers, for example with a key derived from a Diffie-Hellman shared secret at the earliest in message 3. As a consequence, in order to authenticate the responder within the AKE, at least four protocol messages are needed in case of symmetric key authentication with identity protection. Considering the need to keep the number of messages at a minimum (see {{disc}}), unless there are other good reasons for having more than 3 messages, it is not required to protect the PSK identifier, and it may thus be sent in the first message.
+In case of a PSK identifier, this may be protected against passive attackers, for example with a key derived from a Diffie-Hellman shared secret at the earliest in flight 3. As a consequence, in order to authenticate the responder within the AKE, at least four protocol flights are needed in case of symmetric key authentication with identity protection. Considering the need to keep the number of round-trips at a minimum (see {{disc}}), unless there are other good reasons for having more than 3 flights, it is not required to protect the PSK identifier, and it may thus be sent in the first flight.
 
-Other identifying information that needs to be transported in plain text is cipher suites and connection identifiers. Encrypting crypto algorithms does not allow negotiation of cipher suite within 3 messages. Encryption of connection identifiers only works in asymmetric case and does not enable arbitrarily short identifiers (see {{AKE-OSCORE}}).
+Other identifying information that needs to be transported in plain text is cipher suites and connection identifiers. Encrypting crypto algorithms does not allow negotiation of cipher suite within 3 flight. Encryption of connection identifiers only works in asymmetric case and does not enable arbitrarily short identifiers (see {{AKE-OSCORE}}).
 
 
 ## Auxiliary Data
 
-In order to reduce round trips and number of messages, and in some cases also streamline processing, certain security features may be  integrated into the AKE by transporting auxiliary data together with the AKE messages.
+In order to reduce round trips and the number of messages, and in some cases also streamline processing, certain security features may be  integrated into the AKE by transporting auxiliary data together with the AKE messages.
 
-One example is the transport of third-party authorization information such as an access token or a voucher from initiator to responder or vice versa. Such a scheme could enable the party receiving the authorization information to make a decision about whether the party being authenticated is also authorized before the protocol is completed, and if not then discontinue the protocol before it is complete, thereby saving time, message processing and data transmission. This application can be further optimized by using an AKE with static DH keys [TBD].
+One example is the transport of third-party authorization information such as an access token or a voucher from initiator to responder or vice versa. Such a scheme could enable the party receiving the authorization information to make a decision about whether the party being authenticated is also authorized before the protocol is completed, and if not then discontinue the protocol before it is complete, thereby saving time, message processing and data transmission. This application can be further optimized by using an AKE with static DH keys {{I-D.selander-ace-ake-authz}}.
 
 Another example is the embedding of a certificate enrolment request or a newly issued certificate.
 
@@ -230,20 +237,28 @@ The AKE must support the transport of such auxiliary data together with the prot
 Auxiliary data may contain privacy sensitive information. The auxiliary data must not violate the AKE security properties.
 The AKE needs to provide clear guidance on the level of security provided to auxiliary data at different stages of the protocol.
 
-For example, for a SIGMA-I AKE it is expected that the 3 messages will provide the following protection of the auxiliary data:
+For example, for a SIGMA-I AKE it is expected that the 3 flights will provide the following protection of the auxiliary data:
 
-*  Auxiliary data in the first message is unprotected
-*  Auxiliary data in the second message is confidentiality protected against passive attackers and integrity protected against active attackers
-*  Auxiliary data in the third message is confidentiality and integrity protected against active attackers
+*  Auxiliary data in the first flight is unprotected
+*  Auxiliary data in the second flight is confidentiality protected against passive attackers and integrity protected against active attackers
+*  Auxiliary data in the third flight is confidentiality and integrity protected against active attackers
 
 
 ## Extensibility
 
 It is desirable that the AKE supports some kind of extensibility, in particular,  the ability to later include new AKE modes such as PAKE support. Note that by supporting COSE, the AKE can already support new algorithms, new certificate formats, ways to identify credentials, etc.
 
-Since the main objective with this work is to create a simple yet secure AKE,
-care needs to be taken to avoid feature creep and extensions working against this.
+The main objective with this work is to create a simple yet secure AKE.
+The AKE should avoid having multiple ways to express the same thing.
+When the underlying encodings offered by CBOR offer multiple possibility the
+AKE should be strongly opinioniated, and clearly specify which one will be used.
 
+While remaining extensible, the AKE should avoid optional mechanisms which
+introduce code paths that are less well tested.
+
+The AKE should avoid mechanisms where an initiator takes a guess at the policy, and
+when it receives a negative response, must guess, based upon what it has
+tried, what to do next.
 
 ## Denial of Service
 
@@ -295,7 +310,7 @@ The time it takes to send a message over the air in LoRaWAN can be calculated as
 
 #### Round trips and number of messages
 
-Considering the duty cycle of LoRaWAN and associated unavailable times, the round trips and number of messages needs to be reduced as much as possible.
+Considering the duty cycle of LoRaWAN and associated unavailable times, the round trips and number of LoRaWAN packets needs to be reduced as much as possible.
 
 
 #### Power
@@ -369,7 +384,7 @@ Since NB-IoT is operating in licensed spectrum, in contrast to e.g. LoRaWAN, the
 
 #### Round trips and number of messages {#nbiot-rtt}
 
-As indicated in {{nbiot-time}}, the number of messages and round-trips is one limiting factor for protocol completion time.
+As indicated in {{nbiot-time}}, the number of frames and round-trips is one limiting factor for protocol completion time.
 
 
 #### Power {#nbiot-power}
@@ -387,7 +402,7 @@ While "as small protocol messages as possible" does not lend itself to a sharp b
 
 The penalty is high for not fitting into the frame sizes of 6TiSCH and LoRaWAN networks. Fragmentation is not defined within these technologies so requires fragmentation scheme on a higher layer in the stack. With fragmentation increases the number of frames per message, each with its associated overhead in terms of power consumption and latency. Additionally the probability for errors increases, which leads to retransmissions of frames or entire messages that in turn increases the power consumption and latency.
 
-There are trade-offs between "few messages" and "few frames"; if overhead is spread out over more messages such that each message fits into a particular frame this may reduce the overall power consumption. While it may be possible to engineer such a solution for a particular radio technology and signature algorithm, the benefits in terms of fewer messages/round trips in general and for NB-IoT in particular (see {{nb-iot}}) are considered more important than optimizing for a specific scenario. Hence an optimal AKE protocol has 3 messages and each message fits into as few frames as possible, ideally 1 frame per message.
+There are trade-offs between "few messages" and "few frames"; if overhead is spread out over more messages such that each message fits into a particular frame this may reduce the overall power consumption. While it may be possible to engineer such a solution for a particular radio technology and signature algorithm, the benefits in terms of fewer messages/round trips in general and for NB-IoT in particular (see {{nb-iot}}) are considered more important than optimizing for a specific scenario. Hence an optimal AKE protocol has 3 messages and each messages fits into as few frames as possible, ideally 1 frame per messages.
 
 The difference between uplink and downlink performance should not be engineered into the protocol since it cannot be assumed that a particular protocol message will be sent uplink or downlink.
 
@@ -427,7 +442,7 @@ To summarize, even if it we are unable to give precise numbers for AKE frequency
 
 This document compiles the requirements for an AKE and provides some related security considerations.
 
-The AKE must provide the security properties expected of IETF protocols, e.g., providing confidentiality protection, integrity protection, and authentication as is further detailed in the requirements.
+The AKE must provide the security properties expected of IETF protocols, e.g., providing mutual authentication, confidentiality, and negotiation integrity as is further detailed in the requirements.
 
 # IANA Considerations  {#iana}
 
