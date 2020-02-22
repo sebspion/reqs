@@ -130,7 +130,8 @@ In order to be suitable for OSCORE, at the end of the AKE protocol run the two p
 
 * A shared secret (OSCORE Master Secret) with Perfect Forward Secrecy (PFS, see {{confidentiality}}) and a good amount of randomness. (The term "good amount of randomness" is borrowed from {{HKDF}} to signify not necessarily uniformly distributed randomness.)
 
-* OSCORE Sender IDs of peer endpoints, arbitrarily short
+* OSCORE Sender IDs of peer endpoints, arbitrarily short. 
+  * Sender IDs are expected to be unique for a given Master Secret, more precisely the quartet (Master Secret, Master Salt, ID Context, Sender ID) MUST be unique, see Section 3.3. of {{RFC8613}}).
 
 * COSE algorithms to use with OSCORE
 
