@@ -1,7 +1,7 @@
 ---
 title: Requirements for a Lightweight AKE for OSCORE
 abbrev: Reqs-LAKE-for-OSCORE
-docname: draft-ietf-lake-reqs-latest
+docname: draft-ietf-lake-reqs-01
 
 ipr: trust200902
 cat: info
@@ -425,18 +425,6 @@ To summarize, even if it we are unable to give precise numbers for AKE frequency
 * reduces the time for network formation and AKE runs in challenging radio technologies,
 * allows devices to quickly re-establish security in case of reboots, and
 * enables support for recommendations of frequent key renewal.
-
-
-
-# Requirements Summary
-
-* The AKE must support PSK, RPK and certificate based authentication with PFS and crypto agility for AKE as well as OSCORE, have 3 flights and support transport over CoAP. It is required to support different schemes for transporting and identifying credentials.
-
-* After the AKE run, the peers must be mutually authenticated, agree on a shared secret with PFS and good amount of randomness, peer identifiers (potentially short), and COSE algorithms to use.
-
-* The AKE must reuse CBOR, CoAP and COSE primitives and algorithms for low code complexity and to avoid duplicate maintenance of a combined OSCORE and AKE implementation.
-
-* The messages should be as small as reasonably achievable. The messages shall fit into as few LoRaWAN packets and 6TiSCH frames as possible.
 
 
 # Security Considerations  {#sec-cons}
