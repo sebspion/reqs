@@ -42,8 +42,12 @@ normative:
 informative:
 
   RFC7228:
+  RFC7049:
+  RFC7252:
   RFC7967:
+  RFC8152:
   RFC8613:
+  RFC8376:
   I-D.ietf-6tisch-minimal-security:
   I-D.ietf-lpwan-coap-static-context-hc:
   I-D.ietf-cose-x509:
@@ -77,12 +81,12 @@ informative:
 
 
   LwM2M:
-    target: http://www.openmobilealliance.org/release/LightweightM2M/V1_1-20180710-A/OMA-TS-LightweightM2M_Transport-V1_1-20180710-A.pdf
+    target: https://www.openmobilealliance.org/release/LightweightM2M/V1_1-20180710-A/OMA-TS-LightweightM2M_Transport-V1_1-20180710-A.pdf
     title: OMA SpecWorks LwM2M
     date: August 2018
 
   Fairhair:
-    target: https://www.fairhair-alliance.org/data/downloadables/1/9/fairhair_security_wp_march-2018.pdf
+    target: https://openconnectivity.org/wp-content/uploads/2019/11/fairhair_security_wp_march-2018.pdf
     title: Security Architecture for the Internet of Things (IoT) in Commercial Buildings, Fairhair Alliance white paper
     date: March 2018
 
@@ -90,30 +94,61 @@ informative:
     target: https://lora-alliance.org/resource-hub/lorawantm-regional-parameters-v102rb
     title: LoRaWAN Regional Parameters v1.0.2rB
     date: Feb 2017
-
+    
+  LAKE-WG:
+    target: https://datatracker.ietf.org/wg/lake/about/
+    title: LAKE WG
+    date: March 2020
+    
+  KCI:
+    target: https://www.usenix.org/system/files/conference/woot15/woot15-paper-hlauschek.pdf
+    author:
+      -
+        ins: Hlauschek et al.
+    title: Selfie:KCI attacks against TLS
+    date: August 2015
+    
+  Misbinding:
+    target: https://arxiv.org/pdf/1902.07550.pdf
+    title: Misbinding Attacks on Secure Device Pairing and Bootstrapping
+    author:
+      -
+        ins: Sethi et al.
+    date: May 2019
+    
+  Selfie:
+    target: https://eprint.iacr.org/2019/347
+    title: Selfie:Reflections on TLS 1.3 with PSK
+    author:
+      -
+        ins: N. Drucker
+      -
+        ins: S. Gueron 
+    date: March 2019
+    
 --- abstract
 
-This document compiles the requirements for a lightweight authenticated key exchange protocol for OSCORE.
+This document compiles the requirements for a lightweight authenticated key exchange protocol for OSCORE. 
+This draft is in a working group last call (WGLC) in the LAKE working group.
+Post-WGLC, the requirements will be considered sufficiently stable for the working group to proceed with its work. 
+It is not currently planned to publish this draft as an RFC.
+
 
 --- middle
 
 # Introduction  {#intro}
 
-OSCORE {{RFC8613}} is a lightweight communication security protocol providing end-to-end security on application layer for constrained IoT settings (cf. {{RFC7228}}). OSCORE lacks a matching authenticated key exchange protocol (AKE). The intention with LAKE is to create a simple yet secure AKE for implementation in embedded devices supporting OSCORE.
+OSCORE {{RFC8613}} is a lightweight communication security protocol providing end-to-end security on application layer for constrained IoT settings (cf. {{RFC7228}}). OSCORE lacks a matching authenticated key exchange protocol (AKE). The intention with the LAKE WG {{LAKE-WG}} is to create a simple yet secure AKE for implementation in embedded devices supporting OSCORE.
 
 To ensure that the AKE is efficient for the expected applications of OSCORE, we list the relevant public specifications of technologies where OSCORE is included:
 
-* The IETF 6TiSCH WG charter (-02) identifies the need to "secur\[e\] the join process and mak\[e\] that fit within the constraints of high latency, low throughput and small frame sizes that characterize IEEE802.15.4 TSCH". OSCORE protects the join protocol as described in 6TiSCH Minimal Security {{I-D.ietf-6tisch-minimal-security}}.
+* The IETF 6TiSCH WG charter identifies the need to "secur\[e\] the join process and mak\[e\] that fit within the constraints of high latency, low throughput and small frame sizes that characterize IEEE802.15.4 TSCH". OSCORE protects the join protocol as described in 6TiSCH Minimal Security {{I-D.ietf-6tisch-minimal-security}}.
 
-* The IETF LPWAN WG charter (-01) identifies the need to improve the transport capabilities of LPWA networks such as NB-IoT and LoRa whose "common traits include ... frame sizes ... \[on\] the order of tens of bytes transmitted a few times per day at ultra-low speeds". The application of OSCORE is described in {{I-D.ietf-lpwan-coap-static-context-hc}}.
+* The IETF LPWAN WG charter identifies the need to improve the transport capabilities of LPWA networks such as NB-IoT and LoRa whose "common traits include ... frame sizes ... \[on\] the order of tens of bytes transmitted a few times per day at ultra-low speeds". The application of OSCORE is described in {{I-D.ietf-lpwan-coap-static-context-hc}}.
 
 * OMA Specworks LwM2M version 1.1 {{LwM2M}} defines bindings to two challenging radio technologies where OSCORE will be deployed: LoRaWAN and NB-IoT.
 
-Other industry fora which plan to use OSCORE:
-
-* Open Connectivity Foundation (OCF) has been actively involved in the OSCORE development for the purpose of deploying OSCORE.
-
-* Fairhair Alliance has defined an architecture {{Fairhair}} which adopts OSCORE for multicast, but it is not clear whether the architecture will support unicast OSCORE. Fairhair Alliance merged with OCF in November 2019.
+* Fairhair Alliance has defined an architecture {{Fairhair}} which adopts OSCORE for multicast, but it is not clear whether the architecture will support unicast OSCORE. Fairhair Alliance merged with Open Connectivity Foundation (OCF) in November 2019.
 
 
 This document compiles the requirements for the AKE for OSCORE.
@@ -124,7 +159,7 @@ The solution will presumably be useful in other scenarios as well since a low se
 
 ## AKE for OSCORE {#AKE-OSCORE}
 
-The rationale for designing this protocol is that OSCORE is lacking a matching AKE. OSCORE was designed for lightweight RESTful operations for example by minimizing the overhead, and applying the protection to the application layer, thereby limiting the data being encrypted and integrity protected for the other endpoint. Moreover, OSCORE was tailored for use with lightweight primitives that are likely to be implemented in the device, specifically CoAP, CBOR and COSE. The same properties must apply to the AKE.
+The rationale for designing this protocol is that OSCORE is lacking a matching AKE. OSCORE was designed for lightweight RESTful operations for example by minimizing the overhead, and applying the protection to the application layer, thereby limiting the data being encrypted and integrity protected for the other endpoint. Moreover, OSCORE was tailored for use with lightweight primitives that are likely to be implemented in the device, specifically CoAP {{RFC7252}}, CBOR {{RFC7049}} and COSE {{RFC8152}}. The same properties must apply to the AKE.
 
 In order to be suitable for OSCORE, at the end of the AKE protocol run the two parties must agree on (see Section 3.2 of {{RFC8613}}):
 
@@ -145,7 +180,7 @@ The AKE may use other transport than CoAP. In this case the underlying layers mu
 
 ## Credentials
 
-IoT deployments differ in terms of what credentials can be supported. Currently many systems use pre-shared keys (PSKs) provisioned out of band, for various reasons. PSKs are often used in a first deployment because of their perceived simplicity. The use of PSKs allows for protection of communication without major additional security processing, and also enables the use of symmetric crypto algorithms only, reducing the implementation and computational effort in the endpoints.
+IoT deployments differ from one another in terms of what credentials can be supported. Currently many systems use pre-shared keys (PSKs) provisioned out of band, for various reasons. PSKs are often used in a first deployment because of their perceived simplicity. The use of PSKs allows for protection of communication without major additional security processing, and also enables the use of symmetric crypto algorithms only, reducing the implementation and computational effort in the endpoints.
 
 However, PSK-based provisioning has inherent weaknesses. There has been reports of massive breaches of PSK provisioning systems, and as many systems use PSKs without perfect forward secrecy (PFS) they are vulnerable to passive pervasive monitoring. The security of these systems can be improved by adding PFS through an AKE authenticated by the provisioned PSK.
 
@@ -159,7 +194,7 @@ In order to allow for these different schemes, the AKE must support PSK- (shared
 
 Multiple public key authentication credential types may need to be supported for RPK and certificate-based authentication. In case of a Diffie-Hellman key exchange both the use of signature based public keys (for compatibility with existing ecosystem) and static DH public keys (for reduced message size) is expected.
 
-To further minimize the bandwidth consumption it is required to support transporting the certificates by reference rather than by value. Considering the wide variety of deployments the AKE must support different schemes for transporting and identifying credentials, including those identified in Section 2 of {{I-D.ietf-cose-x509}}.
+To further minimize the bandwidth consumption it is required to support transporting the certificates by reference rather than by value. Considering the wide variety of deployments, the AKE must support different schemes for transporting and identifying credentials, including those identified in Section 2 of {{I-D.ietf-cose-x509}}.
 
 The common lack of a user interface in constrained devices leads to various credential provisioning schemes.
 The use of RPKs may be appropriate for the authentication of the AKE initiator but not for the AKE responder.
@@ -176,11 +211,11 @@ Since the protocol may be initiated by different endpoints, it shall not be nece
 
 The mutual authentication guarantees of the AKE shall at least guarantee the following properties:
 
-* The AKE shall provide Key Compromise Impersonation (KCI) resistance.
+* The AKE shall provide Key Compromise Impersonation (KCI) resistance {{KCI}}.
 
-* The AKE shall protect against identity misbinding attacks, when applicable. Note that the identity may be directly related to a public key such as for example the public key itself, a hash of the public key, or data unrelated to a key.
+* The AKE shall protect against identity misbinding attacks {{Misbinding}}. Note that the identity may be directly related to a public key such as for example the public key itself, a hash of the public key, or data unrelated to a key.
 
-* The AKE shall protect against reflection attacks, but need not protect against attacks when more than two parties legitimately share keys (cf. the Selfie attack on TLS 1.3) as that setting is out of scope.
+* The AKE shall protect against reflection attacks, but need not protect against attacks when more than two parties legitimately share keys (cf. the Selfie attack on TLS 1.3 {{Selfie}}) as that setting is out of scope.
 
 Moreover, it shall be possible for the receiving endpoint to detect a replayed AKE message.
 
@@ -216,7 +251,7 @@ The AKE negotiation must provide strong integrity guarantees against active atta
 
 ## Identity Protection
 
-In general, it is necessary to transport identities as part of the AKE run in order to provide authentication of an entity not identified beforehand. In the case of constrained devices, the identity may contain sensitive information on the manufacturer of the device, the batch, default firmware version, etc. Protecting identifying information from passive and active attacks is important from a privacy point of view, but needs to be balanced with the other requirements, including security and lightweightness. For certain data we therefore need to make an exemption in order to obtain an efficient protocol.
+In general, it is necessary to transport identities as part of the AKE run in order to provide authentication of an entity not identified beforehand. In the case of constrained devices, the identity may contain sensitive information on the manufacturer of the device, the batch, default firmware version, etc. Protecting identifying information from passive and active attacks is important from a privacy point of view, but needs to be balanced with the other requirements, including security and lightweightness. 
 
 In the case of public key identities, the AKE is required to protect the identity of one of the peers against active attackers and the identity of the other peer against passive attackers.
 
@@ -270,8 +305,8 @@ Jamming attacks, cutting cables etc. leading to long term loss of availability m
 
 
 ## Lightweight {#lw}
- 
-We target an AKE which is efficiently deployable in 6TiSCH multi-hop networks, LoRaWAN networks and NB-IoT networks. The desire is to optimize the AKE to be 'as lightweight as reasonably achievable' in these environments, where 'lightweight' refers to:
+
+We target an AKE which is efficiently deployable in 6TiSCH multi-hop networks, LoRaWAN networks and NB-IoT networks. (For an overview of low-power wide area networks, see e.g. {{RFC8376}}.) The desire is to optimize the AKE to be 'as lightweight as reasonably achievable' in these environments, where 'lightweight' refers to:
 
 * resource consumption, measured by bytes on the wire, wall-clock time and number of round trips to complete, or power consumption
 * the amount of new code required on end systems which already have an
@@ -286,7 +321,7 @@ Per 'time', it is desirable for the AKE message exchange(s) to complete in a rea
 
 Per 'round-trips', it is desirable that the number of completed request/response message exchanges required before the initiating endpoint can start sending protected traffic data is as small as possible, since this reduces completion time. See {{disc}} for a discussion about the tradeoff between message size and number of flights.
 
-Per 'power', it is desirable for the transmission of AKE messages and crypto to draw as little power as possible. The best mechanism for doing so differs across radio technologies.  For example, NB-IoT uses licensed spectrum and thus can transmit at higher power to improve coverage, making the transmitted byte count relatively more important than for other radio technologies.  In other cases, the radio transmitter will be active for a full MTU frame regardless of how much of the frame is occupied by message content, which makes the byte count less sensitive for the power consumption as long as it fits into the MTU frame. The power consumption thus increases with AKE message size and the largest impact is on average under poor network conditions.
+Per 'power', it is desirable for the transmission of AKE messages and crypto to draw as little power as possible. The best mechanism for doing so differs across radio technologies.  For example, NB-IoT uses licensed spectrum and thus can transmit at higher power to improve coverage, making the transmitted byte count relatively more important than for other radio technologies.  In other cases, the radio transmitter will be active for a full MTU frame regardless of how much of the frame is occupied by message content, which makes the byte count less sensitive for the power consumption as long as it fits into the MTU frame. The power consumption thus increases with AKE message size and the largest impact is on average under poor network conditions. Note that listening for messages to receive can in many cases be a large contribution to the power consumption, for which there are separate techniques to handle, e.g., time slots, discontinuous reception, etc. but this is not considered in scope of the AKE design.
 
 Per 'new code', it is desirable to introduce as little new code as possible onto OSCORE-enabled devices to support this new AKE. These devices have on the order of 10s of kB of memory and 100 kB of storage on which an embedded OS; a COAP stack; CORE and AKE libraries; and target applications would run. It is expected that the majority of this space is available for actual application logic, as opposed to the support libraries. In a typical OSCORE implementation COSE encrypt and signature structures will be available, as will support for COSE algorithms relevant for IoT enabling the same algorithms as is used for OSCORE (e.g. COSE algorithm no. 10 = CCM* used by 6TiSCH). The use of those, or CBOR or CoAP, would not add to the footprint.
 
