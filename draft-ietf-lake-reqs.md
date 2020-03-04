@@ -74,6 +74,11 @@ informative:
       -
         ins: H. Krawczyk
     date: May 2010
+    
+  IANA-COSE-Algorithms:
+    target: https://www.iana.org/assignments/cose/cose.xhtml#algorithms
+    title: COSE Algorithms
+    date: March 2020
 
 
   LwM2M:
@@ -131,11 +136,11 @@ In order to be suitable for OSCORE, at the end of the AKE protocol run the two p
 * A shared secret (OSCORE Master Secret) with Perfect Forward Secrecy (PFS, see {{confidentiality}}) and a good amount of randomness. (The term "good amount of randomness" is borrowed from {{HKDF}} to signify not necessarily uniformly distributed randomness.)
 
 * OSCORE Sender IDs of peer endpoints, arbitrarily short. 
-  * Sender IDs are expected to be unique for a given Master Secret, more precisely the quartet (Master Secret, Master Salt, ID Context, Sender ID) MUST be unique, see Section 3.3. of {{RFC8613}}).
+  * Sender IDs are expected to be unique for a given Master Secret, more precisely the quartet (Master Secret, Master Salt, ID Context, Sender ID) MUST be unique, see Section 3.3. of {{RFC8613}}.
 
 * COSE algorithms to use with OSCORE
 
-COSE provides the crypto primitives for OSCORE, and shall therefore be used also by the AKE, for several reasons including maintenance of crypto library. COSE provides identification of credentials and algorithms for OSCORE and the AKE, and an extension point for new schemes.
+COSE provides the crypto primitives for OSCORE. The AKE shall specify how COSE can be reused for identification of credentials and algorithms of OSCORE and the AKE, as extension point for new schemes, and to avoid duplicated maintenance of crypto library.
 
 The AKE cannot rely on messages being exchanged in both directions after the AKE has completed, because CoAP/OSCORE requests may not have a response {{RFC7967}}. Furthermore, there is no assumption of dependence between CoAP client/server and AKE initiator/responder roles, and an OSCORE context may be used with CoAP client and server roles interchanged as is done, for example, in {{LwM2M}}.
 
@@ -209,7 +214,7 @@ Motivated by long deployment lifetimes, the AKE is required to support cryptogra
 
 * The protocol shall support both pre-shared key and asymmetric key authentication. PAKE and post-quantum key exchange is out of scope, but may be supported in a later version.
 * The protocol shall allow multiple elliptic curves for Diffie-Hellman operations and signature-based authentication.
-* The AKE shall support negotiation of all the COSE algorithms to be used in the AKE and in OSCORE. A successful negotiation shall result in the most preferred algorithms of one of the parties which are supported by the other.
+* The AKE shall support negotiation of COSE algorithms {{IANA-COSE-Algorithms}} to be used in the AKE and in OSCORE. A successful negotiation shall result in the most preferred algorithms of one of the parties which are supported by the other.
 * The AKE may choose different sets of symmetric crypto algorithms (AEAD, MAC, etc.) for AKE and for OSCORE. In particular, the length of the MAC for the AKE may be required to be larger than for OSCORE.
 
 The AKE negotiation must provide strong integrity guarantees against active attackers. At the end of the AKE protocol, both endpoints must agree on both the crypto algorithms that were proposed and those that were chosen. In particular, the protocol must protect against downgrade attacks.
@@ -264,7 +269,7 @@ tried, what to do next.
 
 ## Denial of Service
 
-The AKE shall protect against denial of service attacks on responder and initiator to the extent that the protocol supports lightweight deployments (see {{lw}}) and without duplicating the DoS mitigation of the underlying transport (see {{AKE-OSCORE}}).
+The AKE shall protect against denial of service attacks on responder, initiator and third parties to the extent that the protocol supports lightweight deployments (see {{lw}}) and without duplicating the DoS mitigation of the underlying transport (see {{AKE-OSCORE}}).
 
 Jamming attacks, cutting cables etc. leading to long term loss of availability may not be possible to mitigate, but an attacker temporarily injecting messages or disturbing the communication shall not have a similar impact.
 
@@ -442,7 +447,7 @@ None.
 # Acknowledgments
 {: numbered="no"}
 
-The authors want to thank Richard Barnes, Karthik Bhargavan, Ivaylo Petrov, Eric Rescorla, Michael Richardson, and Claes Tidestav for providing valuable input.
+The authors want to thank Richard Barnes, Karthik Bhargavan, Stephen Farrell, Ivaylo Petrov, Eric Rescorla, Michael Richardson, and Claes Tidestav for providing valuable input.
 
 
 
