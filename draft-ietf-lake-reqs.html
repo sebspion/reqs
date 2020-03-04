@@ -11,9 +11,12 @@
 <meta content="Dan Garcia-Carrillo" name="author">
 <meta content="
        This document compiles the requirements for a lightweight authenticated key exchange protocol for OSCORE. 
+This draft is in a working group last call (WGLC) in the LAKE working group.
+Post-WGLC, the requirements will be considered sufficiently stable for the working group to proceed with its work. 
+It is not currently planned to publish this draft as an RFC. 
     " name="description">
 <meta content="xml2rfc 2.40.1" name="generator">
-<meta content="draft-ietf-lake-reqs-01" name="ietf.draft">
+<meta content="draft-ietf-lake-reqs-latest" name="ietf.draft">
 <link href="draft-ietf-lake-reqs.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
 <style type="text/css">@import url('https://martinthomson.github.io/i-d-template/fonts.css');
@@ -835,7 +838,7 @@ table.left {
 <dt class="label-workgroup">Workgroup:</dt>
 <dd class="workgroup">Network Working Group</dd>
 <dt class="label-internet-draft">Internet-Draft:</dt>
-<dd class="internet-draft">draft-ietf-lake-reqs-01</dd>
+<dd class="internet-draft">draft-ietf-lake-reqs-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
 <time datetime="2020-03-04" class="published">4 March 2020</time>
@@ -868,7 +871,10 @@ table.left {
 <h1 id="title">Requirements for a Lightweight AKE for OSCORE</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">This document compiles the requirements for a lightweight authenticated key exchange protocol for OSCORE.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">This document compiles the requirements for a lightweight authenticated key exchange protocol for OSCORE. 
+This draft is in a working group last call (WGLC) in the LAKE working group.
+Post-WGLC, the requirements will be considered sufficiently stable for the working group to proceed with its work. 
+It is not currently planned to publish this draft as an RFC.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <div id="status-of-memo">
 <section id="section-boilerplate.1">
@@ -957,19 +963,22 @@ table.left {
 </ul>
 </li>
 <li class="toc ulEmpty" id="section-toc.1-1.3">
-            <p id="section-toc.1-1.3.1"><a href="#section-3" class="xref">3</a>.  <a href="#name-security-considerations" class="xref">Security Considerations</a><a href="#section-toc.1-1.3.1" class="pilcrow">¶</a></p>
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="xref">3</a>.  <a href="#name-requirements-summary" class="xref">Requirements Summary</a><a href="#section-toc.1-1.3.1" class="pilcrow">¶</a></p>
 </li>
 <li class="toc ulEmpty" id="section-toc.1-1.4">
-            <p id="section-toc.1-1.4.1"><a href="#section-4" class="xref">4</a>.  <a href="#name-iana-considerations" class="xref">IANA Considerations</a><a href="#section-toc.1-1.4.1" class="pilcrow">¶</a></p>
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="xref">4</a>.  <a href="#name-security-considerations" class="xref">Security Considerations</a><a href="#section-toc.1-1.4.1" class="pilcrow">¶</a></p>
 </li>
 <li class="toc ulEmpty" id="section-toc.1-1.5">
-            <p id="section-toc.1-1.5.1"><a href="#section-5" class="xref"></a><a href="#name-acknowledgments" class="xref">Acknowledgments</a><a href="#section-toc.1-1.5.1" class="pilcrow">¶</a></p>
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="xref">5</a>.  <a href="#name-iana-considerations" class="xref">IANA Considerations</a><a href="#section-toc.1-1.5.1" class="pilcrow">¶</a></p>
 </li>
 <li class="toc ulEmpty" id="section-toc.1-1.6">
-            <p id="section-toc.1-1.6.1"><a href="#section-6" class="xref"></a><a href="#name-informative-references" class="xref">Informative References</a><a href="#section-toc.1-1.6.1" class="pilcrow">¶</a></p>
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="xref"></a><a href="#name-acknowledgments" class="xref">Acknowledgments</a><a href="#section-toc.1-1.6.1" class="pilcrow">¶</a></p>
 </li>
 <li class="toc ulEmpty" id="section-toc.1-1.7">
-            <p id="section-toc.1-1.7.1"><a href="#section-appendix.a" class="xref"></a><a href="#name-authors-addresses" class="xref">Authors' Addresses</a><a href="#section-toc.1-1.7.1" class="pilcrow">¶</a></p>
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="xref"></a><a href="#name-informative-references" class="xref">Informative References</a><a href="#section-toc.1-1.7.1" class="pilcrow">¶</a></p>
+</li>
+<li class="toc ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#section-appendix.a" class="xref"></a><a href="#name-authors-addresses" class="xref">Authors' Addresses</a><a href="#section-toc.1-1.8.1" class="pilcrow">¶</a></p>
 </li>
 </ul>
 </nav>
@@ -980,26 +989,21 @@ table.left {
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">OSCORE <span>[<a href="#RFC8613" class="xref">RFC8613</a>]</span> is a lightweight communication security protocol providing end-to-end security on application layer for constrained IoT settings (cf. <span>[<a href="#RFC7228" class="xref">RFC7228</a>]</span>). OSCORE lacks a matching authenticated key exchange protocol (AKE). The intention with LAKE is to create a simple yet secure AKE for implementation in embedded devices supporting OSCORE.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-1">OSCORE <span>[<a href="#RFC8613" class="xref">RFC8613</a>]</span> is a lightweight communication security protocol providing end-to-end security on application layer for constrained IoT settings (cf. <span>[<a href="#RFC7228" class="xref">RFC7228</a>]</span>). OSCORE lacks a matching authenticated key exchange protocol (AKE). The intention with the LAKE WG <span>[<a href="#LAKE-WG" class="xref">LAKE-WG</a>]</span> is to create a simple yet secure AKE for implementation in embedded devices supporting OSCORE.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">To ensure that the AKE is efficient for the expected applications of OSCORE, we list the relevant public specifications of technologies where OSCORE is included:<a href="#section-1-2" class="pilcrow">¶</a></p>
 <ul>
-<li id="section-1-3.1">The IETF 6TiSCH WG charter (-02) identifies the need to "secur[e] the join process and mak[e] that fit within the constraints of high latency, low throughput and small frame sizes that characterize IEEE802.15.4 TSCH". OSCORE protects the join protocol as described in 6TiSCH Minimal Security <span>[<a href="#I-D.ietf-6tisch-minimal-security" class="xref">I-D.ietf-6tisch-minimal-security</a>]</span>.<a href="#section-1-3.1" class="pilcrow">¶</a>
+<li id="section-1-3.1">The IETF 6TiSCH WG charter identifies the need to "secur[e] the join process and mak[e] that fit within the constraints of high latency, low throughput and small frame sizes that characterize IEEE802.15.4 TSCH". OSCORE protects the join protocol as described in 6TiSCH Minimal Security <span>[<a href="#I-D.ietf-6tisch-minimal-security" class="xref">I-D.ietf-6tisch-minimal-security</a>]</span>.<a href="#section-1-3.1" class="pilcrow">¶</a>
 </li>
-<li id="section-1-3.2">The IETF LPWAN WG charter (-01) identifies the need to improve the transport capabilities of LPWA networks such as NB-IoT and LoRa whose "common traits include ... frame sizes ... [on] the order of tens of bytes transmitted a few times per day at ultra-low speeds". The application of OSCORE is described in <span>[<a href="#I-D.ietf-lpwan-coap-static-context-hc" class="xref">I-D.ietf-lpwan-coap-static-context-hc</a>]</span>.<a href="#section-1-3.2" class="pilcrow">¶</a>
+<li id="section-1-3.2">The IETF LPWAN WG charter identifies the need to improve the transport capabilities of LPWA networks such as NB-IoT and LoRa whose "common traits include ... frame sizes ... [on] the order of tens of bytes transmitted a few times per day at ultra-low speeds". The application of OSCORE is described in <span>[<a href="#I-D.ietf-lpwan-coap-static-context-hc" class="xref">I-D.ietf-lpwan-coap-static-context-hc</a>]</span>.<a href="#section-1-3.2" class="pilcrow">¶</a>
 </li>
 <li id="section-1-3.3">OMA Specworks LwM2M version 1.1 <span>[<a href="#LwM2M" class="xref">LwM2M</a>]</span> defines bindings to two challenging radio technologies where OSCORE will be deployed: LoRaWAN and NB-IoT.<a href="#section-1-3.3" class="pilcrow">¶</a>
 </li>
-</ul>
-<p id="section-1-4">Other industry fora which plan to use OSCORE:<a href="#section-1-4" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-1-5.1">Open Connectivity Foundation (OCF) has been actively involved in the OSCORE development for the purpose of deploying OSCORE.<a href="#section-1-5.1" class="pilcrow">¶</a>
-</li>
-<li id="section-1-5.2">Fairhair Alliance has defined an architecture <span>[<a href="#Fairhair" class="xref">Fairhair</a>]</span> which adopts OSCORE for multicast, but it is not clear whether the architecture will support unicast OSCORE. Fairhair Alliance merged with OCF in November 2019.<a href="#section-1-5.2" class="pilcrow">¶</a>
+<li id="section-1-3.4">Fairhair Alliance has defined an architecture <span>[<a href="#Fairhair" class="xref">Fairhair</a>]</span> which adopts OSCORE for multicast, but it is not clear whether the architecture will support unicast OSCORE. Fairhair Alliance merged with Open Connectivity Foundation (OCF) in November 2019.<a href="#section-1-3.4" class="pilcrow">¶</a>
 </li>
 </ul>
-<p id="section-1-6">This document compiles the requirements for the AKE for OSCORE.
+<p id="section-1-4">This document compiles the requirements for the AKE for OSCORE.
 It summarizes the security requirements that are expected from such an AKE, as well as the main characteristics of the environments where the solution is envisioned to be deployed.
-The solution will presumably be useful in other scenarios as well since a low security overhead improves the overall performance.<a href="#section-1-6" class="pilcrow">¶</a></p>
+The solution will presumably be useful in other scenarios as well since a low security overhead improves the overall performance.<a href="#section-1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="prob-desc">
@@ -1012,22 +1016,17 @@ The solution will presumably be useful in other scenarios as well since a low se
         <h3 id="name-ake-for-oscore">
 <a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-ake-for-oscore" class="section-name selfRef">AKE for OSCORE</a>
         </h3>
-<p id="section-2.1-1">The rationale for designing this protocol is that OSCORE is lacking a matching AKE. OSCORE was designed for lightweight RESTful operations for example by minimizing the overhead, and applying the protection to the application layer, thereby limiting the data being encrypted and integrity protected for the other endpoint. Moreover, OSCORE was tailored for use with lightweight primitives that are likely to be implemented in the device, specifically CoAP, CBOR and COSE. The same properties must apply to the AKE.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.1-1">The rationale for designing this protocol is that OSCORE is lacking a matching AKE. OSCORE was designed for lightweight RESTful operations for example by minimizing the overhead, and applying the protection to the application layer, thereby limiting the data being encrypted and integrity protected for the other endpoint. Moreover, OSCORE was tailored for use with lightweight primitives that are likely to be implemented in the device, specifically CoAP <span>[<a href="#RFC7252" class="xref">RFC7252</a>]</span>, CBOR <span>[<a href="#RFC7049" class="xref">RFC7049</a>]</span> and COSE <span>[<a href="#RFC8152" class="xref">RFC8152</a>]</span>. The same properties must apply to the AKE.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
 <p id="section-2.1-2">In order to be suitable for OSCORE, at the end of the AKE protocol run the two parties must agree on (see Section 3.2 of <span>[<a href="#RFC8613" class="xref">RFC8613</a>]</span>):<a href="#section-2.1-2" class="pilcrow">¶</a></p>
 <ul>
 <li id="section-2.1-3.1">A shared secret (OSCORE Master Secret) with Perfect Forward Secrecy (PFS, see <a href="#confidentiality" class="xref">Section 2.4</a>) and a good amount of randomness. (The term "good amount of randomness" is borrowed from <span>[<a href="#HKDF" class="xref">HKDF</a>]</span> to signify not necessarily uniformly distributed randomness.)<a href="#section-2.1-3.1" class="pilcrow">¶</a>
 </li>
-<li id="section-2.1-3.2">
-            <p id="section-2.1-3.2.1">OSCORE Sender IDs of peer endpoints, arbitrarily short.<a href="#section-2.1-3.2.1" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-2.1-3.2.2.1">Sender IDs are expected to be unique for a given Master Secret, more precisely the quartet (Master Secret, Master Salt, ID Context, Sender ID) MUST be unique, see Section 3.3. of <span>[<a href="#RFC8613" class="xref">RFC8613</a>]</span>.<a href="#section-2.1-3.2.2.1" class="pilcrow">¶</a>
-</li>
-</ul>
+<li id="section-2.1-3.2">OSCORE Sender IDs of peer endpoints, arbitrarily short<a href="#section-2.1-3.2" class="pilcrow">¶</a>
 </li>
 <li id="section-2.1-3.3">COSE algorithms to use with OSCORE<a href="#section-2.1-3.3" class="pilcrow">¶</a>
 </li>
 </ul>
-<p id="section-2.1-4">COSE provides the crypto primitives for OSCORE. The AKE shall specify how COSE can be reused for identification of credentials and algorithms of OSCORE and the AKE, as extension point for new schemes, and to avoid duplicated maintenance of crypto library.<a href="#section-2.1-4" class="pilcrow">¶</a></p>
+<p id="section-2.1-4">COSE provides the crypto primitives for OSCORE, and shall therefore be used also by the AKE, for several reasons including maintenance of crypto library. COSE provides identification of credentials and algorithms for OSCORE and the AKE, and an extension point for new schemes.<a href="#section-2.1-4" class="pilcrow">¶</a></p>
 <p id="section-2.1-5">The AKE cannot rely on messages being exchanged in both directions after the AKE has completed, because CoAP/OSCORE requests may not have a response <span>[<a href="#RFC7967" class="xref">RFC7967</a>]</span>. Furthermore, there is no assumption of dependence between CoAP client/server and AKE initiator/responder roles, and an OSCORE context may be used with CoAP client and server roles interchanged as is done, for example, in <span>[<a href="#LwM2M" class="xref">LwM2M</a>]</span>.<a href="#section-2.1-5" class="pilcrow">¶</a></p>
 <p id="section-2.1-6">Moreover, the AKE must support transport over CoAP. Since the AKE messages most commonly will be encapsulated in CoAP, the AKE must not duplicate functionality provided by CoAP, or at least not duplicate functionality in such a way that it adds extra costs in terms of code size, code maintenance, etc. It is therefore assumed that the AKE is being transported in a protocol that provides reliable transport, that can preserve packet ordering and handle message duplication, that can perform fragmentation and protect against denial of service attacks, such as provided by the CoAP Echo option <span>[<a href="#I-D.ietf-core-echo-request-tag" class="xref">I-D.ietf-core-echo-request-tag</a>]</span>.<a href="#section-2.1-6" class="pilcrow">¶</a></p>
 <p id="section-2.1-7">The AKE may use other transport than CoAP. In this case the underlying layers must correspondingly handle message loss, reordering, message duplication, fragmentation, and denial of service protection.<a href="#section-2.1-7" class="pilcrow">¶</a></p>
@@ -1038,14 +1037,14 @@ The solution will presumably be useful in other scenarios as well since a low se
         <h3 id="name-credentials">
 <a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-credentials" class="section-name selfRef">Credentials</a>
         </h3>
-<p id="section-2.2-1">IoT deployments differ in terms of what credentials can be supported. Currently many systems use pre-shared keys (PSKs) provisioned out of band, for various reasons. PSKs are often used in a first deployment because of their perceived simplicity. The use of PSKs allows for protection of communication without major additional security processing, and also enables the use of symmetric crypto algorithms only, reducing the implementation and computational effort in the endpoints.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
+<p id="section-2.2-1">IoT deployments differ from one another in terms of what credentials can be supported. Currently many systems use pre-shared keys (PSKs) provisioned out of band, for various reasons. PSKs are often used in a first deployment because of their perceived simplicity. The use of PSKs allows for protection of communication without major additional security processing, and also enables the use of symmetric crypto algorithms only, reducing the implementation and computational effort in the endpoints.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
 <p id="section-2.2-2">However, PSK-based provisioning has inherent weaknesses. There has been reports of massive breaches of PSK provisioning systems, and as many systems use PSKs without perfect forward secrecy (PFS) they are vulnerable to passive pervasive monitoring. The security of these systems can be improved by adding PFS through an AKE authenticated by the provisioned PSK.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
 <p id="section-2.2-3">Shared keys can alternatively be established in the endpoints using an AKE protocol authenticated with asymmetric public keys instead of symmetric secret keys. Raw public keys (RPK) can be provisioned with the same scheme as PSKs, which allows for a more relaxed trust model since RPKs need not be secret. The corresponding private keys are assumed to be provisioned to the party being authenticated beforehand (e.g. in factory or generated on-board).<a href="#section-2.2-3" class="pilcrow">¶</a></p>
 <p id="section-2.2-4">As a third option, by using a public key infrastructure and running an asymmetric key AKE with public key certificates instead of RPKs, key provisioning can be omitted, leading to a more automated ("zero-touch") bootstrapping procedure. The root CA keys are assumed to be provisioned beforehand.<a href="#section-2.2-4" class="pilcrow">¶</a></p>
 <p id="section-2.2-5">These steps provide an example of a migration path in limited scoped steps from simple to more robust security bootstrapping and provisioning schemes where each step improves the overall security and/or simplicity of deployment of the IoT system, although not all steps are necessarily feasible for the most constrained settings.<a href="#section-2.2-5" class="pilcrow">¶</a></p>
 <p id="section-2.2-6">In order to allow for these different schemes, the AKE must support PSK- (shared between two nodes), RPK- and certificate-based authentication.<a href="#section-2.2-6" class="pilcrow">¶</a></p>
 <p id="section-2.2-7">Multiple public key authentication credential types may need to be supported for RPK and certificate-based authentication. In case of a Diffie-Hellman key exchange both the use of signature based public keys (for compatibility with existing ecosystem) and static DH public keys (for reduced message size) is expected.<a href="#section-2.2-7" class="pilcrow">¶</a></p>
-<p id="section-2.2-8">To further minimize the bandwidth consumption it is required to support transporting the certificates by reference rather than by value. Considering the wide variety of deployments the AKE must support different schemes for transporting and identifying credentials, including those identified in Section 2 of <span>[<a href="#I-D.ietf-cose-x509" class="xref">I-D.ietf-cose-x509</a>]</span>.<a href="#section-2.2-8" class="pilcrow">¶</a></p>
+<p id="section-2.2-8">To further minimize the bandwidth consumption it is required to support transporting the certificates by reference rather than by value. Considering the wide variety of deployments, the AKE must support different schemes for transporting and identifying credentials, including those identified in Section 2 of <span>[<a href="#I-D.ietf-cose-x509" class="xref">I-D.ietf-cose-x509</a>]</span>.<a href="#section-2.2-8" class="pilcrow">¶</a></p>
 <p id="section-2.2-9">The common lack of a user interface in constrained devices leads to various credential provisioning schemes.
 The use of RPKs may be appropriate for the authentication of the AKE initiator but not for the AKE responder.
 The AKE must support different credentials for authentication in different directions of the AKE run, e.g. certificate-based authentication for the initiating endpoint and RPK-based authentication for the responding endpoint.<a href="#section-2.2-9" class="pilcrow">¶</a></p>
@@ -1061,11 +1060,11 @@ The AKE must support different credentials for authentication in different direc
 <p id="section-2.3-2">Since the protocol may be initiated by different endpoints, it shall not be necessary to determine beforehand which endpoint takes the role of initiator of the AKE.<a href="#section-2.3-2" class="pilcrow">¶</a></p>
 <p id="section-2.3-3">The mutual authentication guarantees of the AKE shall at least guarantee the following properties:<a href="#section-2.3-3" class="pilcrow">¶</a></p>
 <ul>
-<li id="section-2.3-4.1">The AKE shall provide Key Compromise Impersonation (KCI) resistance.<a href="#section-2.3-4.1" class="pilcrow">¶</a>
+<li id="section-2.3-4.1">The AKE shall provide Key Compromise Impersonation (KCI) resistance <span>[<a href="#KCI" class="xref">KCI</a>]</span>.<a href="#section-2.3-4.1" class="pilcrow">¶</a>
 </li>
-<li id="section-2.3-4.2">The AKE shall protect against identity misbinding attacks, when applicable. Note that the identity may be directly related to a public key such as for example the public key itself, a hash of the public key, or data unrelated to a key.<a href="#section-2.3-4.2" class="pilcrow">¶</a>
+<li id="section-2.3-4.2">The AKE shall protect against identity misbinding attacks <span>[<a href="#Misbinding" class="xref">Misbinding</a>]</span>. Note that the identity may be directly related to a public key such as for example the public key itself, a hash of the public key, or data unrelated to a key.<a href="#section-2.3-4.2" class="pilcrow">¶</a>
 </li>
-<li id="section-2.3-4.3">The AKE shall protect against reflection attacks, but need not protect against attacks when more than two parties legitimately share keys (cf. the Selfie attack on TLS 1.3) as that setting is out of scope.<a href="#section-2.3-4.3" class="pilcrow">¶</a>
+<li id="section-2.3-4.3">The AKE shall protect against reflection attacks, but need not protect against attacks when more than two parties legitimately share keys (cf. the Selfie attack on TLS 1.3 <span>[<a href="#Selfie" class="xref">Selfie</a>]</span>) as that setting is out of scope.<a href="#section-2.3-4.3" class="pilcrow">¶</a>
 </li>
 </ul>
 <p id="section-2.3-5">Moreover, it shall be possible for the receiving endpoint to detect a replayed AKE message.<a href="#section-2.3-5" class="pilcrow">¶</a></p>
@@ -1097,7 +1096,7 @@ The AKE must support different credentials for authentication in different direc
 </li>
 <li id="section-2.5-2.2">The protocol shall allow multiple elliptic curves for Diffie-Hellman operations and signature-based authentication.<a href="#section-2.5-2.2" class="pilcrow">¶</a>
 </li>
-<li id="section-2.5-2.3">The AKE shall support negotiation of COSE algorithms <span>[<a href="#IANA-COSE-Algorithms" class="xref">IANA-COSE-Algorithms</a>]</span> to be used in the AKE and in OSCORE. A successful negotiation shall result in the most preferred algorithms of one of the parties which are supported by the other.<a href="#section-2.5-2.3" class="pilcrow">¶</a>
+<li id="section-2.5-2.3">The AKE shall support negotiation of all the COSE algorithms to be used in the AKE and in OSCORE. A successful negotiation shall result in the most preferred algorithms of one of the parties which are supported by the other.<a href="#section-2.5-2.3" class="pilcrow">¶</a>
 </li>
 <li id="section-2.5-2.4">The AKE may choose different sets of symmetric crypto algorithms (AEAD, MAC, etc.) for AKE and for OSCORE. In particular, the length of the MAC for the AKE may be required to be larger than for OSCORE.<a href="#section-2.5-2.4" class="pilcrow">¶</a>
 </li>
@@ -1110,7 +1109,7 @@ The AKE must support different credentials for authentication in different direc
         <h3 id="name-identity-protection">
 <a href="#section-2.6" class="section-number selfRef">2.6. </a><a href="#name-identity-protection" class="section-name selfRef">Identity Protection</a>
         </h3>
-<p id="section-2.6-1">In general, it is necessary to transport identities as part of the AKE run in order to provide authentication of an entity not identified beforehand. In the case of constrained devices, the identity may contain sensitive information on the manufacturer of the device, the batch, default firmware version, etc. Protecting identifying information from passive and active attacks is important from a privacy point of view, but needs to be balanced with the other requirements, including security and lightweightness. For certain data we therefore need to make an exemption in order to obtain an efficient protocol.<a href="#section-2.6-1" class="pilcrow">¶</a></p>
+<p id="section-2.6-1">In general, it is necessary to transport identities as part of the AKE run in order to provide authentication of an entity not identified beforehand. In the case of constrained devices, the identity may contain sensitive information on the manufacturer of the device, the batch, default firmware version, etc. Protecting identifying information from passive and active attacks is important from a privacy point of view, but needs to be balanced with the other requirements, including security and lightweightness.<a href="#section-2.6-1" class="pilcrow">¶</a></p>
 <p id="section-2.6-2">In the case of public key identities, the AKE is required to protect the identity of one of the peers against active attackers and the identity of the other peer against passive attackers.<a href="#section-2.6-2" class="pilcrow">¶</a></p>
 <p id="section-2.6-3">In case of a PSK identifier, this may be protected against passive attackers, for example with a key derived from a Diffie-Hellman shared secret at the earliest in flight 3. As a consequence, in order to authenticate the responder within the AKE, at least four protocol flights are needed in case of symmetric key authentication with identity protection. Considering the need to keep the number of round-trips at a minimum (see <a href="#disc" class="xref">Section 2.10.4</a>), unless there are other good reasons for having more than 3 flights, it is not required to protect the PSK identifier, and it may thus be sent in the first flight.<a href="#section-2.6-3" class="pilcrow">¶</a></p>
 <p id="section-2.6-4">Other identifying information that needs to be transported in plain text is cipher suites and connection identifiers. Encrypting crypto algorithms does not allow negotiation of cipher suite within 3 flights. Encryption of connection identifiers only works in asymmetric case and does not enable arbitrarily short identifiers (see <a href="#AKE-OSCORE" class="xref">Section 2.1</a>).<a href="#section-2.6-4" class="pilcrow">¶</a></p>
@@ -1160,7 +1159,7 @@ tried, what to do next.<a href="#section-2.8-4" class="pilcrow">¶</a></p>
         <h3 id="name-denial-of-service">
 <a href="#section-2.9" class="section-number selfRef">2.9. </a><a href="#name-denial-of-service" class="section-name selfRef">Denial of Service</a>
         </h3>
-<p id="section-2.9-1">The AKE shall protect against denial of service attacks on responder, initiator and third parties to the extent that the protocol supports lightweight deployments (see <a href="#lw" class="xref">Section 2.10</a>) and without duplicating the DoS mitigation of the underlying transport (see <a href="#AKE-OSCORE" class="xref">Section 2.1</a>).<a href="#section-2.9-1" class="pilcrow">¶</a></p>
+<p id="section-2.9-1">The AKE shall protect against denial of service attacks on responder and initiator to the extent that the protocol supports lightweight deployments (see <a href="#lw" class="xref">Section 2.10</a>) and without duplicating the DoS mitigation of the underlying transport (see <a href="#AKE-OSCORE" class="xref">Section 2.1</a>).<a href="#section-2.9-1" class="pilcrow">¶</a></p>
 <p id="section-2.9-2">Jamming attacks, cutting cables etc. leading to long term loss of availability may not be possible to mitigate, but an attacker temporarily injecting messages or disturbing the communication shall not have a similar impact.<a href="#section-2.9-2" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1169,8 +1168,7 @@ tried, what to do next.<a href="#section-2.8-4" class="pilcrow">¶</a></p>
         <h3 id="name-lightweight">
 <a href="#section-2.10" class="section-number selfRef">2.10. </a><a href="#name-lightweight" class="section-name selfRef">Lightweight</a>
         </h3>
-<p id="section-2.10-1"> 
-We target an AKE which is efficiently deployable in 6TiSCH multi-hop networks, LoRaWAN networks and NB-IoT networks. The desire is to optimize the AKE to be 'as lightweight as reasonably achievable' in these environments, where 'lightweight' refers to:<a href="#section-2.10-1" class="pilcrow">¶</a></p>
+<p id="section-2.10-1">We target an AKE which is efficiently deployable in 6TiSCH multi-hop networks, LoRaWAN networks and NB-IoT networks. (For an overview of low-power wide area networks, see e.g. <span>[<a href="#RFC8376" class="xref">RFC8376</a>]</span>.) The desire is to optimize the AKE to be 'as lightweight as reasonably achievable' in these environments, where 'lightweight' refers to:<a href="#section-2.10-1" class="pilcrow">¶</a></p>
 <ul>
 <li id="section-2.10-2.1">resource consumption, measured by bytes on the wire, wall-clock time and number of round trips to complete, or power consumption<a href="#section-2.10-2.1" class="pilcrow">¶</a>
 </li>
@@ -1182,7 +1180,7 @@ OSCORE stack<a href="#section-2.10-2.2" class="pilcrow">¶</a>
 <p id="section-2.10-4">Per 'bytes on the wire', it is desirable for the AKE messages to fit into the MTU size of these protocols; and if not possible, within as few frames as possible, since using multiple MTUs can have significant costs in terms of time and power. Note that the MTU size depends on radio technology and its characteristics, including data rates, number of hops, etc. Example benchmarks are given further down in this section.<a href="#section-2.10-4" class="pilcrow">¶</a></p>
 <p id="section-2.10-5">Per 'time', it is desirable for the AKE message exchange(s) to complete in a reasonable amount of time, both for a single uncongested exchange and when multiple exchanges are running in an interleaved fashion, like e.g. in a "network formation" setting when multiple devices connect for the first time. This latency may not be a linear function depending on congestion and the specific radio technology used. As these are relatively low data rate networks, the latency contribution due to computation is in general not expected to be dominant.<a href="#section-2.10-5" class="pilcrow">¶</a></p>
 <p id="section-2.10-6">Per 'round-trips', it is desirable that the number of completed request/response message exchanges required before the initiating endpoint can start sending protected traffic data is as small as possible, since this reduces completion time. See <a href="#disc" class="xref">Section 2.10.4</a> for a discussion about the tradeoff between message size and number of flights.<a href="#section-2.10-6" class="pilcrow">¶</a></p>
-<p id="section-2.10-7">Per 'power', it is desirable for the transmission of AKE messages and crypto to draw as little power as possible. The best mechanism for doing so differs across radio technologies.  For example, NB-IoT uses licensed spectrum and thus can transmit at higher power to improve coverage, making the transmitted byte count relatively more important than for other radio technologies.  In other cases, the radio transmitter will be active for a full MTU frame regardless of how much of the frame is occupied by message content, which makes the byte count less sensitive for the power consumption as long as it fits into the MTU frame. The power consumption thus increases with AKE message size and the largest impact is on average under poor network conditions.<a href="#section-2.10-7" class="pilcrow">¶</a></p>
+<p id="section-2.10-7">Per 'power', it is desirable for the transmission of AKE messages and crypto to draw as little power as possible. The best mechanism for doing so differs across radio technologies.  For example, NB-IoT uses licensed spectrum and thus can transmit at higher power to improve coverage, making the transmitted byte count relatively more important than for other radio technologies.  In other cases, the radio transmitter will be active for a full MTU frame regardless of how much of the frame is occupied by message content, which makes the byte count less sensitive for the power consumption as long as it fits into the MTU frame. The power consumption thus increases with AKE message size and the largest impact is on average under poor network conditions. Note that listening for messages to receive can in many cases be a large contribution to the power consumption, for which there are separate techniques to handle, e.g., time slots, discontinuous reception, etc. but this is not considered in scope of the AKE design.<a href="#section-2.10-7" class="pilcrow">¶</a></p>
 <p id="section-2.10-8">Per 'new code', it is desirable to introduce as little new code as possible onto OSCORE-enabled devices to support this new AKE. These devices have on the order of 10s of kB of memory and 100 kB of storage on which an embedded OS; a COAP stack; CORE and AKE libraries; and target applications would run. It is expected that the majority of this space is available for actual application logic, as opposed to the support libraries. In a typical OSCORE implementation COSE encrypt and signature structures will be available, as will support for COSE algorithms relevant for IoT enabling the same algorithms as is used for OSCORE (e.g. COSE algorithm no. 10 = CCM* used by 6TiSCH). The use of those, or CBOR or CoAP, would not add to the footprint.<a href="#section-2.10-8" class="pilcrow">¶</a></p>
 <p id="section-2.10-9">While the large variety of settings and capabilities of the devices and networks makes it challenging to produce exact values of some these dimensions, there are some key benchmarks that are tractable for security protocol engineering and which have a significant impact.<a href="#section-2.10-9" class="pilcrow">¶</a></p>
 <div id="lorawan">
@@ -1389,32 +1387,49 @@ Network formation time directly affects the time installers need to spend on sit
 </div>
 </section>
 </div>
-<div id="sec-cons">
+<div id="requirements-summary">
 <section id="section-3">
-      <h2 id="name-security-considerations">
-<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+      <h2 id="name-requirements-summary">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-requirements-summary" class="section-name selfRef">Requirements Summary</a>
       </h2>
-<p id="section-3-1">This document compiles the requirements for an AKE and provides some related security considerations.<a href="#section-3-1" class="pilcrow">¶</a></p>
-<p id="section-3-2">The AKE must provide the security properties expected of IETF protocols, e.g., providing mutual authentication, confidentiality, and negotiation integrity as is further detailed in the requirements.<a href="#section-3-2" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-3-1.1">The AKE must support PSK, RPK and certificate based authentication with PFS and crypto agility for AKE as well as OSCORE, have 3 flights and support transport over CoAP. It is required to support different schemes for transporting and identifying credentials.<a href="#section-3-1.1" class="pilcrow">¶</a>
+</li>
+<li id="section-3-1.2">After the AKE run, the peers must be mutually authenticated, agree on a shared secret with PFS and good amount of randomness, peer identifiers (potentially short), and COSE algorithms to use.<a href="#section-3-1.2" class="pilcrow">¶</a>
+</li>
+<li id="section-3-1.3">The AKE must reuse CBOR, CoAP and COSE primitives and algorithms for low code complexity and to avoid duplicate maintenance of a combined OSCORE and AKE implementation.<a href="#section-3-1.3" class="pilcrow">¶</a>
+</li>
+<li id="section-3-1.4">The messages should be as small as reasonably achievable. The messages shall fit into as few LoRaWAN packets and 6TiSCH frames as possible.<a href="#section-3-1.4" class="pilcrow">¶</a>
+</li>
+</ul>
+</section>
+</div>
+<div id="sec-cons">
+<section id="section-4">
+      <h2 id="name-security-considerations">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+      </h2>
+<p id="section-4-1">This document compiles the requirements for an AKE and provides some related security considerations.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-2">The AKE must provide the security properties expected of IETF protocols, e.g., providing mutual authentication, confidentiality, and negotiation integrity as is further detailed in the requirements.<a href="#section-4-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana">
-<section id="section-4">
+<section id="section-5">
       <h2 id="name-iana-considerations">
-<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-4-1">None.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-5-1">None.<a href="#section-5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="acknowledgments">
-<section id="section-5">
+<section id="section-6">
       <h2 id="name-acknowledgments">
 <a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
       </h2>
-<p id="section-5-1">The authors want to thank Richard Barnes, Karthik Bhargavan, Stephen Farrell, Ivaylo Petrov, Eric Rescorla, Michael Richardson, and Claes Tidestav for providing valuable input.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-6-1">The authors want to thank Richard Barnes, Karthik Bhargavan, Ivaylo Petrov, Eric Rescorla, Michael Richardson, and Claes Tidestav for providing valuable input.<a href="#section-6-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<section id="section-6">
+<section id="section-7">
       <h2 id="name-informative-references">
 <a href="#name-informative-references" class="section-name selfRef">Informative References</a>
       </h2>
@@ -1427,7 +1442,7 @@ Network formation time directly affects the time installers need to spend on sit
 <span class="refTitle">"AKE for NB-IoT"</span>, <time datetime="2019-03">March 2019</time>, <span>&lt;<a href="https://github.com/EricssonResearch/EDHOC/blob/master/docs/NB%20IoT%20power%20consumption.xlsx">https://github.com/EricssonResearch/EDHOC/blob/master/docs/NB%20IoT%20power%20consumption.xlsx</a>&gt;</span>. </dd>
 <dt id="Fairhair">[Fairhair]</dt>
 <dd>
-<span class="refTitle">"Security Architecture for the Internet of Things (IoT) in Commercial Buildings, Fairhair Alliance white paper"</span>, <time datetime="2018-03">March 2018</time>, <span>&lt;<a href="https://www.fairhair-alliance.org/data/downloadables/1/9/fairhair_security_wp_march-2018.pdf">https://www.fairhair-alliance.org/data/downloadables/1/9/fairhair_security_wp_march-2018.pdf</a>&gt;</span>. </dd>
+<span class="refTitle">"Security Architecture for the Internet of Things (IoT) in Commercial Buildings, Fairhair Alliance white paper"</span>, <time datetime="2018-03">March 2018</time>, <span>&lt;<a href="https://openconnectivity.org/wp-content/uploads/2019/11/fairhair_security_wp_march-2018.pdf">https://openconnectivity.org/wp-content/uploads/2019/11/fairhair_security_wp_march-2018.pdf</a>&gt;</span>. </dd>
 <dt id="HKDF">[HKDF]</dt>
 <dd>
 <span class="refAuthor">Krawczyk, H.</span>, <span class="refTitle">"Cryptographic Extraction and Key Derivation: The HKDF Scheme"</span>, <time datetime="2010-05">May 2010</time>, <span>&lt;<a href="https://eprint.iacr.org/2010/264.pdf">https://eprint.iacr.org/2010/264.pdf</a>&gt;</span>. </dd>
@@ -1449,27 +1464,48 @@ Network formation time directly affects the time installers need to spend on sit
 <dt id="I-D.selander-ace-ake-authz">[I-D.selander-ace-ake-authz]</dt>
 <dd>
 <span class="refAuthor">Selander, G.</span><span class="refAuthor">, Mattsson, J.</span><span class="refAuthor">, Vucinic, M.</span><span class="refAuthor">, and M. Richardson</span>, <span class="refTitle">"Lightweight Authorization for Authenticated Key Exchange."</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-selander-ace-ake-authz-00</span>, <time datetime="2020-02-06">6 February 2020</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-selander-ace-ake-authz-00.txt">http://www.ietf.org/internet-drafts/draft-selander-ace-ake-authz-00.txt</a>&gt;</span>. </dd>
-<dt id="IANA-COSE-Algorithms">[IANA-COSE-Algorithms]</dt>
+<dt id="KCI">[KCI]</dt>
 <dd>
-<span class="refTitle">"COSE Algorithms"</span>, <time datetime="2020-03">March 2020</time>, <span>&lt;<a href="https://www.iana.org/assignments/cose/cose.xhtml#algorithms">https://www.iana.org/assignments/cose/cose.xhtml#algorithms</a>&gt;</span>. </dd>
+<span class="refAuthor">Hlauschek et al, .</span>, <span class="refTitle">"Selfie:KCI attacks against TLS"</span>, <time datetime="2015-08">August 2015</time>, <span>&lt;<a href="https://www.usenix.org/system/files/conference/woot15/woot15-paper-hlauschek.pdf">https://www.usenix.org/system/files/conference/woot15/woot15-paper-hlauschek.pdf</a>&gt;</span>. </dd>
+<dt id="LAKE-WG">[LAKE-WG]</dt>
+<dd>
+<span class="refTitle">"LAKE WG"</span>, <time datetime="2020-03">March 2020</time>, <span>&lt;<a href="https://datatracker.ietf.org/wg/lake/about/">https://datatracker.ietf.org/wg/lake/about/</a>&gt;</span>. </dd>
 <dt id="LoRaWAN">[LoRaWAN]</dt>
 <dd>
 <span class="refTitle">"LoRaWAN Regional Parameters v1.0.2rB"</span>, <time datetime="2017-02">February 2017</time>, <span>&lt;<a href="https://lora-alliance.org/resource-hub/lorawantm-regional-parameters-v102rb">https://lora-alliance.org/resource-hub/lorawantm-regional-parameters-v102rb</a>&gt;</span>. </dd>
 <dt id="LwM2M">[LwM2M]</dt>
 <dd>
-<span class="refTitle">"OMA SpecWorks LwM2M"</span>, <time datetime="2018-08">August 2018</time>, <span>&lt;<a href="http://www.openmobilealliance.org/release/LightweightM2M/V1_1-20180710-A/OMA-TS-LightweightM2M_Transport-V1_1-20180710-A.pdf">http://www.openmobilealliance.org/release/LightweightM2M/V1_1-20180710-A/OMA-TS-LightweightM2M_Transport-V1_1-20180710-A.pdf</a>&gt;</span>. </dd>
+<span class="refTitle">"OMA SpecWorks LwM2M"</span>, <time datetime="2018-08">August 2018</time>, <span>&lt;<a href="https://www.openmobilealliance.org/release/LightweightM2M/V1_1-20180710-A/OMA-TS-LightweightM2M_Transport-V1_1-20180710-A.pdf">https://www.openmobilealliance.org/release/LightweightM2M/V1_1-20180710-A/OMA-TS-LightweightM2M_Transport-V1_1-20180710-A.pdf</a>&gt;</span>. </dd>
+<dt id="Misbinding">[Misbinding]</dt>
+<dd>
+<span class="refAuthor">Sethi et al, .</span>, <span class="refTitle">"Misbinding Attacks on Secure Device Pairing and Bootstrapping"</span>, <time datetime="2019-05">May 2019</time>, <span>&lt;<a href="https://arxiv.org/pdf/1902.07550.pdf">https://arxiv.org/pdf/1902.07550.pdf</a>&gt;</span>. </dd>
 <dt id="NB-IoT-battery-life-evaluation">[NB-IoT-battery-life-evaluation]</dt>
 <dd>
 <span class="refTitle">"On mMTC, NB-IoT and eMTC battery life evaluation"</span>, <time datetime="2017-01">January 2017</time>, <span>&lt;<a href="http://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_AH/NR_AH_1701/Docs//R1-1701044.zip">http://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_AH/NR_AH_1701/Docs//R1-1701044.zip</a>&gt;</span>. </dd>
+<dt id="RFC7049">[RFC7049]</dt>
+<dd>
+<span class="refAuthor">Bormann, C.</span><span class="refAuthor"> and P. Hoffman</span>, <span class="refTitle">"Concise Binary Object Representation (CBOR)"</span>, <span class="seriesInfo">RFC 7049</span>, <span class="seriesInfo">DOI 10.17487/RFC7049</span>, <time datetime="2013-10">October 2013</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7049">https://www.rfc-editor.org/info/rfc7049</a>&gt;</span>. </dd>
 <dt id="RFC7228">[RFC7228]</dt>
 <dd>
 <span class="refAuthor">Bormann, C.</span><span class="refAuthor">, Ersue, M.</span><span class="refAuthor">, and A. Keranen</span>, <span class="refTitle">"Terminology for Constrained-Node Networks"</span>, <span class="seriesInfo">RFC 7228</span>, <span class="seriesInfo">DOI 10.17487/RFC7228</span>, <time datetime="2014-05">May 2014</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7228">https://www.rfc-editor.org/info/rfc7228</a>&gt;</span>. </dd>
+<dt id="RFC7252">[RFC7252]</dt>
+<dd>
+<span class="refAuthor">Shelby, Z.</span><span class="refAuthor">, Hartke, K.</span><span class="refAuthor">, and C. Bormann</span>, <span class="refTitle">"The Constrained Application Protocol (CoAP)"</span>, <span class="seriesInfo">RFC 7252</span>, <span class="seriesInfo">DOI 10.17487/RFC7252</span>, <time datetime="2014-06">June 2014</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7252">https://www.rfc-editor.org/info/rfc7252</a>&gt;</span>. </dd>
 <dt id="RFC7967">[RFC7967]</dt>
 <dd>
 <span class="refAuthor">Bhattacharyya, A.</span><span class="refAuthor">, Bandyopadhyay, S.</span><span class="refAuthor">, Pal, A.</span><span class="refAuthor">, and T. Bose</span>, <span class="refTitle">"Constrained Application Protocol (CoAP) Option for No Server Response"</span>, <span class="seriesInfo">RFC 7967</span>, <span class="seriesInfo">DOI 10.17487/RFC7967</span>, <time datetime="2016-08">August 2016</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7967">https://www.rfc-editor.org/info/rfc7967</a>&gt;</span>. </dd>
+<dt id="RFC8152">[RFC8152]</dt>
+<dd>
+<span class="refAuthor">Schaad, J.</span>, <span class="refTitle">"CBOR Object Signing and Encryption (COSE)"</span>, <span class="seriesInfo">RFC 8152</span>, <span class="seriesInfo">DOI 10.17487/RFC8152</span>, <time datetime="2017-07">July 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8152">https://www.rfc-editor.org/info/rfc8152</a>&gt;</span>. </dd>
+<dt id="RFC8376">[RFC8376]</dt>
+<dd>
+<span class="refAuthor">Farrell, S., Ed.</span>, <span class="refTitle">"Low-Power Wide Area Network (LPWAN) Overview"</span>, <span class="seriesInfo">RFC 8376</span>, <span class="seriesInfo">DOI 10.17487/RFC8376</span>, <time datetime="2018-05">May 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8376">https://www.rfc-editor.org/info/rfc8376</a>&gt;</span>. </dd>
 <dt id="RFC8613">[RFC8613]</dt>
 <dd>
 <span class="refAuthor">Selander, G.</span><span class="refAuthor">, Mattsson, J.</span><span class="refAuthor">, Palombini, F.</span><span class="refAuthor">, and L. Seitz</span>, <span class="refTitle">"Object Security for Constrained RESTful Environments (OSCORE)"</span>, <span class="seriesInfo">RFC 8613</span>, <span class="seriesInfo">DOI 10.17487/RFC8613</span>, <time datetime="2019-07">July 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8613">https://www.rfc-editor.org/info/rfc8613</a>&gt;</span>. </dd>
+<dt id="Selfie">[Selfie]</dt>
+<dd>
+<span class="refAuthor">Drucker, N.</span><span class="refAuthor"> and S. Gueron</span>, <span class="refTitle">"Selfie:Reflections on TLS 1.3 with PSK"</span>, <time datetime="2019-03">March 2019</time>, <span>&lt;<a href="https://eprint.iacr.org/2019/347">https://eprint.iacr.org/2019/347</a>&gt;</span>. </dd>
 </dl>
 </section>
 <div id="authors-addresses">
