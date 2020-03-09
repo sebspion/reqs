@@ -200,7 +200,7 @@ In order to allow for these different schemes, the AKE must support PSK- (shared
 
 Multiple public key authentication credential types may need to be supported for RPK and certificate-based authentication. In case of a Diffie-Hellman key exchange both the use of signature based public keys (for compatibility with existing ecosystem) and static DH public keys (for reduced message size) is expected.
 
-To further minimize the bandwidth consumption it is required to support transporting the certificates by reference rather than by value. Considering the wide variety of deployments, the AKE must support different schemes for transporting and identifying credentials, including those identified in Section 2 of {{I-D.ietf-cose-x509}}.
+To further minimize the bandwidth consumption it is required to support transporting certificates and raw public keys by reference rather than by value. Considering the wide variety of deployments, the AKE must support different schemes for transporting and identifying credentials, including those identified in Section 2 of {{I-D.ietf-cose-x509}}.
 
 The common lack of a user interface in constrained devices leads to various credential provisioning schemes.
 The use of RPKs may be appropriate for the authentication of the AKE initiator but not for the AKE responder.
@@ -340,7 +340,7 @@ Reflecting deployment reality as of now, we focus on the European regulation as 
 
 #### Bytes on the wire
 
-LoRaWAN has a variable MTU depending on the Spreading Factor (SF). The higher the spreading factor, the higher distances can be achieved and/or better reception. If the coverage and distance allows it, with SF7 -- corresponding to higher data rates -- the maximum payload is 222 bytes. For a SF12 -- and low data rates -- the maximum payload is 51 bytes.
+LoRaWAN has a variable MTU depending on the Spreading Factor (SF). The higher the spreading factor, the higher distances can be achieved and/or better reception. If the coverage and distance allows it, with SF7 -- corresponding to higher data rates -- the maximum payload is 222 bytes. For a SF12 -- and low data rates -- the maximum payload is 51 bytes on data link layer.
 
 The benchmark used here is Data Rates 0-2 corresponding to a packet size of 51 bytes {{LoRaWAN}}. The use of larger frame size depend on good radio conditions which are not always present. Some libraries/providers only support 51-bytes packet size.
 
@@ -482,7 +482,7 @@ None.
 # Acknowledgments
 {: numbered="no"}
 
-The authors want to thank Richard Barnes, Karthik Bhargavan, Stephen Farrell, Ivaylo Petrov, Eric Rescorla, Michael Richardson, and Claes Tidestav for providing valuable input.
+The authors want to thank Richard Barnes, Karthik Bhargavan, Stephen Farrell, Ivaylo Petrov, Eric Rescorla, Michael Richardson, Jesus Sanchez-Gomez, and Claes Tidestav for providing valuable input.
 
 
 
