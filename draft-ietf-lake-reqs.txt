@@ -5,11 +5,11 @@
 Network Working Group                                         M. Vucinic
 Internet-Draft                                                     Inria
 Intended status: Informational                               G. Selander
-Expires: 5 September 2020                                    J. Mattsson
+Expires: 10 September 2020                                   J. Mattsson
                                                              Ericsson AB
                                                                D. Garcia
                                                      Odin Solutions S.L.
-                                                            4 March 2020
+                                                            9 March 2020
 
 
              Requirements for a Lightweight AKE for OSCORE
@@ -39,7 +39,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 September 2020.
+   This Internet-Draft will expire on 10 September 2020.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Vucinic, et al.         Expires 5 September 2020                [Page 1]
+Vucinic, et al.         Expires 10 September 2020               [Page 1]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Vucinic, et al.         Expires 5 September 2020                [Page 2]
+Vucinic, et al.         Expires 10 September 2020               [Page 2]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -165,7 +165,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 5 September 2020                [Page 3]
+Vucinic, et al.         Expires 10 September 2020               [Page 3]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -221,7 +221,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 5 September 2020                [Page 4]
+Vucinic, et al.         Expires 10 September 2020               [Page 4]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -277,7 +277,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 5 September 2020                [Page 5]
+Vucinic, et al.         Expires 10 September 2020               [Page 5]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -333,7 +333,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 5 September 2020                [Page 6]
+Vucinic, et al.         Expires 10 September 2020               [Page 6]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -389,7 +389,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 5 September 2020                [Page 7]
+Vucinic, et al.         Expires 10 September 2020               [Page 7]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -445,7 +445,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 5 September 2020                [Page 8]
+Vucinic, et al.         Expires 10 September 2020               [Page 8]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -501,7 +501,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 5 September 2020                [Page 9]
+Vucinic, et al.         Expires 10 September 2020               [Page 9]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -557,7 +557,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 5 September 2020               [Page 10]
+Vucinic, et al.         Expires 10 September 2020              [Page 10]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -613,7 +613,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 5 September 2020               [Page 11]
+Vucinic, et al.         Expires 10 September 2020              [Page 11]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -669,7 +669,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 5 September 2020               [Page 12]
+Vucinic, et al.         Expires 10 September 2020              [Page 12]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -725,7 +725,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 5 September 2020               [Page 13]
+Vucinic, et al.         Expires 10 September 2020              [Page 13]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -781,7 +781,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 5 September 2020               [Page 14]
+Vucinic, et al.         Expires 10 September 2020              [Page 14]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -837,7 +837,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 5 September 2020               [Page 15]
+Vucinic, et al.         Expires 10 September 2020              [Page 15]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -893,7 +893,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 5 September 2020               [Page 16]
+Vucinic, et al.         Expires 10 September 2020              [Page 16]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -949,7 +949,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 5 September 2020               [Page 17]
+Vucinic, et al.         Expires 10 September 2020              [Page 17]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -1005,7 +1005,7 @@ Informative References
 
 
 
-Vucinic, et al.         Expires 5 September 2020               [Page 18]
+Vucinic, et al.         Expires 10 September 2020              [Page 18]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -1049,9 +1049,9 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
               Minaburo, A., Toutain, L., and R. Andreasen, "LPWAN Static
               Context Header Compression (SCHC) for CoAP", Work in
               Progress, Internet-Draft, draft-ietf-lpwan-coap-static-
-              context-hc-12, 10 December 2019, <http://www.ietf.org/
+              context-hc-13, 5 March 2020, <http://www.ietf.org/
               internet-drafts/draft-ietf-lpwan-coap-static-context-hc-
-              12.txt>.
+              13.txt>.
 
    [I-D.irtf-cfrg-randomness-improvements]
               Cremers, C., Garratt, L., Smyshlyaev, S., Sullivan, N.,
@@ -1061,7 +1061,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 5 September 2020               [Page 19]
+Vucinic, et al.         Expires 10 September 2020              [Page 19]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -1117,7 +1117,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 5 September 2020               [Page 20]
+Vucinic, et al.         Expires 10 September 2020              [Page 20]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -1173,7 +1173,7 @@ Authors' Addresses
 
 
 
-Vucinic, et al.         Expires 5 September 2020               [Page 21]
+Vucinic, et al.         Expires 10 September 2020              [Page 21]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -1229,4 +1229,4 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 5 September 2020               [Page 22]
+Vucinic, et al.         Expires 10 September 2020              [Page 22]
