@@ -479,7 +479,7 @@ hr.addr {
     column-count: 2;
     column-gap: 20px;
   }
-  #name-authors-address {
+  #name-authors-addresses {
     position: absolute;
     top: 0px;
     column-span: all;
@@ -834,7 +834,7 @@ table.left {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Vucinic, et al.</td>
-<td class="center">Expires 10 September 2020</td>
+<td class="center">Expires 22 September 2020</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -847,12 +847,12 @@ table.left {
 <dd class="internet-draft">draft-ietf-lake-reqs-01</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2020-03-09" class="published">9 March 2020</time>
+<time datetime="2020-03-21" class="published">21 March 2020</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2020-09-10">10 September 2020</time></dd>
+<dd class="expires"><time datetime="2020-09-22">22 September 2020</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -901,7 +901,7 @@ It is not currently planned to publish this draft as an RFC.<a href="#section-ab
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 10 September 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 22 September 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1154,7 +1154,7 @@ The AKE needs to provide clear guidance on the level of security provided to aux
 <p id="section-2.8-2">The main objective with this work is to create a simple yet secure AKE.
 The AKE should avoid having multiple ways to express the same thing.
 When the underlying encodings offered by CBOR offer multiple possibility the
-AKE should be strongly opinioniated, and clearly specify which one will be used.<a href="#section-2.8-2" class="pilcrow">¶</a></p>
+AKE should be strongly opinionated, and clearly specify which one will be used.<a href="#section-2.8-2" class="pilcrow">¶</a></p>
 <p id="section-2.8-3">While remaining extensible, the AKE should avoid optional mechanisms which
 introduce code paths that are less well tested.<a href="#section-2.8-3" class="pilcrow">¶</a></p>
 <p id="section-2.8-4">The AKE should avoid mechanisms where an initiator takes a guess at the policy, and
@@ -1187,7 +1187,7 @@ OSCORE stack<a href="#section-2.10-2.2" class="pilcrow">¶</a>
 <p id="section-2.10-3">These properties need to be considered in the context of the use of an existing CoAP/OSCORE stack in the targeted networks and technologies. Some properties are difficult to evaluate for a given protocol, for example, because they depend on the radio conditions or other simultaneous network traffic.  Additionally, these properties are not independent. Therefore the properties listed here should be taken as input for identifying plausible protocol metrics that can be more easily measured and compared between protocols.<a href="#section-2.10-3" class="pilcrow">¶</a></p>
 <p id="section-2.10-4">Per 'bytes on the wire', it is desirable for the AKE messages to fit into the MTU size of these protocols; and if not possible, within as few frames as possible, since using multiple MTUs can have significant costs in terms of time and power. Note that the MTU size depends on radio technology and its characteristics, including data rates, number of hops, etc. Example benchmarks are given further down in this section.<a href="#section-2.10-4" class="pilcrow">¶</a></p>
 <p id="section-2.10-5">Per 'time', it is desirable for the AKE message exchange(s) to complete in a reasonable amount of time, both for a single uncongested exchange and when multiple exchanges are running in an interleaved fashion, like e.g. in a "network formation" setting when multiple devices connect for the first time. This latency may not be a linear function depending on congestion and the specific radio technology used. As these are relatively low data rate networks, the latency contribution due to computation is in general not expected to be dominant.<a href="#section-2.10-5" class="pilcrow">¶</a></p>
-<p id="section-2.10-6">Per 'round-trips', it is desirable that the number of completed request/response message exchanges required before the initiating endpoint can start sending protected traffic data is as small as possible, since this reduces completion time. See <a href="#disc" class="xref">Section 2.10.4</a> for a discussion about the tradeoff between message size and number of flights.<a href="#section-2.10-6" class="pilcrow">¶</a></p>
+<p id="section-2.10-6">Per 'round-trips', it is desirable that the number of completed request/response message exchanges required before the initiating endpoint can start sending protected traffic data is as small as possible, since this reduces completion time. See <a href="#disc" class="xref">Section 2.10.4</a> for a discussion about the trade-off between message size and number of flights.<a href="#section-2.10-6" class="pilcrow">¶</a></p>
 <p id="section-2.10-7">Per 'power', it is desirable for the transmission of AKE messages and crypto to draw as little power as possible. The best mechanism for doing so differs across radio technologies.  For example, NB-IoT uses licensed spectrum and thus can transmit at higher power to improve coverage, making the transmitted byte count relatively more important than for other radio technologies.  In other cases, the radio transmitter will be active for a full MTU frame regardless of how much of the frame is occupied by message content, which makes the byte count less sensitive for the power consumption as long as it fits into the MTU frame. The power consumption thus increases with AKE message size and the largest impact is on average under poor network conditions. Note that listening for messages to receive can in many cases be a large contribution to the power consumption, for which there are separate techniques to handle, e.g., time slots, discontinuous reception, etc. but this is not considered in scope of the AKE design.<a href="#section-2.10-7" class="pilcrow">¶</a></p>
 <p id="section-2.10-8">Per 'new code', it is desirable to introduce as little new code as possible onto OSCORE-enabled devices to support this new AKE. These devices have on the order of 10s of kB of memory and 100 kB of storage on which an embedded OS; a COAP stack; CORE and AKE libraries; and target applications would run. It is expected that the majority of this space is available for actual application logic, as opposed to the support libraries. In a typical OSCORE implementation COSE encrypt and signature structures will be available, as will support for COSE algorithms relevant for IoT enabling the same algorithms as is used for OSCORE (e.g. COSE algorithm no. 10 = CCM* used by 6TiSCH). The use of those, or CBOR or CoAP, would not add to the footprint.<a href="#section-2.10-8" class="pilcrow">¶</a></p>
 <p id="section-2.10-9">While the large variety of settings and capabilities of the devices and networks makes it challenging to produce exact values of some these dimensions, there are some key benchmarks that are tractable for security protocol engineering and which have a significant impact.<a href="#section-2.10-9" class="pilcrow">¶</a></p>
@@ -1442,10 +1442,10 @@ Network formation time directly affects the time installers need to spend on sit
 <span class="refAuthor">Vucinic, M.</span><span class="refAuthor">, Simon, J.</span><span class="refAuthor">, Pister, K.</span><span class="refAuthor">, and M. Richardson</span>, <span class="refTitle">"Constrained Join Protocol (CoJP) for 6TiSCH"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-6tisch-minimal-security-15</span>, <time datetime="2019-12-10">10 December 2019</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-ietf-6tisch-minimal-security-15.txt">http://www.ietf.org/internet-drafts/draft-ietf-6tisch-minimal-security-15.txt</a>&gt;</span>. </dd>
 <dt id="I-D.ietf-core-echo-request-tag">[I-D.ietf-core-echo-request-tag]</dt>
 <dd>
-<span class="refAuthor">Amsuess, C.</span><span class="refAuthor">, Mattsson, J.</span><span class="refAuthor">, and G. Selander</span>, <span class="refTitle">"CoAP: Echo, Request-Tag, and Token Processing"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-core-echo-request-tag-08</span>, <time datetime="2019-11-04">4 November 2019</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-ietf-core-echo-request-tag-08.txt">http://www.ietf.org/internet-drafts/draft-ietf-core-echo-request-tag-08.txt</a>&gt;</span>. </dd>
+<span class="refAuthor">Amsuess, C.</span><span class="refAuthor">, Mattsson, J.</span><span class="refAuthor">, and G. Selander</span>, <span class="refTitle">"CoAP: Echo, Request-Tag, and Token Processing"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-core-echo-request-tag-09</span>, <time datetime="2020-03-09">9 March 2020</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-ietf-core-echo-request-tag-09.txt">http://www.ietf.org/internet-drafts/draft-ietf-core-echo-request-tag-09.txt</a>&gt;</span>. </dd>
 <dt id="I-D.ietf-cose-x509">[I-D.ietf-cose-x509]</dt>
 <dd>
-<span class="refAuthor">Schaad, J.</span>, <span class="refTitle">"CBOR Object Signing and Encryption (COSE): Headers for carrying and referencing X.509 certificates"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cose-x509-05</span>, <time datetime="2019-11-04">4 November 2019</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-ietf-cose-x509-05.txt">http://www.ietf.org/internet-drafts/draft-ietf-cose-x509-05.txt</a>&gt;</span>. </dd>
+<span class="refAuthor">Schaad, J.</span>, <span class="refTitle">"CBOR Object Signing and Encryption (COSE): Header parameters for carrying and referencing X.509 certificates"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cose-x509-06</span>, <time datetime="2020-03-09">9 March 2020</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-ietf-cose-x509-06.txt">http://www.ietf.org/internet-drafts/draft-ietf-cose-x509-06.txt</a>&gt;</span>. </dd>
 <dt id="I-D.ietf-lpwan-coap-static-context-hc">[I-D.ietf-lpwan-coap-static-context-hc]</dt>
 <dd>
 <span class="refAuthor">Minaburo, A.</span><span class="refAuthor">, Toutain, L.</span><span class="refAuthor">, and R. Andreasen</span>, <span class="refTitle">"LPWAN Static Context Header Compression (SCHC) for CoAP"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-lpwan-coap-static-context-hc-13</span>, <time datetime="2020-03-05">5 March 2020</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-ietf-lpwan-coap-static-context-hc-13.txt">http://www.ietf.org/internet-drafts/draft-ietf-lpwan-coap-static-context-hc-13.txt</a>&gt;</span>. </dd>
@@ -1454,13 +1454,13 @@ Network formation time directly affects the time installers need to spend on sit
 <span class="refAuthor">Cremers, C.</span><span class="refAuthor">, Garratt, L.</span><span class="refAuthor">, Smyshlyaev, S.</span><span class="refAuthor">, Sullivan, N.</span><span class="refAuthor">, and C. Wood</span>, <span class="refTitle">"Randomness Improvements for Security Protocols"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-irtf-cfrg-randomness-improvements-10</span>, <time datetime="2020-02-17">17 February 2020</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-irtf-cfrg-randomness-improvements-10.txt">http://www.ietf.org/internet-drafts/draft-irtf-cfrg-randomness-improvements-10.txt</a>&gt;</span>. </dd>
 <dt id="I-D.selander-ace-ake-authz">[I-D.selander-ace-ake-authz]</dt>
 <dd>
-<span class="refAuthor">Selander, G.</span><span class="refAuthor">, Mattsson, J.</span><span class="refAuthor">, Vucinic, M.</span><span class="refAuthor">, and M. Richardson</span>, <span class="refTitle">"Lightweight Authorization for Authenticated Key Exchange."</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-selander-ace-ake-authz-00</span>, <time datetime="2020-02-06">6 February 2020</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-selander-ace-ake-authz-00.txt">http://www.ietf.org/internet-drafts/draft-selander-ace-ake-authz-00.txt</a>&gt;</span>. </dd>
+<span class="refAuthor">Selander, G.</span><span class="refAuthor">, Mattsson, J.</span><span class="refAuthor">, Vucinic, M.</span><span class="refAuthor">, Richardson, M.</span><span class="refAuthor">, and A. Schellenbaum</span>, <span class="refTitle">"Lightweight Authorization for Authenticated Key Exchange."</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-selander-ace-ake-authz-01</span>, <time datetime="2020-03-09">9 March 2020</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-selander-ace-ake-authz-01.txt">http://www.ietf.org/internet-drafts/draft-selander-ace-ake-authz-01.txt</a>&gt;</span>. </dd>
 <dt id="IANA-COSE-Algorithms">[IANA-COSE-Algorithms]</dt>
 <dd>
 <span class="refTitle">"COSE Algorithms"</span>, <time datetime="2020-03">March 2020</time>, <span>&lt;<a href="https://www.iana.org/assignments/cose/cose.xhtml#algorithms">https://www.iana.org/assignments/cose/cose.xhtml#algorithms</a>&gt;</span>. </dd>
 <dt id="KCI">[KCI]</dt>
 <dd>
-<span class="refAuthor">Hlauschek et al, .</span>, <span class="refTitle">"Selfie:KCI attacks against TLS"</span>, <time datetime="2015-08">August 2015</time>, <span>&lt;<a href="https://www.usenix.org/system/files/conference/woot15/woot15-paper-hlauschek.pdf">https://www.usenix.org/system/files/conference/woot15/woot15-paper-hlauschek.pdf</a>&gt;</span>. </dd>
+<span class="refAuthor">Hlauschek, C.</span><span class="refAuthor">, Gruber, M.</span><span class="refAuthor">, Fankhauser, F.</span><span class="refAuthor">, and C. Schanes</span>, <span class="refTitle">"Prying open Pandoras box:KCI attacks against TLS"</span>, <time datetime="2015-08">August 2015</time>, <span>&lt;<a href="https://www.usenix.org/system/files/conference/woot15/woot15-paper-hlauschek.pdf">https://www.usenix.org/system/files/conference/woot15/woot15-paper-hlauschek.pdf</a>&gt;</span>. </dd>
 <dt id="LAKE-WG">[LAKE-WG]</dt>
 <dd>
 <span class="refTitle">"LAKE WG"</span>, <time datetime="2020-03">March 2020</time>, <span>&lt;<a href="https://datatracker.ietf.org/wg/lake/about/">https://datatracker.ietf.org/wg/lake/about/</a>&gt;</span>. </dd>
@@ -1472,7 +1472,7 @@ Network formation time directly affects the time installers need to spend on sit
 <span class="refTitle">"OMA SpecWorks LwM2M"</span>, <time datetime="2018-08">August 2018</time>, <span>&lt;<a href="https://www.openmobilealliance.org/release/LightweightM2M/V1_1-20180710-A/OMA-TS-LightweightM2M_Transport-V1_1-20180710-A.pdf">https://www.openmobilealliance.org/release/LightweightM2M/V1_1-20180710-A/OMA-TS-LightweightM2M_Transport-V1_1-20180710-A.pdf</a>&gt;</span>. </dd>
 <dt id="Misbinding">[Misbinding]</dt>
 <dd>
-<span class="refAuthor">Sethi et al, .</span>, <span class="refTitle">"Misbinding Attacks on Secure Device Pairing and Bootstrapping"</span>, <time datetime="2019-05">May 2019</time>, <span>&lt;<a href="https://arxiv.org/pdf/1902.07550.pdf">https://arxiv.org/pdf/1902.07550.pdf</a>&gt;</span>. </dd>
+<span class="refAuthor">Sethi, M.</span><span class="refAuthor">, Peltonen, A.</span><span class="refAuthor">, and T. Aura</span>, <span class="refTitle">"Misbinding Attacks on Secure Device Pairing and Bootstrapping"</span>, <span class="seriesInfo">Proceedings of the 2019 ACM Asia Conference on Computer and Communications Security </span>, <time datetime="2019-05">May 2019</time>, <span>&lt;<a href="https://arxiv.org/pdf/1902.07550.pdf">https://arxiv.org/pdf/1902.07550.pdf</a>&gt;</span>. </dd>
 <dt id="NB-IoT-battery-life-evaluation">[NB-IoT-battery-life-evaluation]</dt>
 <dd>
 <span class="refTitle">"On mMTC, NB-IoT and eMTC battery life evaluation"</span>, <time datetime="2017-01">January 2017</time>, <span>&lt;<a href="http://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_AH/NR_AH_1701/Docs//R1-1701044.zip">http://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_AH/NR_AH_1701/Docs//R1-1701044.zip</a>&gt;</span>. </dd>
