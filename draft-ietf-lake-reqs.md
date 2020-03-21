@@ -109,17 +109,35 @@ informative:
     target: https://www.usenix.org/system/files/conference/woot15/woot15-paper-hlauschek.pdf
     author:
       -
-        ins: Hlauschek et al.
-    title: Selfie:KCI attacks against TLS
+        ins: C. Hlauschek
+        name: Clemens Hlauschek
+      - 
+        ins: M. Gruber
+        name: Markus Gruber
+      -
+        ins: F. Fankhauser
+        name: Florian Fankhauser
+      -
+        ins: C. Schanes
+        name: Christian Schanes         
+    title: Prying open Pandoras box:KCI attacks against TLS
     date: August 2015
     
   Misbinding:
     target: https://arxiv.org/pdf/1902.07550.pdf
     title: Misbinding Attacks on Secure Device Pairing and Bootstrapping
     author:
-      -
-        ins: Sethi et al.
+       -
+           ins: M. Sethi
+           name: Mohit Sethi
+       -
+           ins: A. Peltonen
+           name: Aleksi Peltonen
+       -
+           ins: T. Aura
+           name: Tuomas Aura
     date: May 2019
+    seriesinfo: Proceedings of the 2019 ACM Asia Conference on Computer and Communications Security
     
   Selfie:
     target: https://eprint.iacr.org/2019/347
@@ -293,7 +311,7 @@ It is desirable that the AKE supports some kind of extensibility, in particular,
 The main objective with this work is to create a simple yet secure AKE.
 The AKE should avoid having multiple ways to express the same thing.
 When the underlying encodings offered by CBOR offer multiple possibility the
-AKE should be strongly opinioniated, and clearly specify which one will be used.
+AKE should be strongly opinionated, and clearly specify which one will be used.
 
 While remaining extensible, the AKE should avoid optional mechanisms which
 introduce code paths that are less well tested.
@@ -325,7 +343,7 @@ Per 'bytes on the wire', it is desirable for the AKE messages to fit into the MT
 
 Per 'time', it is desirable for the AKE message exchange(s) to complete in a reasonable amount of time, both for a single uncongested exchange and when multiple exchanges are running in an interleaved fashion, like e.g. in a "network formation" setting when multiple devices connect for the first time. This latency may not be a linear function depending on congestion and the specific radio technology used. As these are relatively low data rate networks, the latency contribution due to computation is in general not expected to be dominant.
 
-Per 'round-trips', it is desirable that the number of completed request/response message exchanges required before the initiating endpoint can start sending protected traffic data is as small as possible, since this reduces completion time. See {{disc}} for a discussion about the tradeoff between message size and number of flights.
+Per 'round-trips', it is desirable that the number of completed request/response message exchanges required before the initiating endpoint can start sending protected traffic data is as small as possible, since this reduces completion time. See {{disc}} for a discussion about the trade-off between message size and number of flights.
 
 Per 'power', it is desirable for the transmission of AKE messages and crypto to draw as little power as possible. The best mechanism for doing so differs across radio technologies.  For example, NB-IoT uses licensed spectrum and thus can transmit at higher power to improve coverage, making the transmitted byte count relatively more important than for other radio technologies.  In other cases, the radio transmitter will be active for a full MTU frame regardless of how much of the frame is occupied by message content, which makes the byte count less sensitive for the power consumption as long as it fits into the MTU frame. The power consumption thus increases with AKE message size and the largest impact is on average under poor network conditions. Note that listening for messages to receive can in many cases be a large contribution to the power consumption, for which there are separate techniques to handle, e.g., time slots, discontinuous reception, etc. but this is not considered in scope of the AKE design.
 
