@@ -120,7 +120,7 @@ informative:
       -
         ins: C. Schanes
         name: Christian Schanes         
-    title: Prying open Pandora’s box: KCI attacks against TLS
+    title: Prying open Pandoras box:KCI attacks against TLS
     date: August 2015
     
   Misbinding:
