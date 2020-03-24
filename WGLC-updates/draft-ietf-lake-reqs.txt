@@ -377,15 +377,15 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
    OSCORE and the AKE.
 
    *  The protocol shall support both pre-shared key and asymmetric key
-      authentication.  PAKE, post-quantum and hybrid key exchange is out
-      of scope, but may be supported in a later version.
+      authentication.  PAKE, post-quantum and "hybrid" (simultaneously
+      more than one) key exchange is out of scope, but may be supported
+      in a later version.
 
    *  The protocol shall allow negotiation of elliptic curves for
       Diffie-Hellman operations and signature-based authentication.
 
    *  The AKE shall support negotiation of all COSE algorithms
       [IANA-COSE-Algorithms] to be used in OSCORE.  The AKE shall
-      support negotiation of algorithms used in the AKE.  It is strongly
 
 
 
@@ -394,6 +394,7 @@ Vucinic, et al.         Expires 25 September 2020               [Page 7]
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
+      support negotiation of algorithms used in the AKE.  It is strongly
       recommended that the AKE algorithms are identified using
       [IANA-COSE-Algorithms] to reduce unnecessary complexity of a
       combined OSCORE/AKE implementation.
@@ -432,15 +433,14 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
    are reversed at the cost of an additional flight.
 
    It is not required to protect the PSK identifier, and it may thus be
-   sent in the first flight.  It is possible to protect the PSK
-   identifier against passive attackers, for example with a key derived
-   from the ephemeral Diffie-Hellman shared secret, but that happens at
-   the earliest in flight 3.  As a consequence at least four protocol
-   flights are needed to authenticate the responder.  But since the
-   number of round-trips should be minimal (see Section 2.10.4),
-   protecting the PSK identifier is not required, at least not unless
-   there are other good reasons for having more than 3 flights.
+   sent in the first flight.  Protection of PSK identifier in many cases
+   require extra flights of the AKE.
 
+   Other identifying information may also need to be transported in
+   plain text, for example, identifiers to allow correlation between AKE
+   messages, and cipher suites.  Mechanisms to encrypt these kind of
+   parameters, such as using pre-configured public keys typically adds
+   to message overhead.
 
 
 
@@ -449,12 +449,6 @@ Vucinic, et al.         Expires 25 September 2020               [Page 8]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
-
-   Other identifying information may also need to be transported in
-   plain text.  Correlation of AKE messages is not provided by CoAP.
-   The AKE must provide such identifiers and they need to be in plain
-   text to allow correlation.  The AKE may need to send cipher suites in
-   plain text if such information is not preconfigured.
 
 2.7.  Auxiliary Data
 
@@ -497,6 +491,12 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
       against passive attackers and integrity protected against active
       attackers
 
+   *  Auxiliary data in the third flight is confidentiality and
+      integrity protected against active attackers
+
+
+
+
 
 
 
@@ -505,9 +505,6 @@ Vucinic, et al.         Expires 25 September 2020               [Page 9]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
-
-   *  Auxiliary data in the third flight is confidentiality and
-      integrity protected against active attackers
 
 2.8.  Extensibility
 
@@ -554,6 +551,9 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
    an existing CoAP/OSCORE stack in the targeted networks and
    technologies.  Some properties are difficult to evaluate for a given
    protocol, for example, because they depend on the radio conditions or
+   other simultaneous network traffic.  Additionally, these properties
+   are not independent.  Therefore the properties listed here should be
+
 
 
 
@@ -562,8 +562,6 @@ Vucinic, et al.         Expires 25 September 2020              [Page 10]
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
-   other simultaneous network traffic.  Additionally, these properties
-   are not independent.  Therefore the properties listed here should be
    taken as input for identifying plausible protocol metrics that can be
    more easily measured and compared between protocols.
 
@@ -609,7 +607,9 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
    discontinuous reception, etc. but this is not considered in scope of
    the AKE design.
 
-
+   Per 'new code', it is desirable to introduce as little new code as
+   possible onto OSCORE-enabled devices to support this new AKE.  These
+   devices have on the order of 10s of kB of memory and 100 kB of
 
 
 
@@ -618,9 +618,6 @@ Vucinic, et al.         Expires 25 September 2020              [Page 11]
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
-   Per 'new code', it is desirable to introduce as little new code as
-   possible onto OSCORE-enabled devices to support this new AKE.  These
-   devices have on the order of 10s of kB of memory and 100 kB of
    storage on which an embedded OS; a COAP stack; CORE and AKE
    libraries; and target applications would run.  It is expected that
    the majority of this space is available for actual application logic,
@@ -666,6 +663,9 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
    size of 51 bytes [LoRaWAN].  The use of larger frame size depend on
    good radio conditions which are not always present.  Some libraries/
    providers only support 51-bytes packet size.
+
+
+
 
 
 
