@@ -273,7 +273,7 @@ To mitigate against bad random number generators the AKE shall provide recommend
 
 Motivated by long deployment lifetimes, the AKE is required to support cryptographic agility, including the modularity of COSE crypto algorithms and negotiation of preferred crypto algorithms for OSCORE and the AKE.
 
-* The protocol shall support both pre-shared key and asymmetric key authentication. PAKE, post-quantum and hybrid key exchange is out of scope, but may be supported in a later version.
+* The protocol shall support both pre-shared key and asymmetric key authentication. PAKE, post-quantum and "hybrid" (simultaneously more than one) key exchange is out of scope, but may be supported in a later version.
 * The protocol shall allow negotiation of elliptic curves for Diffie-Hellman operations and signature-based authentication.
 * The AKE shall support negotiation of all COSE algorithms {{IANA-COSE-Algorithms}} to be used in OSCORE. The AKE shall support negotiation of algorithms used in the AKE. It is strongly recommended that the AKE algorithms are identified using {{IANA-COSE-Algorithms}} to reduce unnecessary complexity of a combined OSCORE/AKE implementation.
 *  A successful negotiation shall result in the most preferred algorithms of one of the parties which are supported by the other.
@@ -288,9 +288,9 @@ In general, it is necessary to transport identities as part of the AKE run in or
 
 In the case of public key identities, the AKE is required to protect the identity of one of the peers against active attackers and the identity of the other peer against passive attackers. SIGMA-I and SIGMA-R differ in this respect. SIGMA-I protects the identity of the initiator against active attackers and the identity of the responder against passive attackers. For SIGMA-R, the properties of the roles are reversed at the cost of an additional flight.
 
-It is not required to protect the PSK identifier, and it may thus be sent in the first flight. It is possible to protect the PSK identifier against passive attackers, for example with a key derived from the ephemeral Diffie-Hellman shared secret, but that happens at the earliest in flight 3. As a consequence at least four protocol flights are needed to authenticate the responder. But since the number of round-trips should be minimal (see Section 2.10.4), protecting the PSK identifier is not required, at least not unless there are other good reasons for having more than 3 flights.
+It is not required to protect the PSK identifier, and it may thus be sent in the first flight. Protection of PSK identifier in many cases require extra flights of the AKE.
 
-Other identifying information may also need to be transported in plain text. Correlation of AKE messages is not provided by CoAP. The AKE must provide such identifiers and they need to be in plain text to allow correlation. The AKE may need to send cipher suites in plain text if such information is not preconfigured.
+Other identifying information may also need to be transported in plain text, for example, identifiers to allow correlation between AKE messages, and cipher suites. Mechanisms to encrypt these kind of parameters, such as using pre-configured public keys typically adds to message overhead.
 
 
 ## Auxiliary Data
