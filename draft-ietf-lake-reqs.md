@@ -1,7 +1,7 @@
 ---
 title: Requirements for a Lightweight AKE for OSCORE
 abbrev: Reqs-LAKE-for-OSCORE
-docname: draft-ietf-lake-reqs-01
+docname: draft-ietf-lake-reqs-02
 
 ipr: trust200902
 cat: info
