@@ -5,11 +5,11 @@
 Network Working Group                                         M. Vucinic
 Internet-Draft                                                     Inria
 Intended status: Informational                               G. Selander
-Expires: 24 September 2020                                   J. Mattsson
+Expires: 25 September 2020                                   J. Mattsson
                                                              Ericsson AB
                                                                D. Garcia
                                                      Odin Solutions S.L.
-                                                           23 March 2020
+                                                           24 March 2020
 
 
              Requirements for a Lightweight AKE for OSCORE
@@ -39,7 +39,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 24 September 2020.
+   This Internet-Draft will expire on 25 September 2020.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Vucinic, et al.         Expires 24 September 2020               [Page 1]
+Vucinic, et al.         Expires 25 September 2020               [Page 1]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Vucinic, et al.         Expires 24 September 2020               [Page 2]
+Vucinic, et al.         Expires 25 September 2020               [Page 2]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -165,7 +165,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 24 September 2020               [Page 3]
+Vucinic, et al.         Expires 25 September 2020               [Page 3]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -221,7 +221,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 24 September 2020               [Page 4]
+Vucinic, et al.         Expires 25 September 2020               [Page 4]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -277,7 +277,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 24 September 2020               [Page 5]
+Vucinic, et al.         Expires 25 September 2020               [Page 5]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -333,7 +333,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 24 September 2020               [Page 6]
+Vucinic, et al.         Expires 25 September 2020               [Page 6]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -389,7 +389,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 24 September 2020               [Page 7]
+Vucinic, et al.         Expires 25 September 2020               [Page 7]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -445,7 +445,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 24 September 2020               [Page 8]
+Vucinic, et al.         Expires 25 September 2020               [Page 8]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -501,7 +501,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 24 September 2020               [Page 9]
+Vucinic, et al.         Expires 25 September 2020               [Page 9]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -557,7 +557,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 24 September 2020              [Page 10]
+Vucinic, et al.         Expires 25 September 2020              [Page 10]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -613,7 +613,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 24 September 2020              [Page 11]
+Vucinic, et al.         Expires 25 September 2020              [Page 11]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -669,7 +669,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 24 September 2020              [Page 12]
+Vucinic, et al.         Expires 25 September 2020              [Page 12]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -725,7 +725,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 24 September 2020              [Page 13]
+Vucinic, et al.         Expires 25 September 2020              [Page 13]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -781,7 +781,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 24 September 2020              [Page 14]
+Vucinic, et al.         Expires 25 September 2020              [Page 14]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -837,7 +837,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 24 September 2020              [Page 15]
+Vucinic, et al.         Expires 25 September 2020              [Page 15]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -867,6 +867,10 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 2.10.4.  Discussion and Summary of Benchmarks
 
+   The difference between uplink and downlink performance must not be
+   engineered into the protocol since it cannot be assumed that a
+   particular protocol message will be sent uplink or downlink.
+
    For NB-IoT the byte count on the wire has a measurable impact on time
    and energy consumption for running the AKE, so the number of bytes in
    the messages needs to be as low as possible.
@@ -886,18 +890,18 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
    There are trade-offs between "few messages" and "few frames"; if
    overhead is spread out over more messages such that each message fits
-   into a particular frame this may reduce the overall power
-   consumption.  For example, with a frame size of 50 bytes, two 60-byte
-   messages will fragment into 4 frames in total, whereas three 40-byte
-   messages fragment into 3 frames in total.  While it may be possible
 
 
 
-Vucinic, et al.         Expires 24 September 2020              [Page 16]
+Vucinic, et al.         Expires 25 September 2020              [Page 16]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
+   into a particular frame this may reduce the overall power
+   consumption.  For example, with a frame size of 50 bytes, two 60-byte
+   messages will fragment into 4 frames in total, whereas three 40-byte
+   messages fragment into 3 frames in total.  While it may be possible
    to engineer such a solution for a particular radio technology and
    signature algorithm, the benefits in terms of fewer flights/round
    trips in general and for NB-IoT in particular (see Section 2.10.3)
@@ -912,10 +916,6 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
    avoided.  For the case of certificate based authentication it may not
    be possible to transport certificates in the AKE with the minimal
    number of frames.
-
-   Note also that the difference between uplink and downlink performance
-   must not be engineered into the protocol since it cannot be assumed
-   that a particular protocol message will be sent uplink or downlink.
 
    For the LoRaWAN benchmark, the limit for fragmentation is 51 bytes at
    link layer.  For the 6TiSCH benchmark, messages less than or equal to
@@ -949,7 +949,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 24 September 2020              [Page 17]
+Vucinic, et al.         Expires 25 September 2020              [Page 17]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -990,8 +990,8 @@ Acknowledgments
 
    The authors want to thank Richard Barnes, Karthik Bhargavan, Stephen
    Farrell, Ivaylo Petrov, Eric Rescorla, Michael Richardson, Jesus
-   Sanchez-Gomez, Claes Tidestav and Christopher Wood for providing
-   valuable input.
+   Sanchez-Gomez, Claes Tidestav, Hannes Tschofenig and Christopher Wood
+   for providing valuable input.
 
 Informative References
 
@@ -1005,7 +1005,7 @@ Informative References
 
 
 
-Vucinic, et al.         Expires 24 September 2020              [Page 18]
+Vucinic, et al.         Expires 25 September 2020              [Page 18]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -1061,7 +1061,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 24 September 2020              [Page 19]
+Vucinic, et al.         Expires 25 September 2020              [Page 19]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -1117,7 +1117,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 24 September 2020              [Page 20]
+Vucinic, et al.         Expires 25 September 2020              [Page 20]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -1173,7 +1173,7 @@ Authors' Addresses
 
 
 
-Vucinic, et al.         Expires 24 September 2020              [Page 21]
+Vucinic, et al.         Expires 25 September 2020              [Page 21]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
@@ -1229,4 +1229,4 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.         Expires 24 September 2020              [Page 22]
+Vucinic, et al.         Expires 25 September 2020              [Page 22]

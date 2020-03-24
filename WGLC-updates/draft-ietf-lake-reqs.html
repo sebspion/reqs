@@ -834,7 +834,7 @@ table.left {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Vucinic, et al.</td>
-<td class="center">Expires 24 September 2020</td>
+<td class="center">Expires 25 September 2020</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -847,12 +847,12 @@ table.left {
 <dd class="internet-draft">draft-ietf-lake-reqs-01</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2020-03-23" class="published">23 March 2020</time>
+<time datetime="2020-03-24" class="published">24 March 2020</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2020-09-24">24 September 2020</time></dd>
+<dd class="expires"><time datetime="2020-09-25">25 September 2020</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -901,7 +901,7 @@ It is not currently planned to publish this draft as an RFC.<a href="#section-ab
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 24 September 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 25 September 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1133,8 +1133,8 @@ The AKE must support different credentials for authentication in different direc
         <h3 id="name-auxiliary-data">
 <a href="#section-2.7" class="section-number selfRef">2.7. </a><a href="#name-auxiliary-data" class="section-name selfRef">Auxiliary Data</a>
         </h3>
-<p id="section-2.7-1">In order to reduce round trips and the number of flights, and in some cases also streamline processing, certain security features may be  integrated into the AKE by transporting "auxiliary data" together with the AKE messages.<a href="#section-2.7-1" class="pilcrow">¶</a></p>
-<p id="section-2.7-2">One example is the transport of third-party authorization information  from initiator to responder or vice versa. Such a scheme could enable the party receiving the authorization information to make a decision about whether the party being authenticated is also authorized before the protocol is completed, and if not then discontinue the protocol before it is complete, thereby saving time, message processing and data transmission.<a href="#section-2.7-2" class="pilcrow">¶</a></p>
+<p id="section-2.7-1">In order to reduce round trips and the number of flights, and in some cases also streamline processing, certain security features may be integrated into the AKE by transporting "auxiliary data" together with the AKE messages.<a href="#section-2.7-1" class="pilcrow">¶</a></p>
+<p id="section-2.7-2">One example is the transport of third-party authorization information from initiator to responder or vice versa. Such a scheme could enable the party receiving the authorization information to make a decision about whether the party being authenticated is also authorized before the protocol is completed, and if not then discontinue the protocol before it is complete, thereby saving time, message processing and data transmission.<a href="#section-2.7-2" class="pilcrow">¶</a></p>
 <p id="section-2.7-3">Another, orthogonal, example is the embedding of a certificate enrolment request or a newly issued certificate in the AKE.<a href="#section-2.7-3" class="pilcrow">¶</a></p>
 <p id="section-2.7-4">For example, the auxiliary data in the first two messages of the AKE may transport authorization related information as in <span>[<a href="#I-D.selander-ace-ake-authz" class="xref">I-D.selander-ace-ake-authz</a>]</span> followed by a Certificate Signing Request (CSR) in the auxiliary data of the third message.<a href="#section-2.7-4" class="pilcrow">¶</a></p>
 <p id="section-2.7-5">The AKE must support the transport of such auxiliary data together with the protocol messages.
@@ -1359,12 +1359,12 @@ Network formation time directly affects the time installers need to spend on sit
           <h4 id="name-discussion-and-summary-of-b">
 <a href="#section-2.10.4" class="section-number selfRef">2.10.4. </a><a href="#name-discussion-and-summary-of-b" class="section-name selfRef">Discussion and Summary of Benchmarks</a>
           </h4>
-<p id="section-2.10.4-1">For NB-IoT the byte count on the wire has a measurable impact on time and energy consumption for running the AKE, so the number of bytes in the messages needs to be as low as possible.<a href="#section-2.10.4-1" class="pilcrow">¶</a></p>
-<p id="section-2.10.4-2">While "as small protocol messages as possible" does not lend itself to a sharp boundary threshold, "as few flights as possible" does and is relevant in all settings above.<a href="#section-2.10.4-2" class="pilcrow">¶</a></p>
-<p id="section-2.10.4-3">The penalty is high for not fitting into the frame sizes of 6TiSCH and LoRaWAN networks. Fragmentation is not defined within these technologies so requires fragmentation scheme on a higher layer in the stack. With fragmentation increases the number of frames per message, each with its associated overhead in terms of power consumption and latency. Additionally the probability for errors increases, which leads to retransmissions of frames or entire messages that in turn increases the power consumption and latency.<a href="#section-2.10.4-3" class="pilcrow">¶</a></p>
-<p id="section-2.10.4-4">There are trade-offs between "few messages" and "few frames"; if overhead is spread out over more messages such that each message fits into a particular frame this may reduce the overall power consumption. For example, with a frame size of 50 bytes, two 60-byte messages will fragment into 4 frames in total, whereas three 40-byte messages fragment into 3 frames in total. While it may be possible to engineer such a solution for a particular radio technology and signature algorithm, the benefits in terms of fewer flights/round trips in general and for NB-IoT in particular (see <a href="#nb-iot" class="xref">Section 2.10.3</a>) are considered more important than optimizing for a specific scenario.<a href="#section-2.10.4-4" class="pilcrow">¶</a></p>
-<p id="section-2.10.4-5">Considering that an AKE protocol complying with these requirements is expected to have at least 3 messages, the optimal AKE has 3 messages and each message fits into as few frames as possible, ideally 1 frame per message. The target message sizes for minimal but realistic applications of PSK and RPK should be such that fragmentation can be avoided. For the case of certificate based authentication it may not be possible to transport certificates in the AKE with the minimal number of frames.<a href="#section-2.10.4-5" class="pilcrow">¶</a></p>
-<p id="section-2.10.4-6">Note also that the difference between uplink and downlink performance must not be engineered into the protocol since it cannot be assumed that a particular protocol message will be sent uplink or downlink.<a href="#section-2.10.4-6" class="pilcrow">¶</a></p>
+<p id="section-2.10.4-1">The difference between uplink and downlink performance must not be engineered into the protocol since it cannot be assumed that a particular protocol message will be sent uplink or downlink.<a href="#section-2.10.4-1" class="pilcrow">¶</a></p>
+<p id="section-2.10.4-2">For NB-IoT the byte count on the wire has a measurable impact on time and energy consumption for running the AKE, so the number of bytes in the messages needs to be as low as possible.<a href="#section-2.10.4-2" class="pilcrow">¶</a></p>
+<p id="section-2.10.4-3">While "as small protocol messages as possible" does not lend itself to a sharp boundary threshold, "as few flights as possible" does and is relevant in all settings above.<a href="#section-2.10.4-3" class="pilcrow">¶</a></p>
+<p id="section-2.10.4-4">The penalty is high for not fitting into the frame sizes of 6TiSCH and LoRaWAN networks. Fragmentation is not defined within these technologies so requires fragmentation scheme on a higher layer in the stack. With fragmentation increases the number of frames per message, each with its associated overhead in terms of power consumption and latency. Additionally the probability for errors increases, which leads to retransmissions of frames or entire messages that in turn increases the power consumption and latency.<a href="#section-2.10.4-4" class="pilcrow">¶</a></p>
+<p id="section-2.10.4-5">There are trade-offs between "few messages" and "few frames"; if overhead is spread out over more messages such that each message fits into a particular frame this may reduce the overall power consumption. For example, with a frame size of 50 bytes, two 60-byte messages will fragment into 4 frames in total, whereas three 40-byte messages fragment into 3 frames in total. While it may be possible to engineer such a solution for a particular radio technology and signature algorithm, the benefits in terms of fewer flights/round trips in general and for NB-IoT in particular (see <a href="#nb-iot" class="xref">Section 2.10.3</a>) are considered more important than optimizing for a specific scenario.<a href="#section-2.10.4-5" class="pilcrow">¶</a></p>
+<p id="section-2.10.4-6">Considering that an AKE protocol complying with these requirements is expected to have at least 3 messages, the optimal AKE has 3 messages and each message fits into as few frames as possible, ideally 1 frame per message. The target message sizes for minimal but realistic applications of PSK and RPK should be such that fragmentation can be avoided. For the case of certificate based authentication it may not be possible to transport certificates in the AKE with the minimal number of frames.<a href="#section-2.10.4-6" class="pilcrow">¶</a></p>
 <p id="section-2.10.4-7">For the LoRaWAN benchmark, the limit for fragmentation is 51 bytes at link layer. For the 6TiSCH benchmark, messages less than or equal to 45 bytes at CoAP payload layer need not be fragmented.<a href="#section-2.10.4-7" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1434,7 +1434,7 @@ Network formation time directly affects the time installers need to spend on sit
       <h2 id="name-acknowledgments">
 <a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
       </h2>
-<p id="section-6-1">The authors want to thank Richard Barnes, Karthik Bhargavan, Stephen Farrell, Ivaylo Petrov, Eric Rescorla, Michael Richardson, Jesus Sanchez-Gomez, Claes Tidestav and Christopher Wood for providing valuable input.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-1">The authors want to thank Richard Barnes, Karthik Bhargavan, Stephen Farrell, Ivaylo Petrov, Eric Rescorla, Michael Richardson, Jesus Sanchez-Gomez, Claes Tidestav, Hannes Tschofenig and Christopher Wood for providing valuable input.<a href="#section-6-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <section id="section-7">
