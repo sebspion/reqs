@@ -295,9 +295,9 @@ Other identifying information may also need to be transported in plain text. Cor
 
 ## Auxiliary Data
 
-In order to reduce round trips and the number of flights, and in some cases also streamline processing, certain security features may be  integrated into the AKE by transporting "auxiliary data" together with the AKE messages.
+In order to reduce round trips and the number of flights, and in some cases also streamline processing, certain security features may be integrated into the AKE by transporting "auxiliary data" together with the AKE messages.
 
-One example is the transport of third-party authorization information  from initiator to responder or vice versa. Such a scheme could enable the party receiving the authorization information to make a decision about whether the party being authenticated is also authorized before the protocol is completed, and if not then discontinue the protocol before it is complete, thereby saving time, message processing and data transmission. 
+One example is the transport of third-party authorization information from initiator to responder or vice versa. Such a scheme could enable the party receiving the authorization information to make a decision about whether the party being authenticated is also authorized before the protocol is completed, and if not then discontinue the protocol before it is complete, thereby saving time, message processing and data transmission. 
 
 Another, orthogonal, example is the embedding of a certificate enrolment request or a newly issued certificate in the AKE.
 
@@ -467,6 +467,8 @@ The results {{AKE-for-NB-IoT}} show a high per-byte energy consumption for uplin
 
 ### Discussion and Summary of Benchmarks {#disc}
 
+The difference between uplink and downlink performance must not be engineered into the protocol since it cannot be assumed that a particular protocol message will be sent uplink or downlink.
+
 For NB-IoT the byte count on the wire has a measurable impact on time and energy consumption for running the AKE, so the number of bytes in the messages needs to be as low as possible.
 
 While "as small protocol messages as possible" does not lend itself to a sharp boundary threshold, "as few flights as possible" does and is relevant in all settings above. 
@@ -476,8 +478,6 @@ The penalty is high for not fitting into the frame sizes of 6TiSCH and LoRaWAN n
 There are trade-offs between "few messages" and "few frames"; if overhead is spread out over more messages such that each message fits into a particular frame this may reduce the overall power consumption. For example, with a frame size of 50 bytes, two 60-byte messages will fragment into 4 frames in total, whereas three 40-byte messages fragment into 3 frames in total. While it may be possible to engineer such a solution for a particular radio technology and signature algorithm, the benefits in terms of fewer flights/round trips in general and for NB-IoT in particular (see {{nb-iot}}) are considered more important than optimizing for a specific scenario. 
 
 Considering that an AKE protocol complying with these requirements is expected to have at least 3 messages, the optimal AKE has 3 messages and each message fits into as few frames as possible, ideally 1 frame per message. The target message sizes for minimal but realistic applications of PSK and RPK should be such that fragmentation can be avoided. For the case of certificate based authentication it may not be possible to transport certificates in the AKE with the minimal number of frames.
-
-Note also that the difference between uplink and downlink performance must not be engineered into the protocol since it cannot be assumed that a particular protocol message will be sent uplink or downlink.
 
 For the LoRaWAN benchmark, the limit for fragmentation is 51 bytes at link layer. For the 6TiSCH benchmark, messages less than or equal to 45 bytes at CoAP payload layer need not be fragmented. 
 
@@ -521,7 +521,7 @@ None.
 # Acknowledgments
 {: numbered="no"}
 
-The authors want to thank Richard Barnes, Karthik Bhargavan, Stephen Farrell, Ivaylo Petrov, Eric Rescorla, Michael Richardson, Jesus Sanchez-Gomez, Claes Tidestav and Christopher Wood for providing valuable input.
+The authors want to thank Richard Barnes, Karthik Bhargavan, Stephen Farrell, Ivaylo Petrov, Eric Rescorla, Michael Richardson, Jesus Sanchez-Gomez, Claes Tidestav, Hannes Tschofenig and Christopher Wood for providing valuable input.
 
 
 
