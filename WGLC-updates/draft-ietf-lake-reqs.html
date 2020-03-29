@@ -834,7 +834,7 @@ table.left {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Vucinic, et al.</td>
-<td class="center">Expires 25 September 2020</td>
+<td class="center">Expires 30 September 2020</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -847,12 +847,12 @@ table.left {
 <dd class="internet-draft">draft-ietf-lake-reqs-02</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2020-03-24" class="published">24 March 2020</time>
+<time datetime="2020-03-29" class="published">29 March 2020</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2020-09-25">25 September 2020</time></dd>
+<dd class="expires"><time datetime="2020-09-30">30 September 2020</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -901,7 +901,7 @@ It is not currently planned to publish this draft as an RFC.<a href="#section-ab
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 25 September 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 30 September 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1037,7 +1037,7 @@ The solution will presumably be useful in other scenarios as well since a low se
 <li id="section-2.1-3.3">COSE algorithms to use with OSCORE<a href="#section-2.1-3.3" class="pilcrow">¶</a>
 </li>
 </ul>
-<p id="section-2.1-4">COSE provides the crypto primitives for OSCORE. The AKE shall specify how COSE algorithms are provided as output to OSCORE. It is strongly recommended that COSE is reused by the AKE, for identification of credentials and algorithms, as extension point for new schemes, and to avoid duplicated implementation of crypto wrapper.<a href="#section-2.1-4" class="pilcrow">¶</a></p>
+<p id="section-2.1-4">COSE provides the crypto primitives for OSCORE. The AKE shall specify how it provides COSE algorithms to OSCORE. It is strongly recommended that COSE is reused by the AKE, for identification of credentials and algorithms, as extension point for new schemes, and to avoid duplicated implementation of crypto wrapper.<a href="#section-2.1-4" class="pilcrow">¶</a></p>
 <p id="section-2.1-5">The AKE cannot rely on messages being exchanged in both directions after the AKE has completed, because CoAP/OSCORE requests may not have a response <span>[<a href="#RFC7967" class="xref">RFC7967</a>]</span>. Furthermore, there is no assumption of dependence between CoAP client/server and AKE initiator/responder roles, and an OSCORE context may be used with CoAP client and server roles interchanged as is done, for example, in <span>[<a href="#LwM2M" class="xref">LwM2M</a>]</span>.<a href="#section-2.1-5" class="pilcrow">¶</a></p>
 <p id="section-2.1-6">Moreover, the AKE must support transport over CoAP. Since the AKE messages most commonly will be encapsulated in CoAP, the AKE must not duplicate functionality provided by CoAP, or at least not duplicate functionality in such a way that it adds non-negligible extra costs in terms of code size, code maintenance, etc. It is therefore assumed that the AKE is being transported in a protocol that provides reliable transport, that can preserve packet ordering and handle message duplication <span>[<a href="#RFC7252" class="xref">RFC7252</a>]</span>, that can perform fragmentation <span>[<a href="#RFC7959" class="xref">RFC7959</a>]</span> and protect against denial of service attacks as provided by the CoAP Echo option <span>[<a href="#I-D.ietf-core-echo-request-tag" class="xref">I-D.ietf-core-echo-request-tag</a>]</span>.<a href="#section-2.1-6" class="pilcrow">¶</a></p>
 <p id="section-2.1-7">The AKE may use other transport than CoAP. In this case the underlying layers must correspondingly handle message loss, reordering, message duplication, fragmentation, and denial of service protection.<a href="#section-2.1-7" class="pilcrow">¶</a></p>
