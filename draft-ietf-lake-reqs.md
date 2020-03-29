@@ -200,7 +200,7 @@ In order to be suitable for OSCORE, at the end of the AKE protocol run the two p
 
 * COSE algorithms to use with OSCORE
 
-COSE provides the crypto primitives for OSCORE. The AKE shall specify how COSE algorithms are provided as output to OSCORE. It is strongly recommended that COSE is reused by the AKE, for identification of credentials and algorithms, as extension point for new schemes, and to avoid duplicated implementation of crypto wrapper.
+COSE provides the crypto primitives for OSCORE. The AKE shall specify how it provides COSE algorithms to OSCORE. It is strongly recommended that COSE is reused by the AKE, for identification of credentials and algorithms, as extension point for new schemes, and to avoid duplicated implementation of crypto wrapper.
 
 The AKE cannot rely on messages being exchanged in both directions after the AKE has completed, because CoAP/OSCORE requests may not have a response {{RFC7967}}. Furthermore, there is no assumption of dependence between CoAP client/server and AKE initiator/responder roles, and an OSCORE context may be used with CoAP client and server roles interchanged as is done, for example, in {{LwM2M}}.
 
