@@ -230,7 +230,7 @@ To further minimize the bandwidth consumption it is required to support transpor
 The use of RPKs may be appropriate for the authentication of the AKE initiator but not for the AKE responder.
 The AKE must support different credentials for authentication in different directions of the AKE run, e.g. certificate-based authentication for the initiating endpoint and RPK-based authentication for the responding endpoint.
 
-Assuming that both signature public keys and static DH public keys are in use, then also the case of mixed credentials need to be supported with one endpoint using a static DH public key and the other using a signature public key. The AKE shall support negotiation of public key credential mix and that both can verify the variant that was executed.
+Assuming that both signature public keys and static DH public keys are in use, then also the case of mixed credentials need to be supported with one endpoint using a static DH public key and the other using a signature public key. The AKE shall support negotiation of public key credential mix and that both initiator and responder can verify the variant that was executed.
 
 
 ## Mutual Authentication {#mutual-auth}
@@ -247,7 +247,7 @@ The mutual authentication guarantees of the AKE shall at least guarantee the fol
 
 * The AKE shall protect against reflection attacks, but need not protect against attacks when more than two parties legitimately share keys (cf. the Selfie attack on TLS 1.3 {{Selfie}}) as that setting is out of scope.
 
-Replays shall not affect the security of an AKE session.
+Replayed messages shall not affect the security of an AKE session.
 
 Furthermore, the endpoints shall be able to verify that the identity of the other endpoint is an acceptable identity that it is intended to authenticate to. (This requirement extends beyond the AKE in that the application must enable access to information about acceptable identities without compromising the overall lightweightness of the AKE.)
 
