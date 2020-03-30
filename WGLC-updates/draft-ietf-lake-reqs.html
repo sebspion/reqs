@@ -834,7 +834,7 @@ table.left {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Vucinic, et al.</td>
-<td class="center">Expires 30 September 2020</td>
+<td class="center">Expires 1 October 2020</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -847,12 +847,12 @@ table.left {
 <dd class="internet-draft">draft-ietf-lake-reqs-02</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2020-03-29" class="published">29 March 2020</time>
+<time datetime="2020-03-30" class="published">30 March 2020</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2020-09-30">30 September 2020</time></dd>
+<dd class="expires"><time datetime="2020-10-01">1 October 2020</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -901,7 +901,7 @@ It is not currently planned to publish this draft as an RFC.<a href="#section-ab
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 30 September 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 1 October 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1058,7 +1058,7 @@ The solution will presumably be useful in other scenarios as well since a low se
 <p id="section-2.2-8">To further minimize the bandwidth consumption it is required to support transporting certificates and raw public keys by reference rather than by value. Considering the wide variety of deployments, the AKE must support different schemes for transporting and identifying credentials, including x5t, x5u and x5chain (see Section 2 of <span>[<a href="#I-D.ietf-cose-x509" class="xref">I-D.ietf-cose-x509</a>]</span>).<a href="#section-2.2-8" class="pilcrow">¶</a></p>
 <p id="section-2.2-9">The use of RPKs may be appropriate for the authentication of the AKE initiator but not for the AKE responder.
 The AKE must support different credentials for authentication in different directions of the AKE run, e.g. certificate-based authentication for the initiating endpoint and RPK-based authentication for the responding endpoint.<a href="#section-2.2-9" class="pilcrow">¶</a></p>
-<p id="section-2.2-10">Assuming that both signature public keys and static DH public keys are in use, then also the case of mixed credentials need to be supported with one endpoint using a static DH public key and the other using a signature public key. The AKE shall support negotiation of public key credential mix and that both can verify the variant that was executed.<a href="#section-2.2-10" class="pilcrow">¶</a></p>
+<p id="section-2.2-10">Assuming that both signature public keys and static DH public keys are in use, then also the case of mixed credentials need to be supported with one endpoint using a static DH public key and the other using a signature public key. The AKE shall support negotiation of public key credential mix and that both initiator and responder can verify the variant that was executed.<a href="#section-2.2-10" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="mutual-auth">
@@ -1077,7 +1077,7 @@ The AKE must support different credentials for authentication in different direc
 <li id="section-2.3-4.3">The AKE shall protect against reflection attacks, but need not protect against attacks when more than two parties legitimately share keys (cf. the Selfie attack on TLS 1.3 <span>[<a href="#Selfie" class="xref">Selfie</a>]</span>) as that setting is out of scope.<a href="#section-2.3-4.3" class="pilcrow">¶</a>
 </li>
 </ul>
-<p id="section-2.3-5">Replays shall not affect the security of an AKE session.<a href="#section-2.3-5" class="pilcrow">¶</a></p>
+<p id="section-2.3-5">Replayed messages shall not affect the security of an AKE session.<a href="#section-2.3-5" class="pilcrow">¶</a></p>
 <p id="section-2.3-6">Furthermore, the endpoints shall be able to verify that the identity of the other endpoint is an acceptable identity that it is intended to authenticate to. (This requirement extends beyond the AKE in that the application must enable access to information about acceptable identities without compromising the overall lightweightness of the AKE.)<a href="#section-2.3-6" class="pilcrow">¶</a></p>
 <p id="section-2.3-7">As often is the case, it is expected that an AKE fulfilling these goals would have at least three flights of messages (with each flight potentially consisting of one or more messages, depending on the AKE design and the mapping to OSCORE).<a href="#section-2.3-7" class="pilcrow">¶</a></p>
 </section>
