@@ -5,11 +5,11 @@
 Network Working Group                                         M. Vucinic
 Internet-Draft                                                     Inria
 Intended status: Informational                               G. Selander
-Expires: 1 October 2020                                      J. Mattsson
+Expires: 3 October 2020                                      J. Mattsson
                                                              Ericsson AB
                                                                D. Garcia
                                                      Odin Solutions S.L.
-                                                           30 March 2020
+                                                            1 April 2020
 
 
              Requirements for a Lightweight AKE for OSCORE
@@ -39,7 +39,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 1 October 2020.
+   This Internet-Draft will expire on 3 October 2020.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Vucinic, et al.          Expires 1 October 2020                 [Page 1]
+Vucinic, et al.          Expires 3 October 2020                 [Page 1]
 
-Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
+Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
 
    and restrictions with respect to this document.  Code Components
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Vucinic, et al.          Expires 1 October 2020                 [Page 2]
+Vucinic, et al.          Expires 3 October 2020                 [Page 2]
 
-Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
+Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
 
       whose "common traits include ... frame sizes ... [on] the order of
@@ -165,9 +165,9 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.          Expires 1 October 2020                 [Page 3]
+Vucinic, et al.          Expires 3 October 2020                 [Page 3]
 
-Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
+Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
 
    *  COSE algorithms to use with OSCORE
@@ -221,9 +221,9 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.          Expires 1 October 2020                 [Page 4]
+Vucinic, et al.          Expires 3 October 2020                 [Page 4]
 
-Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
+Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
 
    Shared keys can alternatively be established in the endpoints using
@@ -277,9 +277,9 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.          Expires 1 October 2020                 [Page 5]
+Vucinic, et al.          Expires 3 October 2020                 [Page 5]
 
-Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
+Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
 
    negotiation of public key credential mix and that both initiator and
@@ -333,9 +333,9 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.          Expires 1 October 2020                 [Page 6]
+Vucinic, et al.          Expires 3 October 2020                 [Page 6]
 
-Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
+Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
 
 2.4.  Confidentiality
@@ -389,9 +389,9 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.          Expires 1 October 2020                 [Page 7]
+Vucinic, et al.          Expires 3 October 2020                 [Page 7]
 
-Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
+Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
 
       support negotiation of algorithms used in the AKE.  It is strongly
@@ -445,9 +445,9 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.          Expires 1 October 2020                 [Page 8]
+Vucinic, et al.          Expires 3 October 2020                 [Page 8]
 
-Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
+Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
 
 2.7.  Auxiliary Data
@@ -501,9 +501,9 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.          Expires 1 October 2020                 [Page 9]
+Vucinic, et al.          Expires 3 October 2020                 [Page 9]
 
-Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
+Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
 
 2.8.  Extensibility
@@ -557,9 +557,9 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.          Expires 1 October 2020                [Page 10]
+Vucinic, et al.          Expires 3 October 2020                [Page 10]
 
-Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
+Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
 
    taken as input for identifying plausible protocol metrics that can be
@@ -613,9 +613,9 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.          Expires 1 October 2020                [Page 11]
+Vucinic, et al.          Expires 3 October 2020                [Page 11]
 
-Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
+Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
 
    storage on which an embedded OS; a COAP stack; CORE and AKE
@@ -669,9 +669,9 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.          Expires 1 October 2020                [Page 12]
+Vucinic, et al.          Expires 3 October 2020                [Page 12]
 
-Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
+Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
 
 2.10.1.2.  Time
@@ -725,9 +725,9 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.          Expires 1 October 2020                [Page 13]
+Vucinic, et al.          Expires 3 October 2020                [Page 13]
 
-Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
+Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
 
 2.10.2.1.  Bytes on the wire
@@ -781,9 +781,9 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.          Expires 1 October 2020                [Page 14]
+Vucinic, et al.          Expires 3 October 2020                [Page 14]
 
-Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
+Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
 
    *  device battery life of 10 years or more,
@@ -837,9 +837,9 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.          Expires 1 October 2020                [Page 15]
+Vucinic, et al.          Expires 3 October 2020                [Page 15]
 
-Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
+Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
 
 2.10.3.4.  Power
@@ -893,9 +893,9 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.          Expires 1 October 2020                [Page 16]
+Vucinic, et al.          Expires 3 October 2020                [Page 16]
 
-Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
+Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
 
    into a particular frame this may reduce the overall power
@@ -949,9 +949,9 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.          Expires 1 October 2020                [Page 17]
+Vucinic, et al.          Expires 3 October 2020                [Page 17]
 
-Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
+Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
 
        symmetric key authenticated key exchange, where the symmetric key
@@ -1005,9 +1005,9 @@ Informative References
 
 
 
-Vucinic, et al.          Expires 1 October 2020                [Page 18]
+Vucinic, et al.          Expires 3 October 2020                [Page 18]
 
-Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
+Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
 
               <https://github.com/EricssonResearch/EDHOC/blob/master/
@@ -1061,9 +1061,9 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.          Expires 1 October 2020                [Page 19]
+Vucinic, et al.          Expires 3 October 2020                [Page 19]
 
-Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
+Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
 
               Authenticated Key Exchange.", Work in Progress, Internet-
@@ -1117,9 +1117,9 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.          Expires 1 October 2020                [Page 20]
+Vucinic, et al.          Expires 3 October 2020                [Page 20]
 
-Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
+Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
 
    [OCF]      "OSCORE:OCF Status and Comments", March 2020,
@@ -1173,9 +1173,9 @@ Authors' Addresses
 
 
 
-Vucinic, et al.          Expires 1 October 2020                [Page 21]
+Vucinic, et al.          Expires 3 October 2020                [Page 21]
 
-Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
+Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
 
    Malisa Vucinic
@@ -1229,4 +1229,4 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                March 2020
 
 
 
-Vucinic, et al.          Expires 1 October 2020                [Page 22]
+Vucinic, et al.          Expires 3 October 2020                [Page 22]
