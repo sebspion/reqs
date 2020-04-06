@@ -5,11 +5,11 @@
 Network Working Group                                         M. Vucinic
 Internet-Draft                                                     Inria
 Intended status: Informational                               G. Selander
-Expires: 3 October 2020                                      J. Mattsson
+Expires: 8 October 2020                                      J. Mattsson
                                                              Ericsson AB
                                                                D. Garcia
                                                      Odin Solutions S.L.
-                                                            1 April 2020
+                                                            6 April 2020
 
 
              Requirements for a Lightweight AKE for OSCORE
@@ -39,7 +39,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 October 2020.
+   This Internet-Draft will expire on 8 October 2020.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Vucinic, et al.          Expires 3 October 2020                 [Page 1]
+Vucinic, et al.          Expires 8 October 2020                 [Page 1]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
@@ -77,12 +77,12 @@ Table of Contents
      2.8.  Extensibility . . . . . . . . . . . . . . . . . . . . . .  10
      2.9.  Availability  . . . . . . . . . . . . . . . . . . . . . .  10
      2.10. Lightweight . . . . . . . . . . . . . . . . . . . . . . .  10
-   3.  Security Considerations . . . . . . . . . . . . . . . . . . .  18
-   4.  Privacy Considerations  . . . . . . . . . . . . . . . . . . .  18
-   5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  18
-   Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  18
-   Informative References  . . . . . . . . . . . . . . . . . . . . .  18
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  21
+   3.  Security Considerations . . . . . . . . . . . . . . . . . . .  19
+   4.  Privacy Considerations  . . . . . . . . . . . . . . . . . . .  19
+   5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  19
+   Acknowledgments . . . . . . . . . . . . . . . . . . . . . . . . .  19
+   Informative References  . . . . . . . . . . . . . . . . . . . . .  19
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  23
 
 1.  Introduction
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Vucinic, et al.          Expires 3 October 2020                 [Page 2]
+Vucinic, et al.          Expires 8 October 2020                 [Page 2]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
@@ -165,7 +165,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
 
 
-Vucinic, et al.          Expires 3 October 2020                 [Page 3]
+Vucinic, et al.          Expires 8 October 2020                 [Page 3]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
@@ -221,7 +221,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
 
 
-Vucinic, et al.          Expires 3 October 2020                 [Page 4]
+Vucinic, et al.          Expires 8 October 2020                 [Page 4]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
@@ -277,7 +277,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
 
 
-Vucinic, et al.          Expires 3 October 2020                 [Page 5]
+Vucinic, et al.          Expires 8 October 2020                 [Page 5]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
@@ -333,7 +333,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
 
 
-Vucinic, et al.          Expires 3 October 2020                 [Page 6]
+Vucinic, et al.          Expires 8 October 2020                 [Page 6]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
@@ -389,7 +389,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
 
 
-Vucinic, et al.          Expires 3 October 2020                 [Page 7]
+Vucinic, et al.          Expires 8 October 2020                 [Page 7]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
@@ -445,7 +445,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
 
 
-Vucinic, et al.          Expires 3 October 2020                 [Page 8]
+Vucinic, et al.          Expires 8 October 2020                 [Page 8]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
@@ -501,7 +501,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
 
 
-Vucinic, et al.          Expires 3 October 2020                 [Page 9]
+Vucinic, et al.          Expires 8 October 2020                 [Page 9]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
@@ -557,7 +557,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
 
 
-Vucinic, et al.          Expires 3 October 2020                [Page 10]
+Vucinic, et al.          Expires 8 October 2020                [Page 10]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
@@ -613,7 +613,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
 
 
-Vucinic, et al.          Expires 3 October 2020                [Page 11]
+Vucinic, et al.          Expires 8 October 2020                [Page 11]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
@@ -659,17 +659,17 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
    is 222 bytes.  For a SF12 - and low data rates - the maximum payload
    is 51 bytes on data link layer.
 
-   The benchmark used here is Data Rates 0-2 corresponding to a packet
-   size of 51 bytes [LoRaWAN].  The use of larger frame size depend on
-   good radio conditions which are not always present.  Some libraries/
-   providers only support 51-bytes packet size.
+   The size and number of packets impact the Time-on-Air (ToA).  The
+   benchmark used here is based on SF12 and a packet size of 51 bytes
+   [LoRaWAN].  The use of larger packets depend on good radio conditions
+   which are not always present.  Some libraries/providers only support
+   51-bytes packet size.
 
 
 
 
 
-
-Vucinic, et al.          Expires 3 October 2020                [Page 12]
+Vucinic, et al.          Expires 8 October 2020                [Page 12]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
@@ -681,11 +681,24 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
    communication.  These are the Spreading Factor (SF), the message
    size, the channel, bandwidth, coding rate, etc.  An important feature
    of LoRaWAN is the duty cycle limitation due to the use of the ISM
-   band.  A duty cycle of 1% implies that the time to complete a
-   fragmentation of the payload increases by at least 10,000%. This
-   limitation determines how long time the device will have to wait for
-   next use, which encourages the reduction of the message size as much
-   as possible.
+   band.  The duty cycle is evaluated in a 1-hour sliding window.  It is
+   legal for a device to transmit a burst for a total of up to 36
+   seconds ToA on a 1%-duty-cyle sub-band, but the device must then
+   pause the transmission for the rest of the hour [lorawan-duty-cycle].
+   In order to avoid extreme waiting times, the AKE needs to complete
+   before the duty cycle limit is exhausted, also taking into account
+   potential retransmissions and allowing additional air time for lower
+   level MAC frames and application data.  As a challenging but
+   realistic example we assume each message is retransmitted 2 times and
+   allow a factor 2-3 for additional air time.  With these assumptions
+   it is required with a ToA of 4-6 seconds for the uplink protocol
+   messages to ensure that the entire burst stays within the 36 seconds
+   duty cycle.
+
+   It should be noted that some libraries/providers enforce the duty
+   cycle limitation through a stop-and-wait operation, which restricts
+   the number of bytes to the size of the packets after which duty cycle
+   waiting times are incurred.
 
 2.10.1.3.  Round trips and number of flights
 
@@ -702,6 +715,20 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
    the different LoRaWAN classes of devices) also has an impact on the
    energy consumption, but overall the Time-on-Air is an important
    indication of the performance.
+
+
+
+
+
+
+
+
+
+
+Vucinic, et al.          Expires 8 October 2020                [Page 13]
+
+Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
+
 
 2.10.2.  6TiSCH
 
@@ -721,14 +748,6 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
    cases considered by the 6TiSCH working group, a network that is 2-4
    hops deep is commonplace; a network which is more than 8 hops deep is
    not common.
-
-
-
-
-Vucinic, et al.          Expires 3 October 2020                [Page 13]
-
-Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
-
 
 2.10.2.1.  Bytes on the wire
 
@@ -757,6 +776,16 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
    join the network.  Network formation time directly affects the time
    installers need to spend on site at deployment time.
 
+
+
+
+
+
+Vucinic, et al.          Expires 8 October 2020                [Page 14]
+
+Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
+
+
 2.10.2.3.  Round trips and number of flights
 
    Given the mesh nature of the 6TiSCH network, and given that each
@@ -779,13 +808,6 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
    *  operations in extreme coverage conditions,
 
-
-
-Vucinic, et al.          Expires 3 October 2020                [Page 14]
-
-Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
-
-
    *  device battery life of 10 years or more,
 
    *  low device complexity and cost, and
@@ -803,6 +825,22 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
    *  In-band, guard-band, and stand-alone deployment enabling efficient
       use of spectrum and network infrastructure.
+
+
+
+
+
+
+
+
+
+
+
+
+Vucinic, et al.          Expires 8 October 2020                [Page 15]
+
+Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
+
 
 2.10.3.1.  Bytes on the wire
 
@@ -833,15 +871,6 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
    As indicated in Section 2.10.3.2, the number of frames and round-
    trips is one limiting factor for protocol completion time.
 
-
-
-
-
-Vucinic, et al.          Expires 3 October 2020                [Page 15]
-
-Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
-
-
 2.10.3.4.  Power
 
    Since NB-IoT is operating in licensed spectrum, the device is allowed
@@ -861,6 +890,14 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
    for uplink transmissions, in particular in bad coverage.  Given that
    the application decides about the device being initiator or responder
    in the AKE, the protocol cannot be tailored for a particular message
+
+
+
+Vucinic, et al.          Expires 8 October 2020                [Page 16]
+
+Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
+
+
    being uplink or downlink.  To perform well in both kind of
    applications the overall number of bytes of the protocol needs to be
    as low as possible.
@@ -890,36 +927,60 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
    There are trade-offs between "few messages" and "few frames"; if
    overhead is spread out over more messages such that each message fits
+   into a particular frame this may reduce the overall power
+   consumption.  For example, with a frame size of 50 bytes, two 60-byte
+   messages will fragment into 4 frames in total, whereas three 40-byte
+   messages fragment into 3 frames in total.  On the other hand, a
+   smaller message has less probability to collide with other messages
+   and incur retransmission.
+
+   While it may be possible to engineer such a solution for a particular
+   radio technology and AKE protocol, optimizing for a specific scenario
+   may not be optimal for other settings.  It is expected that specific
+   scenarios are evaluated in the design phase to ensure that the AKE is
+   fit for purpose.  But in order to start the design work some general
+   criteria for the AKE performance need to be formulated that takes
+   into account the differences in the expected deployments.
+
+   There are benefits in terms of fewer flights/round trips for NB-IoT
+   (Section 2.10.3.3) and 6TiSCH (Section 2.10.2.3).  An AKE protocol
+   complying with the requirements of this memo is expected to have at
+   least 3 messages.  With a 3-message AKE, the initiator is able to
 
 
 
-Vucinic, et al.          Expires 3 October 2020                [Page 16]
+Vucinic, et al.          Expires 8 October 2020                [Page 17]
 
 Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
 
-   into a particular frame this may reduce the overall power
-   consumption.  For example, with a frame size of 50 bytes, two 60-byte
-   messages will fragment into 4 frames in total, whereas three 40-byte
-   messages fragment into 3 frames in total.  While it may be possible
-   to engineer such a solution for a particular radio technology and
-   signature algorithm, the benefits in terms of fewer flights/round
-   trips in general and for NB-IoT in particular (see Section 2.10.3)
-   are considered more important than optimizing for a specific
-   scenario.
+   derive the OSCORE security context after receiving message 2,
+   rendering the AKE essentially one round trip before traffic data can
+   be exchanged, which is ideal.
 
-   Considering that an AKE protocol complying with these requirements is
-   expected to have at least 3 messages, the optimal AKE has 3 messages
-   and each message fits into as few frames as possible, ideally 1 frame
-   per message.  The target message sizes for minimal but realistic
-   applications of PSK and RPK should be such that fragmentation can be
-   avoided.  For the case of certificate based authentication it may not
-   be possible to transport certificates in the AKE with the minimal
-   number of frames.
+   If the AKE has 3 messages then optimal performance for 6TiSCH is when
+   each message fits into as few frames as possible, ideally 1 frame per
+   message.
 
-   For the LoRaWAN benchmark, the limit for fragmentation is 51 bytes at
+   For LoRaWAN, optimal performance is determined by the duty cycle
+   which puts a limit to ToA or, for certain libraries/providers, the
+   number of packets (see Section 2.10.1.2).  If the AKE has 3 messages
+   and each message fits into a 51 byte packet then this is optimal for
+   the latter case.  The same assumption incurs a ToA for uplink
+   messages in the interval of 4-6 seconds at SF12 both for a device-
+   initiated and infrastructure-initiated AKE, which complies with the
+   challenging example stated in Section 2.10.1.2.
+
+   One avenue to good performance is therefore to target message sizes
+   which avoids fragmentation or with as few fragments as possible.  For
+   the LoRaWAN benchmark, the limit for fragmentation is 51 bytes at
    link layer.  For the 6TiSCH benchmark, messages less than or equal to
    45 bytes at CoAP payload layer need not be fragmented.
+
+   For minimal but realistic applications of PSK and RPK it is possible
+   to avoid fragmentation.  For the case of certificate based
+   authentication it may not be possible to transport certificates in
+   the AKE with the minimal number of frames.
 
 2.10.5.  AKE frequency
 
@@ -940,20 +1001,21 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
    2.  If a device reboots it may not be able to recover the security
        context, e.g. due to lack of persistent storage, and is required
        to establish a new security context for which an AKE is
+
+
+
+
+Vucinic, et al.          Expires 8 October 2020                [Page 18]
+
+Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
+
+
        preferred.  Reboot frequency may be difficult to predict in
        general.
 
    3.  To limit the impact of a key compromise, BSI, NIST and ANSSI and
        other organizations recommend in other contexts frequent renewal
        of keys by means of Diffie-Hellman key exchange.  This may be a
-
-
-
-Vucinic, et al.          Expires 3 October 2020                [Page 17]
-
-Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
-
-
        symmetric key authenticated key exchange, where the symmetric key
        is obtained from a previous asymmetric key based run of the AKE.
 
@@ -995,6 +1057,15 @@ Acknowledgments
 
 Informative References
 
+
+
+
+
+Vucinic, et al.          Expires 8 October 2020                [Page 19]
+
+Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
+
+
    [AKE-for-6TiSCH]
               "AKE for 6TiSCH", March 2019,
               <https://docs.google.com/document/
@@ -1002,14 +1073,6 @@ Informative References
 
    [AKE-for-NB-IoT]
               "AKE for NB-IoT", March 2019,
-
-
-
-Vucinic, et al.          Expires 3 October 2020                [Page 18]
-
-Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
-
-
               <https://github.com/EricssonResearch/EDHOC/blob/master/
               docs/NB%20IoT%20power%20consumption.xlsx>.
 
@@ -1051,6 +1114,14 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
               Cremers, C., Garratt, L., Smyshlyaev, S., Sullivan, N.,
               and C. Wood, "Randomness Improvements for Security
               Protocols", Work in Progress, Internet-Draft, draft-irtf-
+
+
+
+Vucinic, et al.          Expires 8 October 2020                [Page 20]
+
+Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
+
+
               cfrg-randomness-improvements-10, 17 February 2020,
               <http://www.ietf.org/internet-drafts/draft-irtf-cfrg-
               randomness-improvements-10.txt>.
@@ -1058,14 +1129,6 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
    [I-D.selander-ace-ake-authz]
               Selander, G., Mattsson, J., Vucinic, M., Richardson, M.,
               and A. Schellenbaum, "Lightweight Authorization for
-
-
-
-Vucinic, et al.          Expires 3 October 2020                [Page 19]
-
-Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
-
-
               Authenticated Key Exchange.", Work in Progress, Internet-
               Draft, draft-selander-ace-ake-authz-01, 9 March 2020,
               <http://www.ietf.org/internet-drafts/draft-selander-ace-
@@ -1089,6 +1152,16 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
               <https://lora-alliance.org/resource-hub/lorawantm-
               regional-parameters-v102rb>.
 
+   [lorawan-duty-cycle]
+              Saelens, M., Hoebeke, J., Shahid, A., and E. De Poorter,
+              "Impact of EU duty cycle and transmission power
+              limitations for sub-GHz LPWAN SRDs an overview and future
+              challenges. EURASIP Journal on Wireless Communications and
+              Networking. 2019. 10.1186/s13638-019-1502-5.", 2019,
+              <https://jwcn-
+              eurasipjournals.springeropen.com/articles/10.1186/
+              s13638-019-1502-5>.
+
    [LwM2M]    "OMA SpecWorks LwM2M", August 2018,
               <https://www.openmobilealliance.org/release/
               LightweightM2M/V1_1-20180710-A/OMA-TS-
@@ -1097,6 +1170,14 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
    [massive-breach]
               "Sim card database hack gave US and UK spies access to
               billions of cellphones", February 2015,
+
+
+
+Vucinic, et al.          Expires 8 October 2020                [Page 21]
+
+Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
+
+
               <https://www.theguardian.com/us-news/2015/feb/19/nsa-gchq-
               sim-card-billions-cellphones-hacking>.
 
@@ -1112,15 +1193,6 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
               January 2017,
               <http://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_AH/
               NR_AH_1701/Docs//R1-1701044.zip>.
-
-
-
-
-
-Vucinic, et al.          Expires 3 October 2020                [Page 20]
-
-Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
-
 
    [OCF]      "OSCORE:OCF Status and Comments", March 2020,
               <https://github.com/t2trg/2020-03-ocf-
@@ -1155,6 +1227,13 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
               RFC 8152, DOI 10.17487/RFC8152, July 2017,
               <https://www.rfc-editor.org/info/rfc8152>.
 
+
+
+Vucinic, et al.          Expires 8 October 2020                [Page 22]
+
+Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
+
+
    [RFC8376]  Farrell, S., Ed., "Low-Power Wide Area Network (LPWAN)
               Overview", RFC 8376, DOI 10.17487/RFC8376, May 2018,
               <https://www.rfc-editor.org/info/rfc8376>.
@@ -1168,15 +1247,6 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
               with PSK", March 2019, <https://eprint.iacr.org/2019/347>.
 
 Authors' Addresses
-
-
-
-
-
-Vucinic, et al.          Expires 3 October 2020                [Page 21]
-
-Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
-
 
    Malisa Vucinic
    Inria
@@ -1215,18 +1285,4 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Vucinic, et al.          Expires 3 October 2020                [Page 22]
+Vucinic, et al.          Expires 8 October 2020                [Page 23]
