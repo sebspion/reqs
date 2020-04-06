@@ -551,7 +551,7 @@ None.
 # Acknowledgments
 {: numbered="no"}
 
-The authors want to thank Richard Barnes, Karthik Bhargavan, Stephen Farrell, Ivaylo Petrov, Eric Rescorla, Michael Richardson, Jesus Sanchez-Gomez, Claes Tidestav, Hannes Tschofenig and Christopher Wood for providing valuable input.
+The authors want to thank Richard Barnes, Dominique Barthel, Karthik Bhargavan, Stephen Farrell, Ivaylo Petrov, Eric Rescorla, Michael Richardson, Jesus Sanchez-Gomez, Claes Tidestav, Hannes Tschofenig and Christopher Wood for providing valuable input.
 
 
 
