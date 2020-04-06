@@ -156,6 +156,24 @@ informative:
     title: Sim card database hack gave US and UK spies access to billions of cellphones
     date: Feb 2015
     
+  lorawan-duty-cycle:
+    target: https://jwcn-eurasipjournals.springeropen.com/articles/10.1186/s13638-019-1502-5 
+    author:
+      -
+        ins: M. Saelens
+        name: Martijn Saelens
+      - 
+        ins: J. Hoebeke
+        name: Jeroen Hoebeke
+      -
+        ins: A. Shahid
+        name: Adnan Shahid
+      -
+        ins: E. De Poorter
+        name: Eli De Poorter        
+    title: Impact of EU duty cycle and transmission power limitations for sub-GHz LPWAN SRDs an overview and future challenges. EURASIP Journal on Wireless Communications and Networking. 2019. 10.1186/s13638-019-1502-5.
+    date: 2019
+
 --- abstract
 
 This document compiles the requirements for a lightweight authenticated key exchange protocol for OSCORE. 
@@ -369,12 +387,16 @@ Reflecting deployment reality as of now, we focus on the European regulation as 
 
 LoRaWAN has a variable MTU depending on the Spreading Factor (SF). The higher the spreading factor, the higher distances can be achieved and/or better reception. If the coverage and distance allows it, with SF7 -- corresponding to higher data rates -- the maximum payload is 222 bytes. For a SF12 -- and low data rates -- the maximum payload is 51 bytes on data link layer.
 
-The benchmark used here is Data Rates 0-2 corresponding to a packet size of 51 bytes {{LoRaWAN}}. The use of larger frame size depend on good radio conditions which are not always present. Some libraries/providers only support 51-bytes packet size. 
+The size and number of packets impact the Time-on-Air (ToA). The benchmark used here is based on SF12 and a packet size of 51 bytes {{LoRaWAN}}. The use of larger packets depend on good radio conditions which are not always present. Some libraries/providers only support 51-bytes packet size. 
 
 
-#### Time
+#### Time {#lorawan-time}
 
-The time it takes to send a message over the air in LoRaWAN can be calculated as a function of the different parameters of the communication. These are the Spreading Factor (SF), the message size, the channel, bandwidth, coding rate, etc. An important feature of LoRaWAN is the duty cycle limitation due to the use of the ISM band. A duty cycle of 1% implies that the time to complete a fragmentation of the payload increases by at least 10,000%. This limitation determines how long time the device will have to wait for next use, which encourages the reduction of the message size as much as possible.
+The time it takes to send a message over the air in LoRaWAN can be calculated as a function of the different parameters of the communication. These are the Spreading Factor (SF), the message size, the channel, bandwidth, coding rate, etc. An important feature of LoRaWAN is the duty cycle limitation due to the use of the ISM band. 
+The duty cycle is evaluated in a 1-hour sliding window. It is legal for a device to transmit a burst for a total of up to 36 seconds ToA on a 1%-duty-cyle sub-band, but the device must then pause the transmission for the rest of the hour {{lorawan-duty-cycle}}.
+In order to avoid extreme waiting times, the AKE needs to complete before the duty cycle limit is exhausted, also taking into account potential retransmissions and allowing additional air time for lower level MAC frames and application data. As a challenging but realistic example we assume each message is retransmitted 2 times and allow a factor 2-3 for additional air time. With these assumptions it is required with a ToA of 4-6 seconds for the uplink protocol messages to ensure that the entire burst stays within the 36 seconds duty cycle.
+
+It should be noted that some libraries/providers enforce the duty cycle limitation through a stop-and-wait operation, which restricts the number of bytes to the size of the packets after which duty cycle waiting times are incurred.
 
 
 #### Round trips and number of flights
@@ -414,7 +436,7 @@ Given the slotted nature of 6TiSCH, the number of bytes in a frame has insignifi
 The relevant metric for studying AKE is the network formation time, which implies parallel AKE runs among nodes that are attempting to join the network.
 Network formation time directly affects the time installers need to spend on site at deployment time.
 
-#### Round trips and number of flights
+#### Round trips and number of flights {#sixt-rtt}
 
 Given the mesh nature of the 6TiSCH network, and given that each message may travel several hops before reaching its destination, it is highly desirable to minimize the number of round trips to reduce latency.
 
@@ -475,11 +497,19 @@ While "as small protocol messages as possible" does not lend itself to a sharp b
 
 The penalty is high for not fitting into the frame sizes of 6TiSCH and LoRaWAN networks. Fragmentation is not defined within these technologies so requires fragmentation scheme on a higher layer in the stack. With fragmentation increases the number of frames per message, each with its associated overhead in terms of power consumption and latency. Additionally the probability for errors increases, which leads to retransmissions of frames or entire messages that in turn increases the power consumption and latency.
 
-There are trade-offs between "few messages" and "few frames"; if overhead is spread out over more messages such that each message fits into a particular frame this may reduce the overall power consumption. For example, with a frame size of 50 bytes, two 60-byte messages will fragment into 4 frames in total, whereas three 40-byte messages fragment into 3 frames in total. While it may be possible to engineer such a solution for a particular radio technology and signature algorithm, the benefits in terms of fewer flights/round trips in general and for NB-IoT in particular (see {{nb-iot}}) are considered more important than optimizing for a specific scenario. 
+There are trade-offs between "few messages" and "few frames"; if overhead is spread out over more messages such that each message fits into a particular frame this may reduce the overall power consumption. For example, with a frame size of 50 bytes, two 60-byte messages will fragment into 4 frames in total, whereas three 40-byte messages fragment into 3 frames in total. On the other hand, a smaller message has less probability to collide with other messages and incur retransmission.
 
-Considering that an AKE protocol complying with these requirements is expected to have at least 3 messages, the optimal AKE has 3 messages and each message fits into as few frames as possible, ideally 1 frame per message. The target message sizes for minimal but realistic applications of PSK and RPK should be such that fragmentation can be avoided. For the case of certificate based authentication it may not be possible to transport certificates in the AKE with the minimal number of frames.
+While it may be possible to engineer such a solution for a particular radio technology and AKE protocol, optimizing for a specific scenario may not be optimal for other settings. It is expected that specific scenarios are evaluated in the design phase to ensure that the AKE is fit for purpose. But in order to start the design work some general criteria for the AKE performance need to be formulated that takes into account the differences in the expected deployments.
 
-For the LoRaWAN benchmark, the limit for fragmentation is 51 bytes at link layer. For the 6TiSCH benchmark, messages less than or equal to 45 bytes at CoAP payload layer need not be fragmented. 
+There are benefits in terms of fewer flights/round trips for NB-IoT ({{nbiot-rtt}}) and 6TiSCH ({{sixt-rtt}}). An AKE protocol complying with the requirements of this memo is expected to have at least 3 messages. With a 3-message AKE, the initiator is able to derive the OSCORE security context after receiving message 2, rendering the AKE essentially one round trip before traffic data can be exchanged, which is ideal. 
+
+If the AKE has 3 messages then optimal performance for 6TiSCH is when each message fits into as few frames as possible, ideally 1 frame per message. 
+
+For LoRaWAN, optimal performance is determined by the duty cycle which puts a limit to ToA or, for certain libraries/providers, the number of packets (see {{lorawan-time}}). If the AKE has 3 messages and each message fits into a 51 byte packet then this is optimal for the latter case. The same assumption incurs a ToA for uplink messages in the interval of 4-6 seconds at SF12 both for a device-initiated and infrastructure-initiated AKE, which complies with the challenging example stated in {{lorawan-time}}.
+
+One avenue to good performance is therefore to target message sizes which avoids fragmentation or with as few fragments as possible. For the LoRaWAN benchmark, the limit for fragmentation is 51 bytes at link layer. For the 6TiSCH benchmark, messages less than or equal to 45 bytes at CoAP payload layer need not be fragmented. 
+
+For minimal but realistic applications of PSK and RPK it is possible to avoid fragmentation. For the case of certificate based authentication it may not be possible to transport certificates in the AKE with the minimal number of frames.
 
 
 ### AKE frequency
