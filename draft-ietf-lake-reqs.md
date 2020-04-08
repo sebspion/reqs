@@ -222,7 +222,10 @@ COSE provides the crypto primitives for OSCORE. The AKE shall specify how it pro
 
 The AKE cannot rely on messages being exchanged in both directions after the AKE has completed, because CoAP/OSCORE requests may not have a response {{RFC7967}}. Furthermore, there is no assumption of dependence between CoAP client/server and AKE initiator/responder roles, and an OSCORE context may be used with CoAP client and server roles interchanged as is done, for example, in {{LwM2M}}.
 
-Moreover, the AKE must support transport over CoAP. Since the AKE messages most commonly will be encapsulated in CoAP, the AKE must not duplicate functionality provided by CoAP, or at least not duplicate functionality in such a way that it adds non-negligible extra costs in terms of code size, code maintenance, etc. It is therefore assumed that the AKE is being transported in a protocol that provides reliable transport, that can preserve packet ordering and handle message duplication {{RFC7252}}, that can perform fragmentation {{RFC7959}} and protect against denial of service attacks as provided by the CoAP Echo option {{I-D.ietf-core-echo-request-tag}}.
+Moreover, the AKE must support transport over CoAP.
+When transported over CoAP, the AKE must support the traversal of CoAP intermediaries, as required by the 6TiSCH network formation setting {{I-D.ietf-6tisch-minimal-security}}.
+
+Since the AKE messages most commonly will be encapsulated in CoAP, the AKE must not duplicate functionality provided by CoAP, or at least not duplicate functionality in such a way that it adds non-negligible extra costs in terms of code size, code maintenance, etc. It is therefore assumed that the AKE is being transported in a protocol that provides reliable transport, that can preserve packet ordering and handle message duplication {{RFC7252}}, that can perform fragmentation {{RFC7959}} and protect against denial of service attacks as provided by the CoAP Echo option {{I-D.ietf-core-echo-request-tag}}.
 
 The AKE may use other transport than CoAP. In this case the underlying layers must correspondingly handle message loss, reordering, message duplication, fragmentation, and denial of service protection.
 
