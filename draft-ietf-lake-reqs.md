@@ -173,6 +173,13 @@ informative:
         name: Eli De Poorter        
     title: Impact of EU duty cycle and transmission power limitations for sub-GHz LPWAN SRDs an overview and future challenges. EURASIP Journal on Wireless Communications and Networking. 2019. 10.1186/s13638-019-1502-5.
     date: 2019
+    
+  keylength:
+    target: https://infoscience.epfl.ch/record/164539/files/NPDF-32.pdf
+    title: Key Lengths:Contribution to The Handbook of Information Security
+    author:
+      -
+        ins: A. Lenstra
 
 --- abstract
 
@@ -302,6 +309,13 @@ Motivated by long deployment lifetimes, the AKE is required to support cryptogra
 
 The AKE negotiation must provide strong integrity guarantees against active attackers. At the end of the AKE protocol, both endpoints must agree on both the crypto algorithms that were proposed and those that were chosen. In particular, the protocol must protect against downgrade attacks.
 
+## Cryptographic Strength
+
+The AKE shall establish a key with a target security level
+{{keylength}} of >= 127 bits.  This level was chosen to include
+X25519 and applies to the strength of authentication, the established
+keys, and the protection for the negotiation of all cryptographic
+parameters.
 
 ## Identity Protection
 
