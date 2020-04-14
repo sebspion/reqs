@@ -1147,7 +1147,7 @@ Internet-Draft            Reqs-LAKE-for-OSCORE                April 2020
 
    [keylength]
               Lenstra, A., "Key Lengths:Contribution to The Handbook of
-              Information Security", n.d.,
+              Information Security", 2018,
               <https://infoscience.epfl.ch/record/164539/files/NPDF-
               32.pdf>.
 
