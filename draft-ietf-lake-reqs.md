@@ -180,7 +180,8 @@ informative:
     author:
       -
         ins: A. Lenstra
-
+    date: 2018
+    
 --- abstract
 
 This document compiles the requirements for a lightweight authenticated key exchange protocol for OSCORE. 
