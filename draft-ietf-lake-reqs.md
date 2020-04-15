@@ -247,19 +247,27 @@ However, PSK-based provisioning has inherent weaknesses. There has been reports 
 Shared keys can alternatively be established in the endpoints using an AKE protocol authenticated with asymmetric public keys instead of symmetric secret keys. Raw public keys (RPK) can be provisioned with the same scheme as PSKs, which allows for a more relaxed trust model since RPKs need not be secret. The corresponding private keys are assumed to be provisioned to the party being authenticated beforehand (e.g. in factory or generated on-board).
 
 As a third option, by using a public key infrastructure and running an asymmetric key AKE with public key certificates instead of RPKs, key provisioning can be omitted, leading to a more automated ("zero-touch") bootstrapping procedure. The root CA keys are assumed to be provisioned beforehand.
+Public key certificates are important for several IoT settings, e.g., facility management with a large number of devices from many different manufacturers.
 
 These steps provide an example of a migration path in limited scoped steps from simple to more robust security bootstrapping and provisioning schemes where each step improves the overall security and/or simplicity of deployment of the IoT system, although not all steps are necessarily feasible for the most constrained settings.
 
 In order to allow for these different schemes, the AKE must support PSK- (shared between two nodes), RPK- and certificate-based authentication.
+These are also the schemes for which CoAP is designed (see Section 9 of {{RFC7252}}).
 
 Multiple public key authentication credential types may need to be supported for RPK and certificate-based authentication. In case of a Diffie-Hellman key exchange both the use of signature based public keys (for compatibility with existing ecosystem) and static DH public keys (for reduced message size) is expected.
 
-To further minimize the bandwidth consumption it is required to support transporting certificates and raw public keys by reference rather than by value. Considering the wide variety of deployments, the AKE must support different schemes for transporting and identifying credentials, including x5t, x5u and x5chain (see Section 2 of {{I-D.ietf-cose-x509}}).
+To further minimize the bandwidth consumption it is required to support transporting certificates and raw public keys by reference rather than by value. Considering the wide variety of deployments, the AKE must support different schemes for transporting and identifying credentials, including certificate by hash, certificate by URL, and certificates explicitly, such as x5t, x5u and x5chain (see Section 2 of {{I-D.ietf-cose-x509}}).
 
 The use of RPKs may be appropriate for the authentication of the AKE initiator but not for the AKE responder.
 The AKE must support different credentials for authentication in different directions of the AKE run, e.g. certificate-based authentication for the initiating endpoint and RPK-based authentication for the responding endpoint.
 
 Assuming that both signature public keys and static DH public keys are in use, then also the case of mixed credentials need to be supported with one endpoint using a static DH public key and the other using a signature public key. The AKE shall support negotiation of public key credential mix and that both initiator and responder can verify the variant that was executed.
+
+### Initial Focus {#initial-focus}
+
+As illustrated above, the setting is much more diverse in terms of credentials and trust anchors than that of the unconstrained web. In order to deliver a timely result, there is a need to initially focus on what is considered most important at the time of writing: RPK (by reference and value) and certificate by reference.
+
+A subsequent extension beyond the initial focus may be inevitable to maintain a homogenous deployment without having to implement a mix of AKE protocols, for example, to support the migration path described above. The AKE needs to make clear the scope of cases analysed in the initial phase, and that a new analysis is required for additional cases. 
 
 
 ## Mutual Authentication {#mutual-auth}
@@ -527,7 +535,11 @@ For LoRaWAN, optimal performance is determined by the duty cycle which puts a li
 
 One avenue to good performance is therefore to target message sizes which avoids fragmentation or with as few fragments as possible. For the LoRaWAN benchmark, the limit for fragmentation is 51 bytes at link layer. For the 6TiSCH benchmark, messages less than or equal to 45 bytes at CoAP payload layer need not be fragmented. 
 
-For minimal but realistic applications of PSK and RPK it is possible to avoid fragmentation. For the case of certificate based authentication it may not be possible to transport certificates in the AKE with the minimal number of frames.
+For the initial focus cases ({{initial-focus}}), i.e. RPK (by reference and value) and certificate by reference, it is required that the AKE shall perform optimally with respect to the available criteria for the radio technologies. 
+
+To determine with certainty what are the minimal number of fragments for an AKE under different assumptions requires to design and analyse the AKE, which is clearly beyond the requirements phase. However, by means of an example we have reason to believe that an AKE with 3 messages can be designed to support RPK by reference in 3 fragments. Thus the ideal number of fragments is expected for RPK by reference. 
+
+While such performance may not be possible for the other initial focus cases, it is expected that if one of the peers send RPK by value or certificate by reference, then one additional fragment is sufficient, thus in total a maximum of 5 fragments. Alternatively, for the LoRaWAN challenge ({{lorawan-time}}), it is expected that the duty cycle for a burst can be complied with for RPK by value and certificate by reference, assuming that each message only needs to be retransmitted at most once (i.e. good AKE performance for RPK by value and certificate by reference in not too poor radio environments).
 
 
 ### AKE frequency
