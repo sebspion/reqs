@@ -833,7 +833,7 @@ table.left {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Vucinic, et al.</td>
-<td class="center">Expires 16 October 2020</td>
+<td class="center">Expires 17 October 2020</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -846,12 +846,12 @@ table.left {
 <dd class="internet-draft">draft-ietf-lake-reqs-02</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2020-04-14" class="published">14 April 2020</time>
+<time datetime="2020-04-15" class="published">15 April 2020</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2020-10-16">16 October 2020</time></dd>
+<dd class="expires"><time datetime="2020-10-17">17 October 2020</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -900,7 +900,7 @@ It is not currently planned to publish this draft as an RFC.<a href="#section-ab
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 16 October 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 17 October 2020.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1055,14 +1055,25 @@ When transported over CoAP, the AKE must support the traversal of CoAP intermedi
 <p id="section-2.2-1">IoT deployments differ from one another in terms of what credentials can be supported. Currently many systems use pre-shared keys (PSKs) provisioned out of band, for various reasons. PSKs are sometimes used in a first deployment because of their perceived simplicity. The use of PSKs allows for protection of communication without major additional security processing, and also enables the use of symmetric crypto algorithms only, reducing the implementation and computational effort in the endpoints.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
 <p id="section-2.2-2">However, PSK-based provisioning has inherent weaknesses. There has been reports of massive breaches of PSK provisioning systems <span>[<a href="#massive-breach" class="xref">massive-breach</a>]</span>, and as many systems use PSKs without Perfect Forward Secrecy (PFS, see <a href="#confidentiality" class="xref">Section 2.4</a>) they are vulnerable to passive pervasive monitoring. The security of these systems can be improved by adding PFS through an AKE authenticated by the provisioned PSK.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
 <p id="section-2.2-3">Shared keys can alternatively be established in the endpoints using an AKE protocol authenticated with asymmetric public keys instead of symmetric secret keys. Raw public keys (RPK) can be provisioned with the same scheme as PSKs, which allows for a more relaxed trust model since RPKs need not be secret. The corresponding private keys are assumed to be provisioned to the party being authenticated beforehand (e.g. in factory or generated on-board).<a href="#section-2.2-3" class="pilcrow">¶</a></p>
-<p id="section-2.2-4">As a third option, by using a public key infrastructure and running an asymmetric key AKE with public key certificates instead of RPKs, key provisioning can be omitted, leading to a more automated ("zero-touch") bootstrapping procedure. The root CA keys are assumed to be provisioned beforehand.<a href="#section-2.2-4" class="pilcrow">¶</a></p>
+<p id="section-2.2-4">As a third option, by using a public key infrastructure and running an asymmetric key AKE with public key certificates instead of RPKs, key provisioning can be omitted, leading to a more automated ("zero-touch") bootstrapping procedure. The root CA keys are assumed to be provisioned beforehand.
+Public key certificates are important for several IoT settings, e.g., facility management with a large number of devices from many different manufacturers.<a href="#section-2.2-4" class="pilcrow">¶</a></p>
 <p id="section-2.2-5">These steps provide an example of a migration path in limited scoped steps from simple to more robust security bootstrapping and provisioning schemes where each step improves the overall security and/or simplicity of deployment of the IoT system, although not all steps are necessarily feasible for the most constrained settings.<a href="#section-2.2-5" class="pilcrow">¶</a></p>
-<p id="section-2.2-6">In order to allow for these different schemes, the AKE must support PSK- (shared between two nodes), RPK- and certificate-based authentication.<a href="#section-2.2-6" class="pilcrow">¶</a></p>
+<p id="section-2.2-6">In order to allow for these different schemes, the AKE must support PSK- (shared between two nodes), RPK- and certificate-based authentication.
+These are also the schemes for which CoAP is designed (see Section 9 of <span>[<a href="#RFC7252" class="xref">RFC7252</a>]</span>).<a href="#section-2.2-6" class="pilcrow">¶</a></p>
 <p id="section-2.2-7">Multiple public key authentication credential types may need to be supported for RPK and certificate-based authentication. In case of a Diffie-Hellman key exchange both the use of signature based public keys (for compatibility with existing ecosystem) and static DH public keys (for reduced message size) is expected.<a href="#section-2.2-7" class="pilcrow">¶</a></p>
-<p id="section-2.2-8">To further minimize the bandwidth consumption it is required to support transporting certificates and raw public keys by reference rather than by value. Considering the wide variety of deployments, the AKE must support different schemes for transporting and identifying credentials, including x5t, x5u and x5chain (see Section 2 of <span>[<a href="#I-D.ietf-cose-x509" class="xref">I-D.ietf-cose-x509</a>]</span>).<a href="#section-2.2-8" class="pilcrow">¶</a></p>
+<p id="section-2.2-8">To further minimize the bandwidth consumption it is required to support transporting certificates and raw public keys by reference rather than by value. Considering the wide variety of deployments, the AKE must support different schemes for transporting and identifying credentials, including certificate by hash, certificate by URL, and certificates explicitly, such as x5t, x5u and x5chain (see Section 2 of <span>[<a href="#I-D.ietf-cose-x509" class="xref">I-D.ietf-cose-x509</a>]</span>).<a href="#section-2.2-8" class="pilcrow">¶</a></p>
 <p id="section-2.2-9">The use of RPKs may be appropriate for the authentication of the AKE initiator but not for the AKE responder.
 The AKE must support different credentials for authentication in different directions of the AKE run, e.g. certificate-based authentication for the initiating endpoint and RPK-based authentication for the responding endpoint.<a href="#section-2.2-9" class="pilcrow">¶</a></p>
 <p id="section-2.2-10">Assuming that both signature public keys and static DH public keys are in use, then also the case of mixed credentials need to be supported with one endpoint using a static DH public key and the other using a signature public key. The AKE shall support negotiation of public key credential mix and that both initiator and responder can verify the variant that was executed.<a href="#section-2.2-10" class="pilcrow">¶</a></p>
+<div id="initial-focus">
+<section id="section-2.2.1">
+          <h4 id="name-initial-focus">
+<a href="#section-2.2.1" class="section-number selfRef">2.2.1. </a><a href="#name-initial-focus" class="section-name selfRef">Initial Focus</a>
+          </h4>
+<p id="section-2.2.1-1">As illustrated above, the setting is much more diverse in terms of credentials and trust anchors than that of the unconstrained web. In order to deliver a timely result, there is a need to initially focus on what is considered most important at the time of writing: RPK (by reference and value) and certificate by reference.<a href="#section-2.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.2.1-2">A subsequent extension beyond the initial focus may be inevitable to maintain a homogenous deployment without having to implement a mix of AKE protocols, for example, to support the migration path described above. The AKE needs to make clear the scope of cases analysed in the initial phase, and that a new analysis is required for additional cases.<a href="#section-2.2.1-2" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 <div id="mutual-auth">
@@ -1388,7 +1399,9 @@ Network formation time directly affects the time installers need to spend on sit
 <p id="section-2.11.4-8">If the AKE has 3 messages then optimal performance for 6TiSCH is when each message fits into as few frames as possible, ideally 1 frame per message.<a href="#section-2.11.4-8" class="pilcrow">¶</a></p>
 <p id="section-2.11.4-9">For LoRaWAN, optimal performance is determined by the duty cycle which puts a limit to ToA or, for certain libraries/providers, the number of packets (see <a href="#lorawan-time" class="xref">Section 2.11.1.2</a>). If the AKE has 3 messages and each message fits into a 51 byte packet then this is optimal for the latter case. The same assumption incurs a ToA for uplink messages in the interval of 4-6 seconds at SF12 both for a device-initiated and infrastructure-initiated AKE, which complies with the challenging example stated in <a href="#lorawan-time" class="xref">Section 2.11.1.2</a>.<a href="#section-2.11.4-9" class="pilcrow">¶</a></p>
 <p id="section-2.11.4-10">One avenue to good performance is therefore to target message sizes which avoids fragmentation or with as few fragments as possible. For the LoRaWAN benchmark, the limit for fragmentation is 51 bytes at link layer. For the 6TiSCH benchmark, messages less than or equal to 45 bytes at CoAP payload layer need not be fragmented.<a href="#section-2.11.4-10" class="pilcrow">¶</a></p>
-<p id="section-2.11.4-11">For minimal but realistic applications of PSK and RPK it is possible to avoid fragmentation. For the case of certificate based authentication it may not be possible to transport certificates in the AKE with the minimal number of frames.<a href="#section-2.11.4-11" class="pilcrow">¶</a></p>
+<p id="section-2.11.4-11">For the initial focus cases (<a href="#initial-focus" class="xref">Section 2.2.1</a>), i.e. RPK (by reference and value) and certificate by reference, it is required that the AKE shall perform optimally with respect to the available criteria for the radio technologies.<a href="#section-2.11.4-11" class="pilcrow">¶</a></p>
+<p id="section-2.11.4-12">To determine with certainty what are the minimal number of fragments for an AKE under different assumptions requires to design and analyse the AKE, which is clearly beyond the requirements phase. However, by means of an example we have reason to believe that an AKE with 3 messages can be designed to support RPK by reference in 3 fragments. Thus the ideal number of fragments is expected for RPK by reference.<a href="#section-2.11.4-12" class="pilcrow">¶</a></p>
+<p id="section-2.11.4-13">While such performance may not be possible for the other initial focus cases, it is expected that if one of the peers send RPK by value or certificate by reference, then one additional fragment is sufficient, thus in total a maximum of 5 fragments. Alternatively, for the LoRaWAN challenge (<a href="#lorawan-time" class="xref">Section 2.11.1.2</a>), it is expected that the duty cycle for a burst can be complied with for RPK by value and certificate by reference, assuming that each message only needs to be retransmitted at most once (i.e. good AKE performance for RPK by value and certificate by reference in not too poor radio environments).<a href="#section-2.11.4-13" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="ake-frequency">
@@ -1488,7 +1501,7 @@ Network formation time directly affects the time installers need to spend on sit
 <span class="refAuthor">Minaburo, A.</span><span class="refAuthor">, Toutain, L.</span><span class="refAuthor">, and R. Andreasen</span>, <span class="refTitle">"LPWAN Static Context Header Compression (SCHC) for CoAP"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-lpwan-coap-static-context-hc-13</span>, <time datetime="2020-03-05">5 March 2020</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-ietf-lpwan-coap-static-context-hc-13.txt">http://www.ietf.org/internet-drafts/draft-ietf-lpwan-coap-static-context-hc-13.txt</a>&gt;</span>. </dd>
 <dt id="I-D.irtf-cfrg-randomness-improvements">[I-D.irtf-cfrg-randomness-improvements]</dt>
 <dd>
-<span class="refAuthor">Cremers, C.</span><span class="refAuthor">, Garratt, L.</span><span class="refAuthor">, Smyshlyaev, S.</span><span class="refAuthor">, Sullivan, N.</span><span class="refAuthor">, and C. Wood</span>, <span class="refTitle">"Randomness Improvements for Security Protocols"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-irtf-cfrg-randomness-improvements-10</span>, <time datetime="2020-02-17">17 February 2020</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-irtf-cfrg-randomness-improvements-10.txt">http://www.ietf.org/internet-drafts/draft-irtf-cfrg-randomness-improvements-10.txt</a>&gt;</span>. </dd>
+<span class="refAuthor">Cremers, C.</span><span class="refAuthor">, Garratt, L.</span><span class="refAuthor">, Smyshlyaev, S.</span><span class="refAuthor">, Sullivan, N.</span><span class="refAuthor">, and C. Wood</span>, <span class="refTitle">"Randomness Improvements for Security Protocols"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-irtf-cfrg-randomness-improvements-11</span>, <time datetime="2020-04-14">14 April 2020</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-irtf-cfrg-randomness-improvements-11.txt">http://www.ietf.org/internet-drafts/draft-irtf-cfrg-randomness-improvements-11.txt</a>&gt;</span>. </dd>
 <dt id="I-D.selander-ace-ake-authz">[I-D.selander-ace-ake-authz]</dt>
 <dd>
 <span class="refAuthor">Selander, G.</span><span class="refAuthor">, Mattsson, J.</span><span class="refAuthor">, Vucinic, M.</span><span class="refAuthor">, Richardson, M.</span><span class="refAuthor">, and A. Schellenbaum</span>, <span class="refTitle">"Lightweight Authorization for Authenticated Key Exchange."</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-selander-ace-ake-authz-01</span>, <time datetime="2020-03-09">9 March 2020</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-selander-ace-ake-authz-01.txt">http://www.ietf.org/internet-drafts/draft-selander-ace-ake-authz-01.txt</a>&gt;</span>. </dd>
